@@ -19,8 +19,11 @@ if (isset($_GET['search'])) { ?>
 
 
     <!-- Title -->
-    <title>@yield('title')</title>
-
+    <title>@yield('title') | Tahungoding</title>
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('logo/apple-touch-icon.png') }}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('logo/favicon-32x32.png') }}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('logo/favicon-16x16.png') }}">
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900&display=swap"
         rel="stylesheet">
@@ -65,7 +68,19 @@ if (isset($_GET['search'])) { ?>
                 
                 <li>
                     <a href="{{url('recruitment-data')}}" class="{{($url[3] == 'recruitment-data') ? 'active' : null}}"><i
-                            class="material-icons">web</i>Recruitment Data</a>
+                            class="material-icons">assignment</i>Recruitment</a>
+                </li>
+                <li>
+                    <a href="{{url('divisions')}}" class="{{($url[3] == 'divisions') ? 'active' : null}}"><i
+                            class="material-icons">grid_view</i>Division</a>
+                </li>
+                <li>
+                    <a href="{{url('classes')}}" class="{{($url[3] == 'classes') ? 'active' : null}}"><i
+                            class="material-icons">class</i>Class</a>
+                </li>
+                <li>
+                    <a href="{{url('study-programs')}}" class="{{($url[3] == 'study-programs') ? 'active' : null}}"><i
+                            class="material-icons">school</i>Study Program</a>
                 </li>
             </ul>
         </div>
@@ -128,6 +143,7 @@ if (isset($_GET['search'])) { ?>
         </div>
     </div>
 
+    @include('sweetalert::alert')
     <!-- Javascripts -->
     <script src="{{asset('assets/back/plugins/jquery/jquery-3.1.0.min.js')}}"></script>
     <script src="{{asset('assets/back/plugins/bootstrap/popper.min.js')}}"></script>

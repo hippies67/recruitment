@@ -1,10 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Front;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Recruitment;
+use App\Models\RecruitmentUser;
+use App\Models\Division;
+use App\Models\StudyProgram;
+use App\Models\StudentClass;
+use App\Models\SpecializationDivision;
 
-class BackRecruitmentController extends Controller
+class RecruitmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +20,12 @@ class BackRecruitmentController extends Controller
      */
     public function index()
     {
-        return view('back.recruitment.data');
+        $data['recruitment'] = RecruitmentUser::all();
+        $data['class'] = StudentClass::all();
+        $data['division'] = Division::all();
+        $data['study_program'] = StudyProgram::all();
+        $data['specialization_division'] = SpecializationDivision::all();
+        return view('index', $data);
     }
 
     /**
@@ -34,7 +46,24 @@ class BackRecruitmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = [
+            'recruitment' => '1',
+            'nama_lengkap' => $request->nama_lengkap,
+            'email' => $request->email,
+            'kelas' => $request->kelas,
+            'program_studi' => $request->program_studi,
+            'semester' => $request->semester,
+            'divisi' => $request->divisi_value,
+            'pengetahuan_divisi' => $request->pengetahuan_divisi,
+            'pengalaman_divisi' => $request->pengalaman_divisi,
+            'pengalaman_organisasi' => $request->pengalaman_organisasi,
+            'minat_menjadi_pengurus' => $request->minat_menjadi_pengurus,
+            'status' => 'proses'
+        ];
+
+        RecruitmentUser::create($data);
+        
+        return redirect()->back()->with('sukses', 'Data telah berhasil dikirim');
     }
 
     /**

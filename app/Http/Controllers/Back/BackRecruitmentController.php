@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Back;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Recruitment;
 
-class RecruitmentController extends Controller
+class BackRecruitmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,8 @@ class RecruitmentController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $data['recruitment'] = Recruitment::all();
+        return view('back.recruitment.data', $data);
     }
 
     /**
@@ -35,21 +37,7 @@ class RecruitmentController extends Controller
      */
     public function store(Request $request)
     {
-        $data = [
-            'nama_lengkap' => $request->nama_lengkap,
-            'kelas' => $request->kelas,
-            'prodi' => $request->prodi,
-            'semester' => $request->semester,
-            'divisi' => $request->divisi,
-            'pengetahuan_divisi' => $request->pengetahuan_divisi,
-            'pengalaman_divisi' => $request->pengalaman_divisi,
-            'pengalaman_organisasi' => $request->pengalaman_organisasi,
-            'kesanggupan_menjadi_pengurus' => $request->kesanggupan_menjadi_pengurus,
-        ];
-
-        Recruitment::create($data);
-        
-        return redirect()->back()->with('sukses', 'Data telah berhasil dikirim');
+        //
     }
 
     /**
