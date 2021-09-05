@@ -10,6 +10,9 @@ class Recruitment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama_lengkap', 'kelas', 'prodi', 'semester', 'divisi', 'spesialisasi_divisi', 'pengetahuan_divisi', 'pengalaman_divisi', 'pengalaman_organisasi', 'kesanggupan_menjadi_pengurus'
+        'tahun', 'selayang_pandang', 'banner', 'status'
     ];
+
+    
+  
 }

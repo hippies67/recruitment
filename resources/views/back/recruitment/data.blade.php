@@ -2,12 +2,39 @@
 @section('title')
 Recruitment
 @endsection
-
 @section('css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/dataTables.bootstrap4.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+{{-- dropify --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css"
+    integrity="sha512-EZSUkJWTjzDlspOoPSpUFR0o0Xy7jdzW//6qhUkoZ9c4StFkVsp9fbbd0O06p9ELS3H486m4wmrCELjza4JEog=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+    .dropify-wrapper {
+        border: 1px solid #e2e7f1 !important;
+        border-radius: .3rem !important;
+        height: 100% !important;
+    }
+
+    label.error {
+        color: #f1556c;
+        font-size: 13px;
+        font-size: .875rem;
+        font-weight: 400;
+        line-height: 1.5;
+        margin-top: 5px;
+        padding: 0;
+    }
+
+    input.error {
+        color: #f1556c;
+        border: 1px solid #f1556c;
+    }
+</style>
 @endsection
 
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <div class="row">
     <div class="col-md-12">
@@ -15,10 +42,10 @@ Recruitment
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-separator-1">
                     <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Recruitment Data</li>
+                    <li class="breadcrumb-item active" aria-current="page">Recruitment</li>
                 </ol>
             </nav>
-            <h3>Recruitment Data</h3>
+            <h3>Recruitment</h3>
         </div>
     </div>
 </div>
@@ -27,141 +54,275 @@ Recruitment
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab"
-                            aria-controls="all" aria-selected="true">All()</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="proses-tab" data-toggle="tab" href="#proses" role="tab"
-                            aria-controls="proses" aria-selected="false">Proses()</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="terima-tab" data-toggle="tab" href="#terima" role="tab"
-                            aria-controls="terima" aria-selected="false">Terima()</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="tolak-tab" data-toggle="tab" href="#tolak" role="tab"
-                            aria-controls="tolak" aria-selected="false">Tolak()</a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="home-tab">
-                        <br>
-                        <table id="recruitment_all" class="table table-striped table-bordered" >
-                            <thead>
-                                <tr>
-                                    <th>Nama</th>
-                                    <th>Kelas</th>
-                                    <th>Prodi</th>
-                                    <th>Semester</th>
-                                    <th>Divisi</th>
-                                    <th>Etc</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($recruitment as $recruitments)
-                                <tr>
-                                   <td>{{ $recruitments->nama_lengkap }}</td>
-                                   <td>{{ $recruitments->kelas }}</td>
-                                   <td>{{ $recruitments->prodi }}</td>
-                                   <td>{{ $recruitments->semester }}</td>
-                                   <td>{{ $recruitments->divisi }}</td>
-                                   <td>{{ $recruitments->spesialisasi_divisi }}</td>
-                                   <td>{{ $recruitments->pengetahuan_divisi }}</td>
-                                   <td>{{ $recruitments->pengalaman_divisi }}</td>
-                                   <td>{{ $recruitments->pengalaman_organisasi }}</td>
-                                   <td>{{ $recruitments->kesanggupan_menjadi_pengurus }}</td>
-                                   <td>
-                                       <button class="btn btn-sm btn-warning">Edit</button>
-                                       <form action="" method="post">
-                                           <button class="btn btn-sm btn-danger">Hapus</button>
-                                       </form>
-                                   </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="proses" role="tabpanel" aria-labelledby="proses-tab">
-                        <br>
-                        <table id="recruitment_proses" class="table table-striped table-bordered" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                    <td>$320,800</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="terima" role="tabpanel" aria-labelledby="terima-tab">
-                        <br>
-                        <table id="recruitment_terima" class="table table-striped table-bordered" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                    <td>$320,800</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="tolak" role="tabpanel" aria-labelledby="tolak-tab">
-                        <br>
-                        <table id="recruitment_tolak" class="table table-striped table-bordered" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                    <td>$320,800</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="form-group mb-4">
+                    <button data-toggle="modal" data-target="#tambahModal" class="btn btn-sm btn-dark">Tambah</button>
+                </div>
+                <table id="recruitment_table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tahun</th>
+                            <th>Selayang Pandang</th>
+                            <th>Banner</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($recruitment as $recruitments)
+                        <tr>
+                            <td>{{ $recruitments->tahun }}</td>
+                            <td><button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#showModal"
+                                    onclick="selayangPandang({{$recruitments}}, 'Selayang Pandang')"><i
+                                        class="fas fa-info-circle"></i></button>
+                            </td>
+                            <td><button class="btn btn-sm btn-secondary" data-toggle="modal"
+                                    data-target="#bannerModal{{ $recruitments->id }}"><i
+                                        class="fas fa-info-circle"></i></button>
+                            </td>
+                            <td>
+                                @if($checkIfExists > 0)
+
+                                @else
+                                <button class="btn btn-sm btn-dark" data-toggle="modal" data-target="#activeModal"
+                                    onclick="activeData({{$recruitments}})"><i
+                                        class="far fa-arrow-alt-circle-up"></i></button>
+                                @endif
+                                @if($recruitments->status == 'aktif')
+                                <button class="btn btn-sm btn-dark" data-toggle="modal" data-target="#activeModal"
+                                    onclick="notActiveData({{$recruitments}})"><i
+                                        class="far fa-arrow-alt-circle-down"></i></button>
+                                @endif
+                                <button class="btn btn-sm btn-warning" data-toggle="modal"
+                                    data-target="#editModal{{$recruitments->id}}"
+                                    onclick="editData({{$recruitments}})"><i class="fa fa-edit"></i></button>
+                                <button type="button" data-toggle="modal" data-target="#confirmDeleteModal"
+                                    class="btn btn-sm btn-danger" onclick="deleteData({{ $recruitments }})"><i
+                                        class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Active -->
+<div class="modal fade" id="activeModal" tabindex="-1" role="dialog" aria-labelledby="activeModallTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="activeModalTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <form action="{{ route('recruitment-data.update', '') }}" method="post" id="activatingRecruitmentForm">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="edit_status">
+                <div class="modal-body">
+                    apakah anda yakin untuk <span id="statusModalText"></span> <b> recruitment</b> ini ?
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="buttonStatusModalConfirm">Ya, Aktifkan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Show -->
+<div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="TambahModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="showModalTitle">Selayang Pandang</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-between">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="showContent"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-primary">Kembali</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@foreach($recruitment as $recruitments)
+<div class="modal fade" id="bannerModal{{ $recruitments->id }}" tabindex="-1" role="dialog"
+    aria-labelledby="bannerModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bannerModalTitle">Banner</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-between">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <img src="{{ Storage::url($recruitments->banner) }}" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-primary">Kembali</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+<!-- Modal Tambah -->
+<div class="modal fade" id="tambahModal" tabindex="-1" role="dialog" aria-labelledby="TambahModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="TambahModalTitle">Tambah Recruitment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <form class="form-horizontal" action="{{ route('recruitment-data.store') }}" id="tambahRecruitmentForm"
+                method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div class="row justify-content-between">
+                        <div class="col-sm-12">
+                            <br>
+                            <input type="number" name="tahun" class="form-control" placeholder="Tahun">
+                        </div>
+                        <div class="col-sm-12">
+                            <br>
+                            <textarea name="selayang_pandang" class="form-control"
+                                placeholder="Selayang Pandang"></textarea>
+                        </div>
+                        <div class="col-sm-12">
+                            <br>
+                            <input type="file" class="form-control dropify" name="banner" id="banner"
+                                data-allowed-file-extensions="png jpg jpeg svg">
+                            @error('banner')
+                            <style>
+                                .dropify-wrapper {
+                                    border: 1px solid #dc3545 !important;
+                                    border-radius: .3rem !important;
+                                    height: 100% !important;
+                                }
+                            </style>
+                            <div class="mt-1">
+                                <span class="text-danger">{{ $message }}</span>
+                            </div>
+                            @enderror
+                        </div>
+                        <input type="hidden" name="status" value="tidak_aktif">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary mt-4">Tambah</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit -->
+@foreach($recruitment as $recruitments)
+<div class="modal fade" id="editModal{{$recruitments->id}}" tabindex="-1" role="dialog" aria-labelledby="editModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalTitle">Edit Recruitment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <form class="form-horizontal" action="{{ route('recruitment-data.update', '') }}" id="editRecruitmentForm"
+                method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <input type="hidden" id="checkRecruitmentYear">
+                <div class="modal-body">
+                    <div class="row justify-content-between">
+                        <div class="col-sm-12">
+                            <br>
+                            <input type="number" name="edit_tahun" class="form-control" placeholder="Tahun">
+                        </div>
+                        <div class="col-sm-12">
+                            <br>
+                            <textarea name="edit_selayang_pandang" class="form-control"
+                                placeholder="Selayang Pandang"></textarea>
+                        </div>
+                        <div class="col-sm-12">
+                            <br>
+                            <input type="file" class="form-control dropify" name="edit_banner" id="banner"
+                                data-allowed-file-extensions="png jpg jpeg svg" data-default-file="@if(!empty($recruitments->banner) &&
+                            Storage::exists($recruitments->banner)){{ Storage::url($recruitments->banner) }}@endif">
+                            @error('banner')
+                            <style>
+                                .dropify-wrapper {
+                                    border: 1px solid #dc3545 !important;
+                                    border-radius: .3rem !important;
+                                    height: 100% !important;
+                                }
+                            </style>
+                            <div class="mt-1">
+                                <span class="text-danger">{{ $message }}</span>
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary mt-4">Ubah</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
+
+<!-- Modal delete -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalTitle">Hapus Recruitment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <form action="{{ route('recruitment-data.destroy', '') }}" method="post" id="confirmDeleteForm">
+                @csrf
+                @method('delete')
+                <div class="modal-body">
+                    apakah anda yakin untuk menghapus <b> recruitment</b> ini ?
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Ya, Hapus !</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -170,20 +331,124 @@ Recruitment
 <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap4.min.js"></script>
 <script>
-$(document).ready(function() {
-    $('#recruitment_all').DataTable();
+    $(document).ready(function() {
+    $('#recruitment_table').DataTable();
 });
+</script>
+{{-- dropify --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"
+    integrity="sha512-8QFTrG0oeOiyWo/VM9Y8kgxdlCryqhIxVeRpWSezdRRAvarxVtwLnGroJgnVW9/XBRduxO/z1GblzPrMQoeuew=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $('.dropify').dropify();
+</script>
 
-$(document).ready(function() {
-    $('#recruitment_proses').DataTable();
-});
+{{-- recruitment --}}
+{{-- Division --}}
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+<script>
+    $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $("#tambahRecruitmentForm").validate({
+                rules: {
+                    tahun:{
+                        required: true,
+                        remote: {
+                                url: "{{ route('checkRecruitmentYear') }}",
+                                type: "post",
+                        }
+                    },
+                    selayang_pandang:{
+                        required: true,
+                    },
+                },
+                messages: {
+                    nama: {
+                        required: "Tahun harus di isi",
+                        remote: "Tahun sudah tersedia"
+                    },
+                    selayang_pandang: {
+                        required: "Selayang Pandang harus di isi",
+                    },
+                    banner: {
+                        required: "Banner harus di isi",
+                    },
+                }
+            });
 
-$(document).ready(function() {
-    $('#recruitment_terima').DataTable();
-});
+            $("#editRecruitmentForm").validate({
+                rules: {
+                    edit_tahun:{
+                        required: true,
+                        remote: {
+                            param: {
+                                url: "{{ route('checkRecruitmentYear') }}",
+                                type: "post",
+                            },
+                            depends: function(element) {
+                                // compare name in form to hidden field
+                                return ($(element).val() !== $('#checkRecruitmentYear').val());
+                            },
+                           
+                        }
+                    },
+                    edit_selayang_pandang:{
+                        required: true,
+                    }
+                },
+                messages: {
+                    edit_tahun: {
+                        required: "Tahun harus di isi",
+                        remote: "Tahun sudah tersedia"
+                    },
+                    edit_selayang_pandang: {
+                        required: "Selayang Pandang harus di isi",
+                    },
+                    edit_banner: {
+                        required: "Banner harus di isi",
+                    },
+                }
+            });
+        });
 
-$(document).ready(function() {
-    $('#recruitment_tolak').DataTable();
-});
+        const updateLink = $('#editRecruitmentForm').attr('action');
+        function editData(data) {
+            $('#editRecruitmentForm').attr('action',  `${updateLink}/${data.id}`);
+            $('#checkRecruitmentYear').val(data.tahun);
+            $('[name="edit_tahun"]').val(data.tahun);
+            $('[name="edit_selayang_pandang"]').text(data.selayang_pandang);
+            $('[name="edit_banner"]').val(data.banner);
+        }
+
+        const updateLink2 = $('#confirmDeleteForm').attr('action');
+        function deleteData(data) {
+            $('#confirmDeleteForm').attr('action',  `${updateLink2}/${data.id}`);
+        }  
+
+        function selayangPandang(data, title) {
+            $("#showContent").html('<p>'+ `${data.selayang_pandang}`+ '</p>');
+        }
+
+        const activatingLink = $('#activatingRecruitmentForm').attr('action');
+        function activeData(data) {
+            $('#activatingRecruitmentForm').attr('action',  `${activatingLink}/${data.id}`);
+            $('[name="edit_status"]').val('aktif');
+            $('#activeModalTitle').text('Aktivasi Recruitment');
+            $('#statusModalText').text('mengaktifkan');
+            $('#buttonStatusModalConfirm').text('Ya, Aktifkan');
+        }  
+
+        function notActiveData(data) {
+            $('#activatingRecruitmentForm').attr('action',  `${activatingLink}/${data.id}`);
+            $('[name="edit_status"]').val('tidak_aktif');
+            $('#activeModalTitle').text('Aktivasi Recruitment');
+            $('#statusModalText').text('menonaktifkan');
+            $('#buttonStatusModalConfirm').text('Ya, Nonaktifkan');
+        }  
+
 </script>
 @endsection

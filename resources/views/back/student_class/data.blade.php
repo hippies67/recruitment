@@ -235,10 +235,10 @@ Class
                 },
                 messages: {
                     edit_nama: {
-                        required: "Nama Divisi harus di isi",
-                        minlength: "Nama Divisi tidak boleh kurang dari 3 karakter",
-                        maxlength: "Nama Divisi tidak boleh lebih dari 30 karakter",
-                        remote: "Nama Divisi sudah tersedia"
+                        required: "Nama Kelas harus di isi",
+                        minlength: "Nama Kelas tidak boleh kurang dari 3 karakter",
+                        maxlength: "Nama Kelas tidak boleh lebih dari 30 karakter",
+                        remote: "Nama Kelas sudah tersedia"
                     },
                 }
             });
@@ -253,7 +253,7 @@ Class
 
         const updateLink2 = $('#confirmDeleteForm').attr('action');
         function deleteData(data) {
-            $('#confirmDeleteForm').attr('action',  `${updateLink}/${data.id}`);
+            $('#confirmDeleteForm').attr('action',  `${updateLink2}/${data.id}`);
         }  
 </script>
 @endsection

@@ -71,6 +71,10 @@ if (isset($_GET['search'])) { ?>
                             class="material-icons">assignment</i>Recruitment</a>
                 </li>
                 <li>
+                    <a href="{{url('recruitment-users')}}" class="{{($url[3] == 'recruitment-users') ? 'active' : null}}"><i
+                            class="material-icons">supervisor_account</i>Recruitment User</a>
+                </li>
+                <li>
                     <a href="{{url('divisions')}}" class="{{($url[3] == 'divisions') ? 'active' : null}}"><i
                             class="material-icons">grid_view</i>Division</a>
                 </li>

@@ -21,11 +21,12 @@ class RecruitmentController extends Controller
     public function index()
     {
         $data['recruitment'] = RecruitmentUser::all();
+        $data['recruitment_user'] = RecruitmentUser::all();
         $data['class'] = StudentClass::all();
         $data['division'] = Division::all();
         $data['study_program'] = StudyProgram::all();
         $data['specialization_division'] = SpecializationDivision::all();
-        return view('index', $data);
+        return view('front.data', $data);
     }
 
     /**
@@ -33,6 +34,19 @@ class RecruitmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function checkEmail(Request $request) 
+    {
+        if($request->Input('email')){
+            $email = RecruitmentUser::where('email',$request->Input('email'))->first();
+            if($email){
+                return 'false';
+            }else{
+                return  'true';
+            }
+        }
+    }
+
     public function create()
     {
         //
@@ -47,7 +61,7 @@ class RecruitmentController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'recruitment' => '1',
+            'recruitment' => getActiveRecruitment()->id,
             'nama_lengkap' => $request->nama_lengkap,
             'email' => $request->email,
             'kelas' => $request->kelas,

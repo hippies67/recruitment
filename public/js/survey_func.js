@@ -16,6 +16,7 @@ jQuery(function ($) {
 			}
         },
 		beforeSelect: function (event, state) {
+			validateForm();
 			if ($('input#website').val().length != 0) {
 				return false;
 			}
@@ -31,6 +32,10 @@ jQuery(function ($) {
 			} else {
 				error.insertAfter(element);
 			}
+
+			if(!$('input[name=spesialisasi_divisi]:checked').val())  {
+				
+			} 
 		}
 	});
 	//  progress bar
@@ -42,21 +47,13 @@ jQuery(function ($) {
 		}
 	});
 	// Validate select
-	$('#wrapped').validate({
-		ignore: [],
-		rules: {
-			select: {
-				required: true
-			}
-		},
-		errorPlacement: function (error, element) {
-			if (element.is('select:hidden')) {
-				error.insertAfter(element.next('.nice-select'));
-			} else {
-				error.insertAfter(element);
-			}
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		}
 	});
+
+	
 });
 
 // Summary 
@@ -97,3 +94,35 @@ function getVals(formControl, controlType) {
 			break;
 	}
 }
+	function validateForm() {
+		$('#wrapped').validate({
+			ignore: [],
+			rules: {
+				email:{
+					remote: {
+						param: {
+							url: "/check-email",
+							type: "post",
+						},
+						depends: function(element) {
+							// compare name in form to hidden field
+							return ($(element).val() !== $('#checkEmail').val());
+						},
+					
+					}
+				}
+			},
+			messages: {
+				email: {
+					remote: "Email sudah terdaftar"
+				},
+			},
+			errorPlacement: function (error, element) {
+				if (element.is('select:hidden')) {
+					error.insertAfter(element.next('.nice-select'));
+				} else {
+					error.insertAfter(element);
+				}
+			}
+		});				
+	}
