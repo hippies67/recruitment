@@ -22,6 +22,9 @@ class CreateRecruitmentUsersTable extends Migration
             $table->foreign('kelas')->references('id')->on('class');
             $table->unsignedBigInteger('program_studi');
             $table->foreign('program_studi')->references('id')->on('study_programs');
+            $table->unsignedBigInteger('semester');
+            $table->foreign('semester')->references('id')->on('semesters');
+            $table->string('email');
             $table->unsignedBigInteger('divisi');
             $table->foreign('divisi')->references('id')->on('divisions');
             $table->text('pengetahuan_divisi');
@@ -31,7 +34,6 @@ class CreateRecruitmentUsersTable extends Migration
             $table->enum('status', ['proses', 'terima', 'tolak']);
             $table->timestamps();
         });
-        
     }
 
     /**

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnToRecruitmentUsersTable extends Migration
+class AddColumnToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddColumnToRecruitmentUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('recruitment_users', function (Blueprint $table) {
-            $table->boolean('email_sent')->default(0)->after('status');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('username')->after('name');
         });
     }
 
@@ -25,7 +25,7 @@ class AddColumnToRecruitmentUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('recruitment_users', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

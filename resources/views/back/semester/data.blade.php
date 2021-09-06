@@ -1,6 +1,6 @@
 @extends('layouts.back')
 @section('title')
-Class
+Semester
 @endsection
 
 @section('css')
@@ -33,10 +33,10 @@ Class
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-separator-1">
                     <li class="breadcrumb-item"><a href="{{ url('/recruitment-data') }}">Recruitment</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Class</li>
+                    <li class="breadcrumb-item active" aria-current="page">Semester</li>
                 </ol>
             </nav>
-            <h3>Class</h3>
+            <h3>Semester</h3>
         </div>
     </div>
 </div>
@@ -48,22 +48,22 @@ Class
                 <div class="form-group mb-4">
                     <button data-toggle="modal" data-target="#tambahModal" class="btn btn-sm btn-dark">Tambah</button>
                 </div>
-                <table id="class_table" class="table table-striped table-bordered">
+                <table id="semester_table" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>Nama</th>
+                            <th>Semester</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($student_class as $student_classes)
+                        @foreach($semester as $semesters)
                         <tr>
-                            <td>{{ $student_classes->nama }}</td>
+                            <td>{{ $semesters->nama }}</td>
                             <td>
                                 <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal"
-                                    onclick="editData({{$student_classes}})"><i class="fa fa-edit"></i></button>
+                                    onclick="editData({{$semesters}})"><i class="fa fa-edit"></i></button>
                                 <button type="button" data-toggle="modal" data-target="#confirmDeleteModal"
-                                    class="btn btn-danger" onclick="deleteData({{ $student_classes }})"><i
+                                    class="btn btn-danger" onclick="deleteData({{ $semesters }})"><i
                                         class="fa fa-trash"></i>
                                 </button>
                             </td>
@@ -82,19 +82,18 @@ Class
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="TambahModalTitle">Tambah Kelas</h5>
+                <h5 class="modal-title" id="TambahModalTitle">Tambah Semester</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="material-icons">close</i>
                 </button>
             </div>
-            <form class="form-horizontal" action="{{ route('classes.store') }}" id="tambahClassForm" method="POST"
+            <form class="form-horizontal" action="{{ route('semesters.store') }}" id="tambahSemesterForm" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <div class="row justify-content-between">
-
                         <div class="col-sm-12">
-                            <input type="text" name="nama" class="form-control" placeholder="Nama Kelas">
+                            <input type="number" name="nama" class="form-control" placeholder="Nama Semester">
                         </div>
                     </div>
                 </div>
@@ -111,20 +110,20 @@ Class
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalTitle">Edit Kelas</h5>
+                <h5 class="modal-title" id="editModalTitle">Edit Semester</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="material-icons">close</i>
                 </button>
             </div>
-            <form class="form-horizontal" action="{{ route('classes.update', '') }}" id="editKelasForm" method="POST"
+            <form class="form-horizontal" action="{{ route('semesters.update', '') }}" id="editSemesterForm" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                <input type="hidden" id="checkClassName">
+                <input type="hidden" id="checkSemesterName">
                 <div class="modal-body">
                     <div class="row justify-content-between">
                         <div class="col-sm-12">
-                            <input type="text" name="edit_nama" class="form-control" placeholder="Nama Kelas">
+                            <input type="number" name="edit_nama" class="form-control" placeholder="Nama Semester">
                         </div>
                     </div>
                 </div>
@@ -142,16 +141,16 @@ Class
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalTitle">Hapus Kelas</h5>
+                <h5 class="modal-title" id="confirmDeleteModalTitle">Hapus Semester</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="material-icons">close</i>
                 </button>
             </div>
-            <form action="{{ route('classes.destroy', '') }}" method="post" id="confirmDeleteForm">
+            <form action="{{ route('semesters.destroy', '') }}" method="post" id="confirmDeleteForm">
                 @csrf
                 @method('delete')
                 <div class="modal-body">
-                    apakah anda yakin untuk menghapus <b> kelas</b> ini ?
+                    apakah anda yakin untuk menghapus <b> semester</b> ini ?
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger">Ya, Hapus !</button>
@@ -170,7 +169,7 @@ Class
 
 <script>
     $(document).ready(function() {
-            $('#class_table').DataTable();
+            $('#semester_table').DataTable();
         });
 </script>
 
@@ -182,24 +181,22 @@ Class
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            $("#tambahKelasForm").validate({
+            $("#tambahSemesterForm").validate({
                 rules: {
                     nama:{
                         required: true,
-                        minlength: 3,
-                        maxlength: 30,
+                        number: true,
                         remote: {
-                                url: "{{ route('checkDivisionName') }}",
+                                url: "{{ route('checkSemesterName') }}",
                                 type: "post",
                         }
                     },
                 },
                 messages: {
                     nama: {
-                        required: "Nama Kelas harus di isi",
-                        minlength: "Nama Kelas tidak boleh kurang dari 3 karakter",
-                        maxlength: "Nama Kelas tidak boleh lebih dari 30 karakter",
-                        remote: "Nama Kelas sudah tersedia"
+                        required: "Semester harus di isi",
+                        number: "Semester harus berupa bilangan",
+                        remote: "Semester sudah tersedia"
                     },
                 },
                 submitHandler: function(form) {
@@ -208,20 +205,19 @@ Class
                 }
             });
 
-            $("#editKelasForm").validate({
+            $("#editSemesterForm").validate({
                 rules: {
                     edit_nama:{
                         required: true,
-                        minlength: 3,
-                        maxlength: 30,
+                        number: true,
                         remote: {
                             param: {
-                                url: "{{ route('checkClassName') }}",
+                                url: "{{ route('checkSemesterName') }}",
                                 type: "post",
                             },
                             depends: function(element) {
                                 // compare name in form to hidden field
-                                return ($(element).val() !== $('#checkClassName').val());
+                                return ($(element).val() !== $('#checkSemesterName').val());
                             },
                            
                         }
@@ -229,10 +225,9 @@ Class
                 },
                 messages: {
                     edit_nama: {
-                        required: "Nama Kelas harus di isi",
-                        minlength: "Nama Kelas tidak boleh kurang dari 3 karakter",
-                        maxlength: "Nama Kelas tidak boleh lebih dari 30 karakter",
-                        remote: "Nama Kelas sudah tersedia"
+                        required: "Semester harus di isi",
+                        number: "Semester harus berupa bilangan",
+                        remote: "Semester sudah tersedia"
                     },
                 },
                 submitHandler: function(form) {
@@ -242,16 +237,16 @@ Class
             });
         });
 
-        const updateLink = $('#editKelasForm').attr('action');
+        const updateLink = $('#editSemesterForm').attr('action');
         function editData(data) {
-            $('#editKelasForm').attr('action',  `${updateLink}/${data.id}`);
-            $('#checkClassName').val(data.nama);
+            $('#editSemesterForm').attr('action',  `${updateLink}/${data.id}`);
+            $('#checkSemesterName').val(data.nama);
             $('[name="edit_nama"]').val(data.nama);
         }
 
         const updateLink2 = $('#confirmDeleteForm').attr('action');
         function deleteData(data) {
-            $('#confirmDeleteForm').attr('action',  `${updateLink2}/${data.id}`);
+            $('#confirmDeleteForm').attr('action',  `${updateLink}/${data.id}`);
         }  
 </script>
 @endsection

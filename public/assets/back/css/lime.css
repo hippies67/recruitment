@@ -2769,6 +2769,7 @@ body.err-500 .error-image {
     font-size: 64px;
 }
 
+
 .coming-soon .error-image {
     background: url(../images/coming-soon.svg) center center no-repeat;
     background-size: contain;
@@ -2778,15 +2779,13 @@ body.err-500 .error-image {
 /* Authentication */
 
 .login-page {
-    background: url(../images/login.jpg) center center no-repeat;
-    background-size: cover;
+  background-color: #f4f7fc;
 }
 
 .login-page::before {
     display: block;
     content: '';
     position: absolute;
-    background: rgba(0,0,0,.5);
     width: 100%;
     height: 100%;
 }

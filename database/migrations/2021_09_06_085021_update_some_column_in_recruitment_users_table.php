@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateRecruitmentUsersColumn2 extends Migration
+class UpdateSomeColumnInRecruitmentUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,6 +15,7 @@ class UpdateRecruitmentUsersColumn2 extends Migration
     {
         Schema::table('recruitment_users', function (Blueprint $table) {
             $table->text('pengalaman_divisi')->nullable()->after('program_studi')->change();
+            $table->boolean('email_sent')->default(0)->after('status');
         });
     }
 
@@ -25,6 +26,8 @@ class UpdateRecruitmentUsersColumn2 extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('recruitment_users', function (Blueprint $table) {
+            //
+        });
     }
 }

@@ -83,9 +83,18 @@ if (isset($_GET['search'])) { ?>
                             class="material-icons">class</i>Class</a>
                 </li>
                 <li>
+                    <a href="{{url('semesters')}}" class="{{($url[3] == 'semesters') ? 'active' : null}}"><i
+                            class="material-icons">grid_on</i>Semester</a>
+                </li>
+                <li>
                     <a href="{{url('study-programs')}}" class="{{($url[3] == 'study-programs') ? 'active' : null}}"><i
                             class="material-icons">school</i>Study Program</a>
                 </li>
+                <li>
+                    <a href="{{url('user-managements')}}" class="{{($url[3] == 'user-managements') ? 'active' : null}}"><i
+                            class="material-icons">people</i>User Management</a>
+                </li>
+                
             </ul>
         </div>
     </div>
@@ -114,16 +123,11 @@ if (isset($_GET['search'])) { ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
+                            <span>{{ Auth::user()->name }}</span>
+                            <i class="material-icons">keyboard_arrow_down</i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li class="divider"></li>
-                            <form method="POST" action="">
-                                @csrf
-                                <a class="dropdown-item" onclick="event.preventDefault();
-                                    this.closest('form').submit();" href="">Log Out</a>
-                            </form>
+                            <a class="dropdown-item" href="{{ route('logout') }}">Log Out</a>
                         </ul>
                     </li>
                 </ul>

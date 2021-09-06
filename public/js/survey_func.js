@@ -20,6 +20,7 @@ jQuery(function ($) {
 			if ($('input#website').val().length != 0) {
 				return false;
 			}
+
 			if (!state.isMovingForward)
 				return true;
 			var inputs = $(this).wizard('state').step.find(':input');
@@ -94,14 +95,15 @@ function getVals(formControl, controlType) {
 			break;
 	}
 }
-	function validateForm() {
+
+	$(document).ready(function(){
 		$('#wrapped').validate({
 			ignore: [],
 			rules: {
 				email:{
 					remote: {
 						param: {
-							url: "/check-email",
+							url: "/check-email-recruitment",
 							type: "post",
 						},
 						depends: function(element) {
@@ -124,5 +126,7 @@ function getVals(formControl, controlType) {
 					error.insertAfter(element);
 				}
 			}
-		});				
-	}
+		});		
+		
+			
+	});

@@ -8,6 +8,7 @@ use App\Models\Recruitment;
 use App\Models\RecruitmentUser;
 use App\Models\Division;
 use App\Models\StudyProgram;
+use App\Models\Semester;
 use App\Models\StudentClass;
 use App\Models\SpecializationDivision;
 
@@ -25,8 +26,9 @@ class RecruitmentController extends Controller
         $data['class'] = StudentClass::all();
         $data['division'] = Division::all();
         $data['study_program'] = StudyProgram::all();
+        $data['semester'] = Semester::all();
         $data['specialization_division'] = SpecializationDivision::all();
-        if(count($data['recruitment']) < 1 || empty(getActiveRecruitment()) || count($data['class']) < 1 || count($data['division']) < 1 || count($data['study_program']) < 1 || count($data['specialization_division']) < 1) {
+        if(count($data['recruitment']) < 1 || empty(getActiveRecruitment()) || count($data['class']) < 1 || count($data['division']) < 1 || count($data['study_program']) < 1 || count($data['semester']) < 1 || count($data['specialization_division']) < 1) {
             return view('front.coming_soon');
         } else {
             return view('front.data', $data);
