@@ -238,7 +238,7 @@ Recruitment
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary mt-4">Tambah</button>
+                    <button type="submit" class="btn btn-primary mt-4" id="tambahButton">Tambah</button>
                 </div>
             </form>
         </div>
@@ -294,7 +294,7 @@ Recruitment
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary mt-4">Ubah</button>
+                    <button type="submit" class="btn btn-primary mt-4" id="editButton">Ubah</button>
                 </div>
             </form>
         </div>
@@ -365,9 +365,12 @@ Recruitment
                     selayang_pandang:{
                         required: true,
                     },
+                    banner:{
+                        required: true,
+                    },
                 },
                 messages: {
-                    nama: {
+                    tahun: {
                         required: "Tahun harus di isi",
                         remote: "Tahun sudah tersedia"
                     },
@@ -377,6 +380,10 @@ Recruitment
                     banner: {
                         required: "Banner harus di isi",
                     },
+                },
+                submitHandler: function(form) {
+                    $("#tambahButton").prop('disabled', true);
+                    form.submit();
                 }
             });
 
@@ -411,6 +418,10 @@ Recruitment
                     edit_banner: {
                         required: "Banner harus di isi",
                     },
+                },
+                submitHandler: function(form) {
+                    $("#editButton").prop('disabled', true);
+                    form.submit();
                 }
             });
         });

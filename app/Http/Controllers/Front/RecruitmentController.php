@@ -20,13 +20,17 @@ class RecruitmentController extends Controller
      */
     public function index()
     {
-        $data['recruitment'] = RecruitmentUser::all();
+        $data['recruitment'] = Recruitment::all();
         $data['recruitment_user'] = RecruitmentUser::all();
         $data['class'] = StudentClass::all();
         $data['division'] = Division::all();
         $data['study_program'] = StudyProgram::all();
         $data['specialization_division'] = SpecializationDivision::all();
-        return view('front.data', $data);
+        if(count($data['recruitment']) < 1 || empty(getActiveRecruitment()) || count($data['class']) < 1 || count($data['division']) < 1 || count($data['study_program']) < 1 || count($data['specialization_division']) < 1) {
+            return view('front.coming_soon');
+        } else {
+            return view('front.data', $data);
+        }
     }
 
     /**

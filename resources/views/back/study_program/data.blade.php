@@ -99,7 +99,7 @@ Study Program
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Tambah</button>
+                    <button type="submit" class="btn btn-primary" id="tambahButton">Tambah</button>
                 </div>
             </form>
         </div>
@@ -129,7 +129,7 @@ Study Program
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Ubah</button>
+                    <button type="submit" class="btn btn-primary" id="editButton">Ubah</button>
                 </div>
             </form>
         </div>
@@ -211,6 +211,10 @@ Study Program
                         maxlength: "Nama Program Studi tidak boleh lebih dari 30 karakter",
                         remote: "Program Studi Kelas sudah tersedia"
                     },
+                },
+                submitHandler: function(form) {
+                    $("#tambahButton").prop('disabled', true);
+                    form.submit();
                 }
             });
 
@@ -240,6 +244,10 @@ Study Program
                         maxlength: "Nama Program Studi tidak boleh lebih dari 30 karakter",
                         remote: "Nama Program Studi sudah tersedia"
                     },
+                },
+                submitHandler: function(form) {
+                    $("#editButton").prop('disabled', true);
+                    form.submit();
                 }
             });
         });

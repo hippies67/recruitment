@@ -67,7 +67,7 @@ class BackRecruitmentController extends Controller
             'tahun' => $request->tahun,
             'selayang_pandang' => $request->selayang_pandang,
             'banner' => $banner,
-            'status' => $status,
+            'status' => 'tidak_aktif',
         ];
 
         Recruitment::create($data)
