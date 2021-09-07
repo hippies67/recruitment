@@ -114,12 +114,20 @@ Recruitment
                                     <td>{{ $recruitments->minat_menjadi_pengurus }}</td>
                                     <td><span class="badge badge-secondary">{{ $recruitments->status }}</span></td>
                                     <td>
+                                        @if($recruitments->status == 'terima')
+
+                                        @else
                                         <button class="btn btn-sm btn-dark" data-toggle="modal"
                                             data-target="#acceptanceModal"
                                             onclick="acceptData({{ $recruitments }})">Terima</button>
+                                        @endif
+                                        @if($recruitments->status == 'tolak')
+
+                                        @else
                                         <button class="btn btn-sm btn-warning" data-toggle="modal"
                                             data-target="#acceptanceModal"
                                             onclick="rejectData({{ $recruitments }})">Tolak</button>
+                                        @endif
                                         <button class="btn btn-sm btn-danger" data-toggle="modal"
                                             data-target="#confirmDeleteModal"
                                             onclick="deleteData({{ $recruitments }})">Hapus</button>
