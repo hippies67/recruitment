@@ -93,10 +93,14 @@ Division
                     <div class="tab-pane fade" id="specialization_division" role="tabpanel"
                         aria-labelledby="profile-tab">
                         <br>
+                        @if(count($division) < 1)
+                        @else
+                      
                         <div class="form-group mb-4">
                             <button data-toggle="modal" data-target="#tambahSpecDivModal"
                                 class="btn btn-sm btn-dark">Tambah</button>
                         </div>
+                        @endif
                         <table id="specialization_division_table" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
