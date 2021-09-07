@@ -30,9 +30,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/email', function () {
-    return new RecruitmentMail();
-});
+Route::resource('recruitments', RecruitmentController::class);
 
 Route::group(['middleware' => ['guest']], function () {
     Route::get('login', [LoginController::class, 'index'])->name('login');
@@ -43,7 +41,6 @@ Route::resource('kirim-email', EmailController::class);
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('login/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::resource('recruitments', RecruitmentController::class);
     Route::post('check-email-recruitment', [RecruitmentController::class, 'checkEmail'])->name('checkEmailRecruitment');
     Route::resource('recruitment-data', BackRecruitmentController::class);
     Route::post('check-recruitment-year', [BackRecruitmentController::class, 'checkRecruitmentYear'])->name('checkRecruitmentYear');

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateRecruitmentsColumn extends Migration
+class CreateClassesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class UpdateRecruitmentsColumn extends Migration
      */
     public function up()
     {
-        Schema::table('recruitments', function (Blueprint $table) {
-            $table->enum('status', ['aktif', 'tidak_aktif'])->after('banner');
+        Schema::create('classes', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama');
+            $table->timestamps();
         });
     }
 
@@ -25,6 +27,6 @@ class UpdateRecruitmentsColumn extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('classes');
     }
 }

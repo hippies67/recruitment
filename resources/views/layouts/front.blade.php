@@ -9,9 +9,8 @@
 	<meta name="author" content="Ansonika">
 	<title>Recruitment | Tahungoding</title>
 	<!-- Favicons-->
-	<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('logo/apple-touch-icon.png') }}">
-	<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('logo/favicon-32x32.png') }}">
-	<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('logo/favicon-16x16.png') }}">
+	<link rel="shortcut icon" href="{{ asset('assets/back/images/tahu.png') }}" type="image/x-icon">
+
 
 	<!-- GOOGLE WEB FONT -->
 	<link href="https://fonts.googleapis.com/css?family=Work+Sans:400,500,600" rel="stylesheet">

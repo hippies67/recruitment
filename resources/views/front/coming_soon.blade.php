@@ -12,6 +12,7 @@
 
     <!-- Title -->
     <title>Recruitment | Tahungoding</title>
+	<link rel="shortcut icon" href="{{ asset('assets/back/images/tahu.png') }}" type="image/x-icon">
 
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900&display=swap"
