@@ -222,7 +222,7 @@
             <!-- /middle-wizard -->
             <div id="bottom-wizard">
                 <button type="button" name="backward" class="backward">Prev</button>
-                <button type="button" name="forward" class="forward" onclick="validateForm(this)">Next</button>
+                <button type="button" name="forward" class="forward">Next</button>
                 <button type="submit" class="submit" id="submitButton" onclick="checkIfNull()">Submit</button>
             </div>
             <!-- /bottom-wizard -->
@@ -235,9 +235,7 @@
 
 @section('js')
 <script>
-    function validateForm() {
-			$("#wrapped").valid();
-		}
+  
     function getDivisiValue(element) {
             $(".testId").val($(element).attr('data-id'));
             console.log($(element).attr('data-id'));

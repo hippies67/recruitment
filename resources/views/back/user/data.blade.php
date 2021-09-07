@@ -48,7 +48,8 @@ User Manajement
                 <div class="form-group mb-4">
                     <button data-toggle="modal" data-target="#tambahModal" class="btn btn-sm btn-dark">Tambah</button>
                 </div>
-                <table id="user_table" class="table table-striped table-bordered">
+                <h5 class="header-title pb-2">Data Akun Anda</h5>
+                <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>Nama</th>
@@ -74,6 +75,35 @@ User Manajement
                                 </button>
                             </td>
                         </tr>
+                    </tbody>
+                </table>
+                
+                <h5 class="header-title pb-2 pt-4">Data User</h5>
+                <table id="user_table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($user as $users)
+                        <tr>
+                            <td>{{ $users->name }}</td>
+                            <td>{{ $users->username }}</td>
+                            <td>{{ $users->email }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal"
+                                    onclick="editData({{$users}})"><i class="fa fa-edit"></i></button>
+                                <button type="button" data-toggle="modal" data-target="#confirmDeleteModal"
+                                    class="btn btn-danger" onclick="deleteData({{ $users }})"><i
+                                        class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

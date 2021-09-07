@@ -16,7 +16,6 @@ jQuery(function ($) {
 			}
         },
 		beforeSelect: function (event, state) {
-			validateForm();
 			if ($('input#website').val().length != 0) {
 				return false;
 			}
