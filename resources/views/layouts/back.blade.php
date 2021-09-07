@@ -20,7 +20,7 @@ if (isset($_GET['search'])) { ?>
 
     <!-- Title -->
     <title>@yield('title') | Tahungoding</title>
-    
+
     <link rel="shortcut icon" href="{{ asset('assets/back/images/tahu.png') }}" type="image/x-icon">
 
     <!-- Styles -->
@@ -64,13 +64,15 @@ if (isset($_GET['search'])) { ?>
                 <li class="sidebar-title">
                     Back Apps
                 </li>
-                
+
                 <li>
-                    <a href="{{url('recruitment-data')}}" class="{{($url[3] == 'recruitment-data') ? 'active' : null}}"><i
+                    <a href="{{url('recruitment-data')}}"
+                        class="{{($url[3] == 'recruitment-data') ? 'active' : null}}"><i
                             class="material-icons">assignment</i>Recruitment</a>
                 </li>
                 <li>
-                    <a href="{{url('recruitment-users')}}" class="{{($url[3] == 'recruitment-users') ? 'active' : null}}"><i
+                    <a href="{{url('recruitment-users')}}"
+                        class="{{($url[3] == 'recruitment-users') ? 'active' : null}}"><i
                             class="material-icons">supervisor_account</i>Recruitment User</a>
                 </li>
                 <li>
@@ -90,10 +92,11 @@ if (isset($_GET['search'])) { ?>
                             class="material-icons">school</i>Study Program</a>
                 </li>
                 <li>
-                    <a href="{{url('user-managements')}}" class="{{($url[3] == 'user-managements') ? 'active' : null}}"><i
+                    <a href="{{url('user-managements')}}"
+                        class="{{($url[3] == 'user-managements') ? 'active' : null}}"><i
                             class="material-icons">people</i>User Management</a>
                 </li>
-                
+
             </ul>
         </div>
     </div>
@@ -106,8 +109,8 @@ if (isset($_GET['search'])) { ?>
                 </a>
             </section>
             <a class="navbar-brand" href="{{url('dashboard')}}">
-                <img src="{{ asset('assets/back/logo_inimahsumedang_500x.png') }}" style="object-fit: contain" alt="" alt="" width="80"
-                    height="30">
+                <img src="img/tahu.png" style="object-fit: contain" alt=""
+                    alt="" width="80" height="30">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
