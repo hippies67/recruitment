@@ -140,6 +140,9 @@ class BackRecruitmentController extends Controller
     public function destroy($id)
     {
         $recruitment = Recruitment::findOrFail($id);
+        foreach($recruitment->recruitmentUsers as $recruitment_users) {
+            $recruitment_users->delete();
+        }
         $recruitment->delete()
             ? Alert::success('Berhasil', "Recruitment telah berhasil dihapus.")
             : Alert::error('Error', "Recruitment gagal dihapus!");

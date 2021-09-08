@@ -317,7 +317,7 @@ Recruitment
                 @csrf
                 @method('delete')
                 <div class="modal-body">
-                    apakah anda yakin untuk menghapus <b> recruitment</b> ini ?
+                    apakah anda yakin untuk menghapus <b> recruitment</b> ini beserta seluruh data terkait <b>(recruitment user)</b> ?
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger">Ya, Hapus !</button>

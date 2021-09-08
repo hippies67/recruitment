@@ -122,9 +122,13 @@ class StudyProgramController extends Controller
     public function destroy($id)
     {
         $studyProgram = StudyProgram::findOrFail($id);
+        foreach($studyProgram->recruitmentUsers as $recruitment_user) {
+            $recruitment_user->delete();
+        }
+
         $studyProgram->delete()
-            ? Alert::success('Berhasil', "Program Studi telah berhasil dihapus.")
-            : Alert::error('Error', "Program Studi gagal dihapus!");
+            ? Alert::success('Berhasil', "Program Studi dan seluruh data terkait telah berhasil dihapus.")
+            : Alert::error('Error', "Program Studi dan seluruh data terkait gagal dihapus!");
 
         return redirect()->back();
     }

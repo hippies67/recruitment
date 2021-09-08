@@ -51,11 +51,11 @@
         <!-- /top-wizard -->
 
         @if($errors->has('email'))
-            <script>
-                alert('errorwoy');
-            </script>
+        <script>
+            alert('errorwoy');
+        </script>
         @endif
-        <form id="wrapped" action="{{ route('recruitments.store') }}" method="POST">
+        <form id="wrapped" action="{{ route('store') }}" method="POST">
             @csrf
             <input id="website" name="website" type="text" value="">
             <input type="hidden" id="checkEmail">
@@ -67,10 +67,15 @@
                         <input type="text" name="nama_lengkap" class="form-control required"
                             value="{{ old('nama_lengkap') }}" placeholder="Nama Lengkap">
                     </div>
+                    
+                    <div class="form-group">
+                        <input type="text" name="nim" class="form-control"
+                            value="{{ old('nim') }}" placeholder="NIM">
+                    </div>
 
                     <div class="form-group">
                         <div class="styled-select clearfix">
-                            <select class="wide required" name="kelas">
+                            <select class="wide" name="kelas">
                                 <option value="">Pilih Kelas</option>
                                 @foreach($class as $classes)
                                 <option value="{{ $classes->id }}">{{ $classes->nama }}</option>
@@ -106,8 +111,8 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="email" name="email" id="email" class="form-control required" autocomplete="off"
-                            placeholder="Email" onkeydown="validateForm()">
+                        <input type="email" name="email" id="email" class="form-control required" onkeypress="validateEmail()" autocomplete="off"
+                            placeholder="Email">
                         <span for="email" class="error" style="display: none">dd</span>
 
                     </div>
@@ -116,14 +121,22 @@
                 <div class="step" data-state="divisi">
                     <h3 class="main_question"><strong>2/5</strong>Pilih divisi yang kamu inginkan</h3>
                     @foreach($division as $divisions)
-                    <div class="form-group">
-                        <label class="container_radio version_2">{{ $divisions->nama }}
-                            <input type="radio" name="divisi" value="{{ Str::slug($divisions->nama) }}"
-                                data-id="{{ $divisions->id }}" onclick="getDivisiValue(this)" class="required">
-                            <input type="hidden" name="divisi_value" class="testId">
-                            <span for="divisi" class="error" style="display: none">Required</span>
-                            <span class="checkmark"></span>
-                        </label>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="container_radio version_2">{{ $divisions->nama }}
+                                    <input type="radio" name="divisi" value="{{ Str::slug($divisions->nama) }}"
+                                        data-id="{{ $divisions->id }}" onclick="getDivisiValue(this)" class="required">
+                                    <input type="hidden" name="divisi_value" class="testId">
+                                    <span for="divisi" class="error" style="display: none">Required</span>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-sm btn-light" data-toggle="modal" onclick="divisionData({{$divisions}})" data-target="#divisionModal"><i
+                                    class="icon-info-1"></i></button>
+                        </div>
                     </div>
                     @endforeach
                 </div>
@@ -132,14 +145,22 @@
                     <div class="step" data-state="question-4">
                         <h3 class="main_question"><strong>3/5</strong>Pilih spesialisasi yang kamu inginkan</h3>
                         @foreach($divisions->specialization_divisions as $spesialisasi)
-                        <div class="form-group">
-                            <label class="container_radio version_2">{{ $spesialisasi->nama }}
-                                <input type="radio" name="spesialisasi_divisi" value="{{ $spesialisasi->nama }}"
-                                    class="required">
-                                <span class="checkmark"></span>
-                                <span for="spesialisasi_divisi" class="error spesialisasi-divisi-error"
-                                    style="display: none">Required</span>
-                            </label>
+                        <div class="row justify-content">
+                            <div class="col-6">
+                                <div class="form-group" style="display: inline;">
+                                    <label class="container_radio version_2">{{ $spesialisasi->nama }}
+                                        <input type="radio" name="spesialisasi_divisi" value="{{ $spesialisasi->id }}"
+                                            class="required">
+                                        <span class="checkmark"></span>
+                                        <span for="spesialisasi_divisi" class="error spesialisasi-divisi-error"
+                                            style="display: none">Required</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-sm btn-light" data-toggle="modal" onclick="specializationData({{$spesialisasi}})" data-target="#specializationModal"><i
+                                        class="icon-info-1"></i></button>
+                            </div>
                         </div>
                         @endforeach
                     </div>
@@ -222,7 +243,7 @@
             <!-- /middle-wizard -->
             <div id="bottom-wizard">
                 <button type="button" name="backward" class="backward">Prev</button>
-                <button type="button" name="forward" class="forward">Next</button>
+                <button type="button" name="forward" class="forward" onclick="validateEmail()">Next</button>
                 <button type="submit" class="submit" id="submitButton" onclick="checkIfNull()">Submit</button>
             </div>
             <!-- /bottom-wizard -->
@@ -230,12 +251,60 @@
     </div>
     <!-- /Wizard container -->
 </div>
+
+<div class="modal fade" id="divisionModal" tabindex="-1" aria-labelledby="divisionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="divisionModalLabel">Detail</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+                <p id="divisionModalText"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Kembali</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal Specialization -->
+<div class="modal fade" id="specializationModal" tabindex="-1" aria-labelledby="specializationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="specializationModalLabel">Detail</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+                <p id="specializationModalText"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Kembali</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 @endif
 @endsection
 
 @section('js')
 <script>
-  
+    function divisionData(data) {
+        $("#divisionModalText").html(data.deskripsi)
+    }
+    
+    function specializationData(data) {
+        $("#specializationModalText").html(data.deskripsi)
+    }
+</script>
+<script>
     function getDivisiValue(element) {
             $(".testId").val($(element).attr('data-id'));
             console.log($(element).attr('data-id'));

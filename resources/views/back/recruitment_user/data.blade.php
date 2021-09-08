@@ -68,6 +68,7 @@ Recruitment
                             <thead>
                                 <tr>
                                     <th>Nama</th>
+                                    <th>NIM</th>
                                     <th>Email</th>
                                     <th>Kelas</th>
                                     <th>Prodi</th>
@@ -85,12 +86,13 @@ Recruitment
                                 @foreach($recruitment_user as $recruitments)
                                 <tr>
                                     <td>{{ $recruitments->nama_lengkap }}</td>
+                                    <td>{{ $recruitments->nim }}</td>
                                     <td>{{ $recruitments->email }} @if($recruitments->email_sent)
                                         <i class="far fa-check-square text-success" data-toggle="tooltip"
                                             data-placement="top" data-original-title="Terkirim"
                                             style="font-weight: bold; display:inline;"></i>
                                         @endif</td>
-                                    <td>{{ $recruitments->classes->nama }}</td>
+                                    <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
                                     <td>{{ $recruitments->study_programs->nama }}</td>
                                     <td>{{ $recruitments->semester }}</td>
                                     <td>{{ $recruitments->divisions->nama }}</td>
@@ -166,6 +168,7 @@ Recruitment
                             <thead>
                                 <tr>
                                     <th>Nama</th>
+                                    <th>NIM</th>
                                     <th>Email</th>
                                     <th>Kelas</th>
                                     <th>Prodi</th>
@@ -183,12 +186,13 @@ Recruitment
                                 @foreach($recruitment_user_proses as $recruitments)
                                 <tr>
                                     <td>{{ $recruitments->nama_lengkap }}</td>
+                                    <td>{{ $recruitments->nim }}</td>
                                     <td>{{ $recruitments->email }} @if($recruitments->email_sent)
                                         <i class="far fa-check-square text-success" data-toggle="tooltip"
                                             data-placement="top" data-original-title="Terkirim"
                                             style="font-weight: bold; display:inline;"></i>
                                         @endif</td>
-                                    <td>{{ $recruitments->classes->nama }}</td>
+                                    <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
                                     <td>{{ $recruitments->study_programs->nama }}</td>
                                     <td>{{ $recruitments->semester }}</td>
                                     <td>{{ $recruitments->divisions->nama }}</td>
@@ -229,17 +233,21 @@ Recruitment
                     </div>
                     <div class="tab-pane fade" id="terima" role="tabpanel" aria-labelledby="terima-tab">
                         <br>
+                        @if(count($recruitment_user_terima) < 1)
+
+                        @else
                         <div class="form-group">
                             <button class="btn btn-dark"
                                 data-url="{{ route('recruitment-users.send_all_accepted_email') }}" data-toggle="modal"
                                 data-target="#sendAllAcceptedEmailModal" onclick="allAcceptedEmailData(this)">Kirim
                                 Semua Email</button>
                         </div>
-
+                        @endif
                         <table id="recruitment_terima" class="table table-striped table-bordered" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>Nama</th>
+                                    <th>NIM</th>
                                     <th>Email</th>
                                     <th>Kelas</th>
                                     <th>Prodi</th>
@@ -257,12 +265,13 @@ Recruitment
                                 @foreach($recruitment_user_terima as $recruitments)
                                 <tr>
                                     <td>{{ $recruitments->nama_lengkap }}</td>
+                                    <td>{{ $recruitments->nim }}</td>
                                     <td>{{ $recruitments->email }} @if($recruitments->email_sent)
                                         <i class="far fa-check-square text-success" data-toggle="tooltip"
                                             data-placement="top" data-original-title="Terkirim"
                                             style="font-weight: bold; display:inline;"></i>
                                         @endif</td>
-                                    <td>{{ $recruitments->classes->nama }}</td>
+                                    <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
                                     <td>{{ $recruitments->study_programs->nama }}</td>
                                     <td>{{ $recruitments->semester }}</td>
                                     <td>{{ $recruitments->divisions->nama }}</td>
@@ -315,15 +324,19 @@ Recruitment
                     </div>
                     <div class="tab-pane fade" id="tolak" role="tabpanel" aria-labelledby="tolak-tab">
                         <br>
+                        @if(count($recruitment_user_tolak) < 1)
+
+                        @else
                         <div class="form-group">
                             <button class="btn btn-dark" data-url="{{ route('recruitment-users.send_all_rejected_email') }}" data-toggle="modal"
                                 data-target="#sendAllRejectedEmailModal" onclick="allRejectedEmailData(this)">Kirim Semua Email</button>
                         </div>
-                        
+                        @endif
                         <table id="recruitment_tolak" class="table table-striped table-bordered" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th>Nama</th>
+                                    <th>NIM</th>
                                     <th>Email</th>
                                     <th>Kelas</th>
                                     <th>Prodi</th>
@@ -341,12 +354,13 @@ Recruitment
                                 @foreach($recruitment_user_tolak as $recruitments)
                                 <tr>
                                     <td>{{ $recruitments->nama_lengkap }}</td>
+                                    <td>{{ $recruitments->nim }}</td>
                                     <td>{{ $recruitments->email }} @if($recruitments->email_sent)
                                         <i class="far fa-check-square text-success" data-toggle="tooltip"
                                             data-placement="top" data-original-title="Terkirim"
                                             style="font-weight: bold; display:inline;"></i>
                                         @endif</td>
-                                    <td>{{ $recruitments->classes->nama }}</td>
+                                    <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
                                     <td>{{ $recruitments->study_programs->nama }}</td>
                                     <td>{{ $recruitments->semester }}</td>
                                     <td>{{ $recruitments->divisions->nama }}</td>

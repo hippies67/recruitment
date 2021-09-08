@@ -69,11 +69,13 @@ class RecruitmentController extends Controller
         $data = [
             'recruitment' => getActiveRecruitment()->id,
             'nama_lengkap' => $request->nama_lengkap,
+            'nim' => $request->nim,
             'email' => $request->email,
             'kelas' => $request->kelas,
             'program_studi' => $request->program_studi,
             'semester' => $request->semester,
             'divisi' => $request->divisi_value,
+            'spesialisasi_divisi' => $request->spesialisasi_divisi,
             'pengetahuan_divisi' => $request->pengetahuan_divisi,
             'pengalaman_divisi' => $request->pengalaman_divisi,
             'pengalaman_organisasi' => $request->pengalaman_organisasi,

@@ -119,11 +119,16 @@ class SemesterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Semester $semester)
+    public function destroy($id)
     {
+        $semester = Semester::findOrFail($id);
+        foreach($semester->recruitmentUsers as $recruitment_user) {
+            $recruitment_user->delete();
+        }
+
         $semester->delete()
-            ? Alert::success('Berhasil', "Semester telah berhasil dihapus.")
-            : Alert::error('Error', "Semester gagal dihapus!");
+            ? Alert::success('Berhasil', "Semester dan seluruh data terkait telah berhasil dihapus.")
+            : Alert::error('Error', "Semester dan seluruh data terkait gagal dihapus!");
 
         return redirect()->back();
     }

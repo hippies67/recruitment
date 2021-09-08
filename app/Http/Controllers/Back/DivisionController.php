@@ -142,11 +142,20 @@ class DivisionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Division $division)
+    public function destroy($id)
     {
+        $division = Division::findOrFail($id);
+        foreach($division->specialization_divisions as $specialization) {
+            $specialization->delete();
+        }
+
+        foreach($division->recruitmentUsers as $recruitment_user) {
+            $recruitment_user->delete();
+        }
+        
         $division->delete()
-            ? Alert::success('Berhasil', "Divisi telah berhasil dihapus.")
-            : Alert::error('Error', "Divisi gagal dihapus!");
+            ? Alert::success('Berhasil', "Divisi dan seluruh data terkait telah berhasil dihapus.")
+            : Alert::error('Error', "Divisi gagal dan seluruh data terkait dihapus!");
 
         return redirect()->back();
     }

@@ -17,4 +17,9 @@ class Division extends Model
     {
         return $this->hasMany(SpecializationDivision::class, 'division');
     }
+
+    public function recruitmentUsers()
+    {
+        return $this->hasMany(RecruitmentUser::class, 'divisi');
+    }
 }

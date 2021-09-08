@@ -12,4 +12,9 @@ class Semester extends Model
     protected $fillable = [
         'nama'
     ];
+
+    public function recruitmentUsers()
+    {
+        return $this->hasMany(RecruitmentUser::class, 'semester');
+    }
 }

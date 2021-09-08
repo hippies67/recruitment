@@ -13,6 +13,10 @@ class Recruitment extends Model
         'tahun', 'selayang_pandang', 'banner', 'status'
     ];
 
+    public function recruitmentUsers()
+    {
+        return $this->hasMany(RecruitmentUser::class, 'recruitment');
+    }
     
   
 }

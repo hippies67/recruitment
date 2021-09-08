@@ -26,11 +26,9 @@ use App\Mail\RecruitmentMail;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::resource('recruitments', RecruitmentController::class);
+
+Route::resource('/', RecruitmentController::class);
 
 Route::group(['middleware' => ['guest']], function () {
     Route::get('login', [LoginController::class, 'index'])->name('login');

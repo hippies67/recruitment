@@ -123,9 +123,13 @@ class ClassController extends Controller
     public function destroy($id)
     {
         $studentClass = StudentClass::findOrFail($id);
+        foreach($studentClass->recruitmentUsers as $recruitment_user) {
+            $recruitment_user->delete();
+        }
+        
         $studentClass->delete()
-            ? Alert::success('Berhasil', "Kelas telah berhasil dihapus.")
-            : Alert::error('Error', "Kelas gagal dihapus!");
+            ? Alert::success('Berhasil', "Kelas dan seluruh data terkait telah berhasil dihapus.")
+            : Alert::error('Error', "Kelas dan seluruh data terkait gagal dihapus!");
 
         return redirect()->back();
     }
