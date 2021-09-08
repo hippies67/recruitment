@@ -53,6 +53,18 @@ class RecruitmentController extends Controller
         }
     }
 
+    public function checkNim(Request $request) 
+    {
+        if($request->Input('nim')){
+            $nim = RecruitmentUser::where('nim',$request->Input('nim'))->first();
+            if($nim){
+                return 'false';
+            }else{
+                return  'true';
+            }
+        }
+    }
+
     public function create()
     {
         //

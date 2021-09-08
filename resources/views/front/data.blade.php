@@ -53,6 +53,7 @@
         <form id="wrapped" action="{{ route('store') }}" method="POST">
             @csrf
             <input id="website" name="website" type="text" value="">
+            <input type="hidden" id="checkNim">
             <input type="hidden" id="checkEmail">
             <!-- Leave for security protection, read docs for details -->
             <div id="middle-wizard">
@@ -64,10 +65,16 @@
                     </div>
                     
                     <div class="form-group">
-                        <input type="text" name="nim" class="form-control"
+                        <input type="text" name="nim" id="nim" class="form-control" onkeypress="validateNim()"
                             value="{{ old('nim') }}" placeholder="NIM">
                     </div>
 
+                    <div class="form-group">
+                        <input type="email" name="email" id="email" class="form-control required" onkeypress="validateEmail()"
+                            placeholder="Email">
+                        <span for="email" class="error" style="display: none">Required</span>
+                    </div>
+                    
                     <div class="form-group">
                         <div class="styled-select clearfix">
                             <select class="wide" name="kelas">
@@ -105,12 +112,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <input type="email" name="email" id="email" class="form-control required" onkeypress="validateEmail()" autocomplete="off"
-                            placeholder="Email">
-                        <span for="email" class="error" style="display: none">dd</span>
-
-                    </div>
+                   
                 </div>
                 <!-- /step-->
                 <div class="step" data-state="divisi">
@@ -238,7 +240,7 @@
             <!-- /middle-wizard -->
             <div id="bottom-wizard">
                 <button type="button" name="backward" class="backward">Prev</button>
-                <button type="button" name="forward" class="forward" onclick="validateEmail()">Next</button>
+                <button type="button" name="forward" class="forward" onclick="validateEmail();validateEmail();">Next</button>
                 <button type="submit" class="submit" id="submitButton" onclick="checkIfNull()">Submit</button>
             </div>
             <!-- /bottom-wizard -->
@@ -291,6 +293,10 @@
 
 @section('js')
 <script>
+    function validateNim() {
+        $('#nim').valid();    
+    }
+
     function validateEmail() {
         $('#email').valid();    
     }

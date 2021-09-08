@@ -147,7 +147,7 @@ if (isset($_GET['search'])) { ?>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <span class="footer-text text-center">2021 © inimahsumedang</span>
+                    <span class="footer-text text-center">2021 © tahungoding</span>
                 </div>
             </div>
         </div>

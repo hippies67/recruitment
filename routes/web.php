@@ -29,6 +29,8 @@ use App\Mail\RecruitmentMail;
 
 
 Route::resource('/', RecruitmentController::class);
+Route::post('check-nim-recruitment', [RecruitmentController::class, 'checkNim'])->name('checkNimRecruitment');
+Route::post('check-email-recruitment', [RecruitmentController::class, 'checkEmail'])->name('checkEmailRecruitment');
 
 Route::group(['middleware' => ['guest']], function () {
     Route::get('login', [LoginController::class, 'index'])->name('login');
@@ -39,7 +41,6 @@ Route::resource('kirim-email', EmailController::class);
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('login/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::post('check-email-recruitment', [RecruitmentController::class, 'checkEmail'])->name('checkEmailRecruitment');
     Route::resource('recruitment-data', BackRecruitmentController::class);
     Route::post('check-recruitment-year', [BackRecruitmentController::class, 'checkRecruitmentYear'])->name('checkRecruitmentYear');
     Route::resource('recruitment-users', RecruitmentUserController::class);

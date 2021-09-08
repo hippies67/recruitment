@@ -99,6 +99,19 @@ function getVals(formControl, controlType) {
 		$('#wrapped').validate({
 			ignore: [],
 			rules: {
+				nim: {
+					remote: {
+						param: {
+							url: "/check-nim-recruitment",
+							type: "post",
+						},
+						depends: function(element) {
+							// compare name in form to hidden field
+							return ($(element).val() !== $('#checkNim').val());
+						},
+					
+					}
+				},
 				email:{
 					remote: {
 						param: {
@@ -114,6 +127,9 @@ function getVals(formControl, controlType) {
 				}
 			},
 			messages: {
+				nim: {
+					remote: "Nim sudah terdaftar"
+				},
 				email: {
 					remote: "Email sudah terdaftar"
 				},
