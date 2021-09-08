@@ -50,11 +50,6 @@
         </div>
         <!-- /top-wizard -->
 
-        @if($errors->has('email'))
-        <script>
-            alert('errorwoy');
-        </script>
-        @endif
         <form id="wrapped" action="{{ route('store') }}" method="POST">
             @csrf
             <input id="website" name="website" type="text" value="">
@@ -296,6 +291,9 @@
 
 @section('js')
 <script>
+    function validateEmail() {
+        $('#email').valid();    
+    }
     function divisionData(data) {
         $("#divisionModalText").html(data.deskripsi)
     }

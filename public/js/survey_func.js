@@ -95,7 +95,7 @@ function getVals(formControl, controlType) {
 	}
 }
 
-	function validateEmail() {
+	$(document).ready(function() {
 		$('#wrapped').validate({
 			ignore: [],
 			rules: {
@@ -126,4 +126,4 @@ function getVals(formControl, controlType) {
 				}
 			}
 		});			
-	}
+	});	
