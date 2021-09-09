@@ -30,7 +30,7 @@ class RecruitmentController extends Controller
         $data['study_program'] = StudyProgram::all();
         $data['semester'] = Semester::all();
         $data['specialization_division'] = SpecializationDivision::all();
-        $data['districts'] = District::where('name', 'LIKE', 'SUMEDANG%')->get();
+        $data['districts'] = District::where('regency_id', '=', '3211')->get();
         if(count($data['recruitment']) < 1 || empty(getActiveRecruitment()) || count($data['class']) < 1 || count($data['division']) < 1 || count($data['study_program']) < 1 || count($data['semester']) < 1 || count($data['specialization_division']) < 1) {
             return view('front.coming_soon');
         } else {

@@ -87,18 +87,23 @@
                     </div>
 
                     <div class="form-group">
-                            <select class="form-control" id="district-dropdown" style="color:#6c757d !important;" autocomplete="off">
+                        <div class="styled-select clearfix">
+                            <select class="wide required" id="district-dropdown" style="color:#6c757d !important;" autocomplete="off">
                                 <option value="">Pilih Kecamatan</option>
                                 @foreach($districts as $districts1)
                                 <option value="{{ $districts1->id }}" data-name="{{ $districts1->name }}">{{ $districts1->name }}</option>
                                 @endforeach
                             </select>
+                        </div>
                             <input type="hidden" name="kecamatan" id="kecamatanValue">
                     </div>
 
-                    <div class="form-group" >
-                            <select class="form-control" name="desa" id="village-dropdown" style="color: #6c757d;display:none;" autocomplete="off">
+                    <div class="form-group">
+                        <div class="styled-select clearfix">
+                            <select class="wide required" name="desa" id="village-dropdown" style="color: #6c757d; !important;" autocomplete="off">
+                                <option value="">Pilih Desa / Keluraha</option>
                             </select>
+                        </div>
                     </div>
 
 
@@ -329,10 +334,11 @@
                 },
                 dataType : 'json',
                 success: function(result){
-                    $('#village-dropdown').css('display', 'block'); 
-                    $('#village-dropdown').html('<option value="">Pilih Desa</option>'); 
                     $.each(result.villages,function(key,value){
+                        console.log(key);
                         $("#village-dropdown").append('<option value="'+value.name+'">'+value.name+'</option>');
+                        $("#village-dropdown").niceSelect('destroy');
+                        $("#village-dropdown").niceSelect();
                     });
                 }
             });
