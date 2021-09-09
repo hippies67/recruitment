@@ -31,6 +31,7 @@ use App\Mail\RecruitmentMail;
 Route::resource('/', RecruitmentController::class);
 Route::post('check-nim-recruitment', [RecruitmentController::class, 'checkNim'])->name('checkNimRecruitment');
 Route::post('check-email-recruitment', [RecruitmentController::class, 'checkEmail'])->name('checkEmailRecruitment');
+Route::post('get-villages-by-district', [RecruitmentController::class, 'getVillage'])->name('getVillage');
 
 Route::group(['middleware' => ['guest']], function () {
     Route::get('login', [LoginController::class, 'index'])->name('login');

@@ -11,6 +11,8 @@ use App\Models\StudyProgram;
 use App\Models\Semester;
 use App\Models\StudentClass;
 use App\Models\SpecializationDivision;
+use App\Models\District;
+use App\Models\Village;
 
 class RecruitmentController extends Controller
 {
@@ -28,6 +30,7 @@ class RecruitmentController extends Controller
         $data['study_program'] = StudyProgram::all();
         $data['semester'] = Semester::all();
         $data['specialization_division'] = SpecializationDivision::all();
+        $data['districts'] = District::where('name', 'LIKE', 'SUMEDANG%')->get();
         if(count($data['recruitment']) < 1 || empty(getActiveRecruitment()) || count($data['class']) < 1 || count($data['division']) < 1 || count($data['study_program']) < 1 || count($data['semester']) < 1 || count($data['specialization_division']) < 1) {
             return view('front.coming_soon');
         } else {
@@ -65,6 +68,13 @@ class RecruitmentController extends Controller
         }
     }
 
+    public function getVillage(Request $request)
+    {
+        $data['villages'] = Village::where("district_id",$request->district_id)
+                    ->get(["name","id"]);
+        return response()->json($data);
+    }
+
     public function create()
     {
         //
@@ -83,6 +93,7 @@ class RecruitmentController extends Controller
             'nama_lengkap' => $request->nama_lengkap,
             'nim' => $request->nim,
             'email' => $request->email,
+            'alamat' => $request->kecamatan . ', ' . $request->desa,
             'kelas' => $request->kelas,
             'program_studi' => $request->program_studi,
             'semester' => $request->semester,

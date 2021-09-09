@@ -63,18 +63,18 @@
                         <input type="text" name="nama_lengkap" class="form-control required"
                             value="{{ old('nama_lengkap') }}" placeholder="Nama Lengkap">
                     </div>
-                    
+
                     <div class="form-group">
                         <input type="text" name="nim" id="nim" class="form-control" onkeypress="validateNim()"
                             value="{{ old('nim') }}" placeholder="NIM">
                     </div>
 
                     <div class="form-group">
-                        <input type="email" name="email" id="email" class="form-control required" onkeypress="validateEmail()"
-                            placeholder="Email">
+                        <input type="email" name="email" id="email" class="form-control required"
+                            onkeypress="validateEmail()" placeholder="Email">
                         <span for="email" class="error" style="display: none">Required</span>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="styled-select clearfix">
                             <select class="wide" name="kelas">
@@ -85,6 +85,22 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                            <select class="form-control" id="district-dropdown" style="color:#6c757d !important;" autocomplete="off">
+                                <option value="">Pilih Kecamatan</option>
+                                @foreach($districts as $districts1)
+                                <option value="{{ $districts1->id }}" data-name="{{ $districts1->name }}">{{ $districts1->name }}</option>
+                                @endforeach
+                            </select>
+                            <input type="hidden" name="kecamatan" id="kecamatanValue">
+                    </div>
+
+                    <div class="form-group" >
+                            <select class="form-control" name="desa" id="village-dropdown" style="color: #6c757d;display:none;" autocomplete="off">
+                            </select>
+                    </div>
+
 
                     <div class="form-group">
                         <div class="styled-select clearfix">
@@ -112,7 +128,7 @@
                         </div>
                     </div>
 
-                   
+
                 </div>
                 <!-- /step-->
                 <div class="step" data-state="divisi">
@@ -131,7 +147,8 @@
                             </div>
                         </div>
                         <div class="col-6">
-                            <button type="button" class="btn btn-sm btn-light" data-toggle="modal" onclick="divisionData({{$divisions}})" data-target="#divisionModal"><i
+                            <button type="button" class="btn btn-sm btn-light" data-toggle="modal"
+                                onclick="divisionData({{$divisions}})" data-target="#divisionModal"><i
                                     class="icon-info-1"></i></button>
                         </div>
                     </div>
@@ -155,8 +172,9 @@
                                 </div>
                             </div>
                             <div class="col-6">
-                                <button type="button" class="btn btn-sm btn-light" data-toggle="modal" onclick="specializationData({{$spesialisasi}})" data-target="#specializationModal"><i
-                                        class="icon-info-1"></i></button>
+                                <button type="button" class="btn btn-sm btn-light" data-toggle="modal"
+                                    onclick="specializationData({{$spesialisasi}})"
+                                    data-target="#specializationModal"><i class="icon-info-1"></i></button>
                             </div>
                         </div>
                         @endforeach
@@ -240,7 +258,8 @@
             <!-- /middle-wizard -->
             <div id="bottom-wizard">
                 <button type="button" name="backward" class="backward">Prev</button>
-                <button type="button" name="forward" class="forward" onclick="validateEmail();validateEmail();">Next</button>
+                <button type="button" name="forward" class="forward"
+                    onclick="validateEmail();validateEmail();">Next</button>
                 <button type="submit" class="submit" id="submitButton" onclick="checkIfNull()">Submit</button>
             </div>
             <!-- /bottom-wizard -->
@@ -251,47 +270,76 @@
 
 <div class="modal fade" id="divisionModal" tabindex="-1" aria-labelledby="divisionModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="divisionModalLabel">Detail</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="divisionModalLabel">Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
                 <p id="divisionModalText"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Kembali</button>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Kembali</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
 <!-- Modal Specialization -->
-<div class="modal fade" id="specializationModal" tabindex="-1" aria-labelledby="specializationModalLabel" aria-hidden="true">
+<div class="modal fade" id="specializationModal" tabindex="-1" aria-labelledby="specializationModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="specializationModalLabel">Detail</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="specializationModalLabel">Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
                 <p id="specializationModalText"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Kembali</button>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Kembali</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
 @endif
 @endsection
 
 @section('js')
+<script>
+    $(document).ready(function() {
+        $('#district-dropdown').on('change', function() {
+            var district_id = this.value;
+            var element = $(this).find('option:selected'); 
+            var kecamatanValue = element.attr("data-name"); 
+            $('#kecamatanValue').val(kecamatanValue); 
+            $("#village-dropdown").html('');
+            $.ajax({
+                url:"{{url('get-villages-by-district')}}",
+                type: "POST",
+                data: {
+                    district_id: district_id,
+                    _token: '{{csrf_token()}}' 
+                },
+                dataType : 'json',
+                success: function(result){
+                    $('#village-dropdown').css('display', 'block'); 
+                    $('#village-dropdown').html('<option value="">Pilih Desa</option>'); 
+                    $.each(result.villages,function(key,value){
+                        $("#village-dropdown").append('<option value="'+value.name+'">'+value.name+'</option>');
+                    });
+                }
+            });
+        }); 
+    });
+</script>
+
 <script>
     function validateNim() {
         $('#nim').valid();    
@@ -368,4 +416,5 @@
         // });
         
 </script>
+
 @endsection

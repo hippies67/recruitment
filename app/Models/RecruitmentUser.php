@@ -9,7 +9,7 @@ class RecruitmentUser extends Model
 {
     protected $table = "recruitment_users";
     protected $fillable = [
-        'recruitment', 'nama_lengkap', 'nim', 'kelas', 'program_studi', 'semester', 'email', 'divisi', 'spesialisasi_divisi', 'pengetahuan_divisi', 'pengalaman_divisi', 'pengalaman_organisasi', 'minat_menjadi_pengurus', 'status', 'email_sent'
+        'recruitment', 'nama_lengkap', 'nim', 'kelas', 'alamat','program_studi', 'semester', 'email', 'divisi', 'spesialisasi_divisi', 'pengetahuan_divisi', 'pengalaman_divisi', 'pengalaman_organisasi', 'minat_menjadi_pengurus', 'status', 'email_sent'
     ];
 
     public function classes()

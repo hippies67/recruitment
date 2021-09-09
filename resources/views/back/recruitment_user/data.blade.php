@@ -70,6 +70,7 @@ Recruitment
                                     <th>Nama</th>
                                     <th>NIM</th>
                                     <th>Email</th>
+                                    <th>Alamat</th>
                                     <th>Kelas</th>
                                     <th>Prodi</th>
                                     <th>Semester</th>
@@ -92,6 +93,7 @@ Recruitment
                                             data-placement="top" data-original-title="Terkirim"
                                             style="font-weight: bold; display:inline;"></i>
                                         @endif</td>
+                                    <td>{{ $recruitments->alamat }}</td>
                                     <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
                                     <td>{{ $recruitments->study_programs->nama }}</td>
                                     <td>{{ $recruitments->semester }}</td>
@@ -170,6 +172,7 @@ Recruitment
                                     <th>Nama</th>
                                     <th>NIM</th>
                                     <th>Email</th>
+                                    <th>Alamat</th>
                                     <th>Kelas</th>
                                     <th>Prodi</th>
                                     <th>Semester</th>
@@ -192,6 +195,7 @@ Recruitment
                                             data-placement="top" data-original-title="Terkirim"
                                             style="font-weight: bold; display:inline;"></i>
                                         @endif</td>
+                                    <td>{{ $recruitments->alamat }}</td>
                                     <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
                                     <td>{{ $recruitments->study_programs->nama }}</td>
                                     <td>{{ $recruitments->semester }}</td>
@@ -249,6 +253,7 @@ Recruitment
                                     <th>Nama</th>
                                     <th>NIM</th>
                                     <th>Email</th>
+                                    <th>Alamat</th>
                                     <th>Kelas</th>
                                     <th>Prodi</th>
                                     <th>Semester</th>
@@ -271,6 +276,7 @@ Recruitment
                                             data-placement="top" data-original-title="Terkirim"
                                             style="font-weight: bold; display:inline;"></i>
                                         @endif</td>
+                                    <td>{{ $recruitments->alamat }}</td>
                                     <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
                                     <td>{{ $recruitments->study_programs->nama }}</td>
                                     <td>{{ $recruitments->semester }}</td>
@@ -338,6 +344,7 @@ Recruitment
                                     <th>Nama</th>
                                     <th>NIM</th>
                                     <th>Email</th>
+                                    <th>Alamat</th>
                                     <th>Kelas</th>
                                     <th>Prodi</th>
                                     <th>Semester</th>
@@ -360,6 +367,7 @@ Recruitment
                                             data-placement="top" data-original-title="Terkirim"
                                             style="font-weight: bold; display:inline;"></i>
                                         @endif</td>
+                                    <td>{{ $recruitments->alamat }}</td>
                                     <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
                                     <td>{{ $recruitments->study_programs->nama }}</td>
                                     <td>{{ $recruitments->semester }}</td>
