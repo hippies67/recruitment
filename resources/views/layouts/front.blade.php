@@ -41,9 +41,7 @@
 
 	<nav>
 		<ul class="cd-primary-nav">
-			<li><a href="#" class="animated_link">Home</a></li>
-			<li><a href="qa" class="animated_link">Q & A</a></li>
-			<li><a href="contact" class="animated_link">Contact</a></li>
+			<li><a href="/" class="animated_link">Home</a></li>
 		</ul>
 	</nav>
 	<!-- /menu -->

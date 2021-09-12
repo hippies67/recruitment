@@ -113,6 +113,7 @@ function getVals(formControl, controlType) {
 					}
 				},
 				email:{
+					email: true,
 					remote: {
 						param: {
 							url: "/check-email-recruitment",
@@ -131,15 +132,14 @@ function getVals(formControl, controlType) {
 					remote: "Nim sudah terdaftar"
 				},
 				email: {
+					email: "Email yang di isikan harus valid",
 					remote: "Email sudah terdaftar"
-				},
+				}
 			},
 			errorPlacement: function (error, element) {
-				if (element.is('select:hidden')) {
-					error.insertAfter(element.next('.nice-select'));
-				} else {
+				
 					error.insertAfter(element);
-				}
+				
 			}
 		});			
 	});	

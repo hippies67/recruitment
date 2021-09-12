@@ -72,7 +72,6 @@
                     <div class="form-group">
                         <input type="email" name="email" id="email" class="form-control required"
                             onkeypress="validateEmail()" placeholder="Email">
-                        <span for="email" class="error" style="display: none">Required</span>
                     </div>
 
                     <div class="form-group">
@@ -88,19 +87,22 @@
 
                     <div class="form-group">
                         <div class="styled-select clearfix">
-                            <select class="wide required" id="district-dropdown" style="color:#6c757d !important;" autocomplete="off">
+                            <select class="wide required" id="district-dropdown" style="color:#6c757d !important;"
+                                autocomplete="off">
                                 <option value="">Pilih Kecamatan</option>
                                 @foreach($districts as $districts1)
-                                <option value="{{ $districts1->id }}" data-name="{{ $districts1->name }}">{{ $districts1->name }}</option>
+                                <option value="{{ $districts1->id }}" data-name="{{ $districts1->name }}">
+                                    {{ $districts1->name }}</option>
                                 @endforeach
                             </select>
                         </div>
-                            <input type="hidden" name="kecamatan" id="kecamatanValue">
+                        <input type="hidden" name="kecamatan" id="kecamatanValue">
                     </div>
 
                     <div class="form-group">
                         <div class="styled-select clearfix">
-                            <select class="wide required" name="desa" id="village-dropdown" style="color: #6c757d; !important;" autocomplete="off">
+                            <select class="wide required" name="desa" id="village-dropdown"
+                                style="color: #6c757d; !important;" autocomplete="off">
                                 <option value="">Pilih Desa / Keluraha</option>
                             </select>
                         </div>
@@ -262,10 +264,10 @@
             </div>
             <!-- /middle-wizard -->
             <div id="bottom-wizard">
-                <button type="button" name="backward" class="backward">Prev</button>
-                <button type="button" name="forward" class="forward"
-                    onclick="validateEmail();validateEmail();">Next</button>
-                <button type="submit" class="submit" id="submitButton" onclick="checkIfNull()">Submit</button>
+                <button type="button" name="backward" class="backward" onclick="show()">Prev</button>
+                <button type="button" name="forward" class="forward" onclick="submitValidate()">Next</button>
+                <button type="submit" class="submit" id="submitButton"
+                    onclick="checkIfNull();submitValidate();">Submit</button>
             </div>
             <!-- /bottom-wizard -->
         </form>
@@ -317,6 +319,8 @@
 @endsection
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+
 <script>
     $(document).ready(function() {
         $('#district-dropdown').on('change', function() {
@@ -347,6 +351,32 @@
 </script>
 
 <script>
+    function show() {
+        // untuk membuat input tidak hidden 
+        $("#nim").css('display', 'block');
+        $("#email").css('display', 'block');
+    }
+</script>
+
+<script>
+    function submitValidate() {
+        // validate nim 
+        if(!$('#nim').valid() && $('input[name=organization_1]:checked').val() && $('input[name=minat_menjadi_pengurus]:checked').val() && $('input[name=terms]:checked').val()) {
+            Swal.fire({
+            icon: 'info',
+            title: 'Error',
+            text: 'Nim yang anda masukan sudah tersedia'
+            })
+        }    
+        // validate email
+        if(!$('#email').valid() && $('input[name=organization_1]:checked').val() && $('input[name=minat_menjadi_pengurus]:checked').val() && $('input[name=terms]:checked').val()) {
+            Swal.fire({
+            icon: 'info',
+            title: 'Error',
+            text: 'Email yang anda masukan sudah tersedia'
+            })
+        }    
+    }
     function validateNim() {
         $('#nim').valid();    
     }
