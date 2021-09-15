@@ -6,6 +6,8 @@ User Manajement
 @section('css')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.9/css/fixedHeader.bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <style>
     label.error {
@@ -49,9 +51,10 @@ User Manajement
                     <button data-toggle="modal" data-target="#tambahModal" class="btn btn-sm btn-dark">Tambah</button>
                 </div>
                 <h5 class="header-title pb-2">Data Akun Anda</h5>
-                <table class="table table-striped table-bordered">
+                <table id="user_loggedin"class="table table-striped table-bordered">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Nama</th>
                             <th>Username</th>
                             <th>Email</th>
@@ -61,8 +64,10 @@ User Manajement
                     <tbody>
                         @php
                             $auth = Auth::user();
+                            $increments = 1;
                         @endphp
                         <tr>
+                            <td>{{ $increments++ }}</td>
                             <td>{{ $auth->name }}</td>
                             <td>{{ $auth->username }}</td>
                             <td>{{ $auth->email }}</td>
@@ -77,11 +82,14 @@ User Manajement
                         </tr>
                     </tbody>
                 </table>
-                
+                @php
+                    $increments = 1;
+                @endphp
                 <h5 class="header-title pb-2 pt-4">Data User</h5>
                 <table id="user_table" class="table table-striped table-bordered">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Nama</th>
                             <th>Username</th>
                             <th>Email</th>
@@ -91,6 +99,7 @@ User Manajement
                     <tbody>
                         @foreach($user as $users)
                         <tr>
+                            <td>{{ $increments++ }}</td>
                             <td>{{ $users->name }}</td>
                             <td>{{ $users->username }}</td>
                             <td>{{ $users->email }}</td>
@@ -227,14 +236,29 @@ User Manajement
 @section('js')
 <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.9/js/dataTables.fixedHeader.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap.min.js"></script>
 
 {{-- Jquery Validation --}}
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 
 <script>
     $(document).ready(function() {
-            $('#user_table').DataTable();
+        $('#user_loggedin').DataTable({
+            responsive: true,
+            "paging": false,
+            "searching": false,
+            "ordering": false,
+            "info":     false
         });
+    });
+
+    $(document).ready(function() {
+        $('#user_table').DataTable({
+            responsive: true
+        });
+    });
 
 </script>
 

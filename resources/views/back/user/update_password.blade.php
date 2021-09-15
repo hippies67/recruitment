@@ -38,26 +38,6 @@ Ubah Password
                                 </p>
                 
                                 <div class="form-group">
-                                    <label for="passwordLama">Password Lama<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="password" name="password_lama" parsley-trigger="change"
-                                            placeholder="Masukkan Password Lama"
-                                            class="form-control @error('password_lama') is-invalid @enderror" id="password_lama"
-                                            value="{{ old('password_lama') }}">
-                                        <div class="input-group-append">
-                                            <button
-                                                class="btn btn-secondary fas fa-eye @error('password_lama') btn-danger @enderror toggle-password-lama"
-                                                type="button"></button>
-                                        </div>
-                                    </div>
-                                    @error('password_lama')
-                                    <div class="mt-1">
-                                        <span class="text-danger">{{ $message }}</span>
-                                    </div>
-                                    @enderror
-                                </div>
-                
-                                <div class="form-group">
                                     <label for="passwordBaru">Password Baru<span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="password" name="password_baru" parsley-trigger="change"

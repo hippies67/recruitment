@@ -6,6 +6,8 @@ Class
 @section('css')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.9/css/fixedHeader.bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <style>
     label.error {
@@ -51,13 +53,18 @@ Class
                 <table id="class_table" class="table table-striped table-bordered">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Nama</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $increments = 1;
+                        @endphp
                         @foreach($student_class as $student_classes)
                         <tr>
+                            <td>{{ $increments++ }}</td>
                             <td>{{ $student_classes->nama }}</td>
                             <td>
                                 <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal"
@@ -164,14 +171,19 @@ Class
 @section('js')
 <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.9/js/dataTables.fixedHeader.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap.min.js"></script>
 
 {{-- Jquery Validation --}}
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 
 <script>
     $(document).ready(function() {
-            $('#class_table').DataTable();
+        $('#class_table').DataTable({
+            responsive: true
         });
+    });
 </script>
 
 {{-- Division --}}

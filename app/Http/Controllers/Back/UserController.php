@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Rules\MatchOldPassword;
 use App\Models\User;
 use Alert;
 use Hash;
@@ -138,13 +137,10 @@ class UserController extends Controller
     {
         
             $this->validate($request, [
-           
-                'password_lama' => ['required', new MatchOldPassword],
                 'password_baru' => 'required',
                 'konfirmasi_password_baru' => 'same:password_baru',
             ],
             [
-                'password_lama.required' => 'Password Lama harus di isi.',
                 'password_baru.required' => 'Password Baru harus di isi.',
                 'konfirmasi_password_baru.same' => 'Konfirmasi Password Baru tidak sama.',
             ]);
@@ -157,7 +153,7 @@ class UserController extends Controller
         ? Alert::success('Berhasil', "Password telah berhasil diubah!")
         : Alert::error('Error', "Password gagal diubah!");
 
-        return redirect()->back();
+        return redirect()->route('user-managements.index');
     }
 
     public function update(Request $request, $id)

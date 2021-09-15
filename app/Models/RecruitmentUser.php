@@ -22,6 +22,11 @@ class RecruitmentUser extends Model
         return $this->belongsTo(StudyProgram::class, 'program_studi');
     }
 
+    public function specialization_divisions()
+    {
+        return $this->belongsTo(SpecializationDivision::class, 'spesialisasi_divisi');
+    }
+
     public function divisions()
     {
         return $this->belongsTo(Division::class, 'divisi');

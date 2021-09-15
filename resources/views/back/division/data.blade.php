@@ -6,6 +6,8 @@ Division
 @section('css')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.9/css/fixedHeader.bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <style>
     label.error {
@@ -63,17 +65,22 @@ Division
                             <button data-toggle="modal" data-target="#tambahModal"
                                 class="btn btn-sm btn-dark">Tambah</button>
                         </div>
-                        <table id="division_table" class="table table-striped table-bordered">
+                        <table id="division_table" class="table table-striped table-bordered" style="width: 100%">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Nama</th>
                                     <th>Deskripsi</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $increment_division = 1;
+                                @endphp
                                 @foreach($division as $divisions)
                                 <tr>
+                                    <td>{{ $increment_division++ }}</td>
                                     <td>{{ $divisions->nama }}</td>
                                     <td>{{ $divisions->deskripsi }}</td>
                                     <td>
@@ -101,9 +108,10 @@ Division
                                 class="btn btn-sm btn-dark">Tambah</button>
                         </div>
                         @endif
-                        <table id="specialization_division_table" class="table table-striped table-bordered">
+                        <table id="specialization_division_table" class="table table-striped table-bordered" style="width: 100%">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Divisi</th>
                                     <th>Nama Spesialisasi</th>
                                     <th>Deskripsi</th>
@@ -111,8 +119,12 @@ Division
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $increment_specialization_division = 1;
+                                @endphp
                                 @foreach($specialization_division as $specialization_divisions)
                                 <tr>
+                                    <td>{{ $increment_specialization_division++ }}</td>
                                     <td>{{ $specialization_divisions->divisions->nama }}</td>
                                     <td>{{ $specialization_divisions->nama }}</td>
                                     <td>{{ $specialization_divisions->deskripsi }}</td>
@@ -345,17 +357,24 @@ Division
 @section('js')
 <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.0/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.9/js/dataTables.fixedHeader.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap.min.js"></script>
 
 {{-- Jquery Validation --}}
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 
 <script>
-    $(document).ready(function() {
-    $('#division_table').DataTable();
+$(document).ready(function() {
+    $('#division_table').DataTable({
+        responsive: true
+    });
 });
 
 $(document).ready(function() {
-    $('#specialization_division_table').DataTable();
+    $('#specialization_division_table').DataTable({
+        responsive: true
+    });
 });
 
 $(document).ready(function(){
@@ -366,6 +385,12 @@ $(document).ready(function(){
     if(activeTab){
         $('#myTab a[href="' + activeTab + '"]').tab('show');
     }
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+        $($.fn.dataTable.tables(true)).DataTable()
+           .columns.adjust()
+           .responsive.recalc();
+        }); 
 });
 
 </script>
