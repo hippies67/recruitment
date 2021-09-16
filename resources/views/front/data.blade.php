@@ -223,7 +223,7 @@
                                     </label>
                                 </div>
                                 <textarea name="pengalaman_organisasi" class="form-control" id="hiddenTextArea"
-                                    style="height:100px;display:none;" onkeyup="checkIfNull()"></textarea>
+                                    style="height:100px;display:none;" onkeyup="checkIfNull()" placeholder="Ceritakan pengalaman mu"></textarea>
                                 <span class="text-danger pt-2" id="errorElement" style="display: none;">Mohon di isi
                                     kolom ini</span>
                                 <br><br>
