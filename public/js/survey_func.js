@@ -4,8 +4,8 @@ jQuery(function ($) {
 	$("#wizard_container").wizard({
 		stepsWrapper: "#wrapped",
 		submit: ".submit",
-        transitions: {
-            divisi: function( $step, action ) {
+		transitions: {
+			divisi: function ($step, action) {
 				var divisi = $step.find("[name=divisi]:checked").val();
 
 				if (!divisi) {
@@ -14,7 +14,7 @@ jQuery(function ($) {
 
 				return divisi;
 			}
-        },
+		},
 		beforeSelect: function (event, state) {
 			if ($('input#website').val().length != 0) {
 				return false;
@@ -33,9 +33,9 @@ jQuery(function ($) {
 				error.insertAfter(element);
 			}
 
-			if(!$('input[name=spesialisasi_divisi]:checked').val())  {
-				
-			} 
+			if (!$('input[name=spesialisasi_divisi]:checked').val()) {
+
+			}
 		}
 	});
 	//  progress bar
@@ -53,7 +53,7 @@ jQuery(function ($) {
 		}
 	});
 
-	
+
 });
 
 // Summary 
@@ -95,51 +95,56 @@ function getVals(formControl, controlType) {
 	}
 }
 
-	$(document).ready(function() {
-		$('#wrapped').validate({
-			ignore: [],
-			rules: {
-				nim: {
-					remote: {
-						param: {
-							url: "/check-nim-recruitment",
-							type: "post",
-						},
-						depends: function(element) {
-							// compare name in form to hidden field
-							return ($(element).val() !== $('#checkNim').val());
-						},
-					
-					}
-				},
-				email:{
-					email: true,
-					remote: {
-						param: {
-							url: "/check-email-recruitment",
-							type: "post",
-						},
-						depends: function(element) {
-							// compare name in form to hidden field
-							return ($(element).val() !== $('#checkEmail').val());
-						},
-					
-					}
+$(document).ready(function () {
+	$('#wrapped').validate({
+		ignore: [],
+		rules: {
+			select: {
+				required: true
+			},
+			nim: {
+				remote: {
+					param: {
+						url: "/check-nim-recruitment",
+						type: "post",
+					},
+					depends: function (element) {
+						// compare name in form to hidden field
+						return ($(element).val() !== $('#checkNim').val());
+					},
+
 				}
 			},
-			messages: {
-				nim: {
-					remote: "Nim sudah terdaftar"
-				},
-				email: {
-					email: "Email yang di isikan harus valid",
-					remote: "Email sudah terdaftar"
+			email: {
+				email: true,
+				remote: {
+					param: {
+						url: "/check-email-recruitment",
+						type: "post",
+					},
+					depends: function (element) {
+						// compare name in form to hidden field
+						return ($(element).val() !== $('#checkEmail').val());
+					},
+
 				}
-			},
-			errorPlacement: function (error, element) {
-				
-					error.insertAfter(element);
-				
 			}
-		});			
-	});	
+		},
+		messages: {
+			nim: {
+				remote: "Nim sudah terdaftar"
+			},
+			email: {
+				email: "Email yang di isikan harus valid",
+				remote: "Email sudah terdaftar"
+			}
+		},
+		errorPlacement: function (error, element) {
+			if (element.is('select:hidden')) {
+				error.insertAfter(element.next('.nice-select'));
+			} else {
+				error.insertAfter(element);
+			}
+		}
+	});
+});

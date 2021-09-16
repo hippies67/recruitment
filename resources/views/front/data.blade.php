@@ -87,7 +87,7 @@
 
                     <div class="form-group">
                         <div class="styled-select clearfix">
-                            <select class="wide required" id="district-dropdown" style="color:#6c757d !important;"
+                            <select class="wide required" id="district-dropdown" onchange="validateAlamat()" style="color:#6c757d !important;"
                                 autocomplete="off">
                                 <option value="">Pilih Kecamatan</option>
                                 @foreach($districts as $districts1)
@@ -325,6 +325,7 @@
     $(document).ready(function() {
         $('#district-dropdown').on('change', function() {
             var district_id = this.value;
+            console.log(district_id);
             var element = $(this).find('option:selected'); 
             var kecamatanValue = element.attr("data-name"); 
             $('#kecamatanValue').val(kecamatanValue); 
@@ -378,6 +379,10 @@
         }    
     }
     
+    function validateAlamat() {
+        $('#district-dropdown').valid();    
+    }
+
     function validateNim() {
         $('#nim').valid();    
     }
@@ -385,6 +390,7 @@
     function validateEmail() {
         $('#email').valid();    
     }
+    
     function divisionData(data) {
         $("#divisionModalText").html(data.deskripsi)
     }
