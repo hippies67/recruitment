@@ -111,7 +111,7 @@
 
                     <div class="form-group">
                         <div class="styled-select clearfix">
-                            <select class="wide required" name="program_studi" onchange="validateProdi()">
+                            <select class="wide required" name="program_studi" id="program_studi" onchange="validateProdi()">
                                 <option value="">Pilih Program Studi</option>
                                 @foreach($study_program as $study_programs)
                                 <option value="{{ $study_programs->id }}"
@@ -124,7 +124,7 @@
 
                     <div class="form-group">
                         <div class="styled-select clearfix">
-                            <select class="wide required" name="semester" onchange="validateSemester()">
+                            <select class="wide required" name="semester" id="semester" onchange="validateSemester()">
                                 <option value="">Pilih Semester</option>
                                 @foreach($semester as $semesters)
                                 <option value="{{ $semesters->id }}"
