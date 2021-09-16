@@ -252,7 +252,7 @@
                     </div>
                     <div class="form-group terms">
                         <label class="container_check">Dengan mengisi form tersebut kamu telah bersedia menjadi bagian
-                            dari tahungoding dan menaati <a href="">peraturan</a> yang berlaku, dan kamu juga telah siap
+                            dari tahungoding dan menaati <a href="https://s.id/adarttahungoding2020" target="_blank">peraturan</a> yang berlaku, dan kamu juga telah siap
                             untuk mengikuti semua rangkaian kegiatan yang telah disiapkan oleh pengurus.
                             <input type="checkbox" name="terms" value="Yes" class="required">
                             <span class="checkmark"></span>
@@ -377,6 +377,7 @@
             })
         }    
     }
+    
     function validateNim() {
         $('#nim').valid();    
     }
