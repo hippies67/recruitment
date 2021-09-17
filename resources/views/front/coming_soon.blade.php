@@ -5,14 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Responsive Admin Dashboard Template">
-    <meta name="keywords" content="admin,dashboard">
-    <meta name="author" content="stacks">
+    <meta name="description" content="Recruitment Closed">
+    <meta name="author" content="Tahungoding">
     <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
     <title>Recruitment | Tahungoding</title>
-	<link rel="shortcut icon" href="{{ asset('assets/back/images/tahu.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('assets/back/images/tahu.png') }}" type="image/x-icon">
 
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900&display=swap"
@@ -50,9 +49,9 @@
     <div class="container">
         <div class="error-container">
             <div class="error-info">
-                <h1 style="color: #ffffff !important;">Maintenance</h1>
-                <p style="color: #ffffff !important;">Website sedang dalam perbaikan.<br>Mohon maaf atas ketidaknyamanan
-                    nya.</p>
+                <h1 style="color: #ffffff !important;">Recruitment</h1>
+                <h1 style="color: #ffffff !important;">Closed</h1>
+                <p style="color: #ffffff !important;">Open member tahungoding 2021 telah ditutup <br>terima kasih kami ucapkan kepada kalian yang <br>telah antusias untuk mendaftar.</p>
             </div>
             <div class="error-image"></div>
         </div>
