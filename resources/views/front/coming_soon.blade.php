@@ -23,6 +23,8 @@
     <!-- Theme Styles -->
     <link href="{{ asset('assets/back/css/lime.min.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/back/css/custom.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -52,6 +54,12 @@
                 <h1 style="color: #ffffff !important;">Recruitment</h1>
                 <h1 style="color: #ffffff !important;">Closed</h1>
                 <p style="color: #ffffff !important;">Open member tahungoding 2021 telah ditutup <br>terima kasih kami ucapkan kepada kalian yang <br>telah antusias untuk mendaftar.</p>
+                <p style="color: #ffffff !important;">Untuk mengetahui informasi lainnya terkait <br>tahungoding follow akun sosial media kita di :</p>
+                <div class="row">
+                    <div class="col">
+                        <a href="https://instagram.com/tahungoding" class="text-white" style="font-size: 14px;"><i class="fab fa-instagram"></i>  <span style="margin-left: 3px;"">tahungoding</span></a>
+                    </div>
+                </div>
             </div>
             <div class="error-image"></div>
         </div>
