@@ -86,6 +86,7 @@ Recruitment
                                     <th>NIM</th>
                                     <th>Email</th>
                                     <th>Terkirim</th>
+                                    <th>Tahap</th>
                                     <th>Alamat</th>
                                     <th>Kelas</th>
                                     <th>Prodi</th>
@@ -121,10 +122,11 @@ Recruitment
                                             data-placement="top" data-original-title="Tahap Pertama"
                                             style="font-weight: bold; display:inline;"></i>
                                         <i class="far fa-check-square text-success" data-toggle="tooltip"
-                                            data-placement="top" data-original-title="Tahap Terakhir"
+                                            data-placement="top" data-original-title="Tahap Kedua"
                                             style="font-weight: bold; display:inline;"></i>
                                         @endif
                                     </td>
+                                    <td><span class="badge badge-secondary">{{ $recruitments->stage }}</span></td>
                                     <td>{{ $recruitments->alamat }}</td>
                                     <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
                                     <td>{{ $recruitments->study_programs->nama }}</td>
