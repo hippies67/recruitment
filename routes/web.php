@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('recruitment-data', BackRecruitmentController::class);
     Route::post('check-recruitment-year', [BackRecruitmentController::class, 'checkRecruitmentYear'])->name('checkRecruitmentYear');
     Route::resource('recruitment-users', RecruitmentUserController::class);
+    Route::get('recruitment-user/send-lolos-email-no-stage-update/{recruitmentUser}', [RecruitmentUserController::class, 'send_lolos_email_no_stage_update'])->name('recruitment-users.send_lolos_email_no_stage_update');
     Route::get('recruitment-user/send-lolos-email/{recruitmentUser}', [RecruitmentUserController::class, 'send_lolos_email'])->name('recruitment-users.send_lolos_email');
     Route::get('recruitment-user/send-tidak-lolos-email/{recruitmentUser}', [RecruitmentUserController::class, 'send_tidak_lolos_email'])->name('recruitment-users.send_tidak_lolos_email');
     Route::put('recruitment-user/stage/{recruitmentUser}', [RecruitmentUserController::class, 'stage'])->name('recruitment-users.stage');

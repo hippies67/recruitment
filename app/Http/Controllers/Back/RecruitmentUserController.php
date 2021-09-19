@@ -111,6 +111,22 @@ class RecruitmentUserController extends Controller
         return redirect()->back();
     }
 
+    public function send_lolos_email_no_stage_update($id)
+    {
+        $recruitment_user = RecruitmentUser::findOrFail($id);
+        $recruitment_user->update(['email_sent' => 1]);
+
+        Mail::to($recruitment_user->email)->send(new LolosRecruitmentMail($recruitment_user));
+
+        if(count(Mail::failures()) > 0) {
+            Alert::error('Error', "Email gagal dikirim!");
+        } else {
+            Alert::success('Berhasil', "Email telah berhasil dikirim.");
+        }
+
+        return redirect()->back();
+    }
+
     public function send_lolos_email($id)
     {
         $recruitment_user = RecruitmentUser::findOrFail($id);

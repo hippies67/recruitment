@@ -157,19 +157,21 @@ Recruitment
                                     <td>
                                         <div class="form-group">
                                             @if($recruitments->stage == '1')
-                                            @if($recruitments->status == 'lolos')
+                                            @if($recruitments->email_sent == '0')
+                                                @if($recruitments->status == 'lolos')
 
-                                            @else
-                                            <button class="btn btn-sm btn-dark" data-toggle="modal"
-                                                data-target="#pelolosanModal"
-                                                onclick="lolosData({{ $recruitments }})">Lolos</button>
-                                            @endif
-                                            @if($recruitments->status == 'tidak_lolos')
+                                                @else
+                                                <button class="btn btn-sm btn-dark" data-toggle="modal"
+                                                    data-target="#pelolosanModal"
+                                                    onclick="lolosData({{ $recruitments }})">Lolos</button>
+                                                @endif
+                                                @if($recruitments->status == 'tidak_lolos')
 
-                                            @else
-                                            <button class="btn btn-sm btn-warning" data-toggle="modal"
-                                                data-target="#pelolosanModal"
-                                                onclick="tidakLolosData({{ $recruitments }})">Tidak Lolos</button>
+                                                @else
+                                                <button class="btn btn-sm btn-warning" data-toggle="modal"
+                                                    data-target="#pelolosanModal"
+                                                    onclick="tidakLolosData({{ $recruitments }})">Tidak Lolos</button>
+                                                @endif
                                             @endif
                                             <button class="btn btn-sm btn-danger" data-toggle="modal"
                                                 data-target="#confirmDeleteModal"
@@ -179,7 +181,7 @@ Recruitment
                                             @if($recruitments->email_sent == '0')
                                             @if($recruitments->status == 'lolos')
                                             <button class="btn btn-sm btn-info"
-                                                data-url="{{ route('recruitment-users.send_lolos_email', $recruitments->id) }}"
+                                                data-url="{{ route('recruitment-users.send_lolos_email_no_stage_update', $recruitments->id) }}"
                                                 data-toggle="modal" data-target="#emailModal"
                                                 onclick="lolosEmailData(this, {{$recruitments}})">Kirim
                                                 Email</button>
@@ -198,26 +200,28 @@ Recruitment
                                                 Email</button>
                                             @endif
                                             @endif
-                                            @if($recruitments->status == 'lolos')
+                                            @if($recruitments->status == 'lolos' && $recruitments->email_sent == '1')
                                             <button class="btn btn-sm btn-dark" data-toggle="modal"
                                                 data-target="#stageModal" onclick="stageData({{ $recruitments }})">Tahap
                                                 Kedua</button>
                                             @endif
                                             @endif
                                             @if($recruitments->stage == '2')
-                                            @if($recruitments->status == 'terima')
+                                            @if($recruitments->email_sent == '1')
+                                                @if($recruitments->status == 'terima')
 
-                                            @else
-                                            <button class="btn btn-sm btn-dark" data-toggle="modal"
-                                                data-target="#penerimaanModal"
-                                                onclick="terimaData({{ $recruitments }})">Terima</button>
-                                            @endif
-                                            @if($recruitments->status == 'tolak')
+                                                @else
+                                                <button class="btn btn-sm btn-dark" data-toggle="modal"
+                                                    data-target="#penerimaanModal"
+                                                    onclick="terimaData({{ $recruitments }})">Terima</button>
+                                                @endif
+                                                @if($recruitments->status == 'tolak')
 
-                                            @else
-                                            <button class="btn btn-sm btn-warning" data-toggle="modal"
-                                                data-target="#penerimaanModal"
-                                                onclick="tolakData({{ $recruitments }})">Tolak</button>
+                                                @else
+                                                <button class="btn btn-sm btn-warning" data-toggle="modal"
+                                                    data-target="#penerimaanModal"
+                                                    onclick="tolakData({{ $recruitments }})">Tolak</button>
+                                                @endif
                                             @endif
                                             <button class="btn btn-sm btn-danger" data-toggle="modal"
                                                 data-target="#confirmDeleteModal"
