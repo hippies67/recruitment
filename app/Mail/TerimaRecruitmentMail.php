@@ -7,9 +7,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AcceptedRecruitmentMail extends Mailable
+class TerimaRecruitmentMail extends Mailable
 {
-    public $recruitment_user; 
+    public $recruitment_user;
 
     use Queueable, SerializesModels;
 
@@ -30,6 +30,6 @@ class AcceptedRecruitmentMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Open Member TAHUNGODING')->markdown('back.email.accepted_email')->with('recruitment_user', $this->recruitment_user);
+        return $this->subject('Open Recruitment TAHUNGODING')->markdown('back.email.terima_email')->with('recruitment_user', $this->recruitment_user);
     }
 }

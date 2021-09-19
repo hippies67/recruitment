@@ -103,7 +103,8 @@ class RecruitmentController extends Controller
             'pengalaman_divisi' => $request->pengalaman_divisi,
             'pengalaman_organisasi' => $request->pengalaman_organisasi,
             'minat_menjadi_pengurus' => $request->minat_menjadi_pengurus,
-            'status' => 'proses'
+            'status' => 'proses',
+            'stage' => '1'
         ];
 
         RecruitmentUser::create($data);

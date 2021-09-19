@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Back;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RecruitmentUser;
-use App\Mail\AcceptedRecruitmentMail;
-use App\Mail\RejectedRecruitmentMail;
+use App\Mail\TerimaRecruitmentMail;
+use App\Mail\TolakRecruitmentMail;
+use App\Mail\LolosRecruitmentMail;
+use App\Mail\TidakLolosRecruitmentMail;
 use Alert;
 use Mail;
 
@@ -21,6 +23,8 @@ class RecruitmentUserController extends Controller
     {
         $data['recruitment_user'] = RecruitmentUser::all();
         $data['recruitment_user_proses'] = RecruitmentUser::where('status', '=', 'proses')->get();
+        $data['recruitment_user_lolos'] = RecruitmentUser::where('status', '=', 'lolos')->get();
+        $data['recruitment_user_tidak_lolos'] = RecruitmentUser::where('status', '=', 'tidak_lolos')->get();
         $data['recruitment_user_terima'] = RecruitmentUser::where('status', '=', 'terima')->get();
         $data['recruitment_user_tolak'] = RecruitmentUser::where('status', '=', 'tolak')->get();
         return view('back.recruitment_user.data', $data);
@@ -107,12 +111,12 @@ class RecruitmentUserController extends Controller
         return redirect()->back();
     }
 
-    public function send_accepted_email($id)
+    public function send_lolos_email($id)
     {
         $recruitment_user = RecruitmentUser::findOrFail($id);
-        $recruitment_user->update(['email_sent' => 1]);
+        $recruitment_user->update(['email_sent' => 1, 'stage' => 2]);
 
-        Mail::to($recruitment_user->email)->send(new AcceptedRecruitmentMail($recruitment_user));
+        Mail::to($recruitment_user->email)->send(new LolosRecruitmentMail($recruitment_user));
 
         if(count(Mail::failures()) > 0) {
             Alert::error('Error', "Email gagal dikirim!");
@@ -123,12 +127,12 @@ class RecruitmentUserController extends Controller
         return redirect()->back();
     }
 
-    public function send_rejected_email($id)
+    public function send_tidak_lolos_email($id)
     {
         $recruitment_user = RecruitmentUser::findOrFail($id);
         $recruitment_user->update(['email_sent' => 1]);
 
-        Mail::to($recruitment_user->email)->send(new RejectedRecruitmentMail($recruitment_user));
+        Mail::to($recruitment_user->email)->send(new TidakLolosRecruitmentMail($recruitment_user));
 
         if(count(Mail::failures()) > 0) {
             Alert::error('Error', "Email gagal dikirim!");
@@ -139,20 +143,63 @@ class RecruitmentUserController extends Controller
         return redirect()->back();
     }
 
-    public function reset_email($id)
+    public function stage($id)
+    {
+        $recruitment_user = RecruitmentUser::findOrFail($id);
+
+        $recruitment_user->update(['stage' => 2])
+        ? Alert::success('Berhasil', "Peserta telah dialihkan ke tahap kedua!")
+        : Alert::error('Error', "Peserta gagal dialihkan ke tahap kedua!");
+
+        return redirect()->back();
+    }
+
+    public function send_terima_email($id)
+    {
+        $recruitment_user = RecruitmentUser::findOrFail($id);
+        $recruitment_user->update(['email_sent' => 2]);
+
+        Mail::to($recruitment_user->email)->send(new TerimaRecruitmentMail($recruitment_user));
+
+        if(count(Mail::failures()) > 0) {
+            Alert::error('Error', "Email gagal dikirim!");
+        } else {
+            Alert::success('Berhasil', "Email telah berhasil dikirim.");
+        }
+
+        return redirect()->back();
+    }
+
+    public function send_tolak_email($id)
+    {
+        $recruitment_user = RecruitmentUser::findOrFail($id);
+        $recruitment_user->update(['email_sent' => 2]);
+
+        Mail::to($recruitment_user->email)->send(new TolakRecruitmentMail($recruitment_user));
+
+        if(count(Mail::failures()) > 0) {
+            Alert::error('Error', "Email gagal dikirim!");
+        } else {
+            Alert::success('Berhasil', "Email telah berhasil dikirim.");
+        }
+
+        return redirect()->back();
+    }
+
+    public function reset_email(Request $request, $id)
     {
         $recruitment_user = RecruitmentUser::findOrFail($id);
         
-        $recruitment_user->update(['email_sent' => 0])
+        $recruitment_user->update(['email_sent' => $request->email_sent, 'stage' => $request->stage])
         ? Alert::success('Berhasil', "Email telah berhasil direset!")
         : Alert::error('Error', "Email gagal direset.");
 
         return redirect()->back();
     }
 
-    public function send_all_accepted_email()
+    public function send_all_lolos_email()
     {
-        $recruitment_user = RecruitmentUser::where('status', '=', 'terima')->get();
+        $recruitment_user = RecruitmentUser::where('status', '=', 'lolos')->get();
 
         $emailSent = RecruitmentUser::where('email_sent', '=', '0')->get();
 
@@ -161,7 +208,29 @@ class RecruitmentUserController extends Controller
         } else {
             foreach ($recruitment_user as $recruitment) {
 
-                Mail::to($recruitment->email)->send(new AcceptedRecruitmentMail($recruitment));
+                Mail::to($recruitment->email)->send(new LolosRecruitmentMail($recruitment));
+
+                $recruitment->update(['email_sent' => 1, 'stage' => 2])
+                ? Alert::success('Berhasil', "Email telah berhasil dikirim!")
+                : Alert::error('Error', "Email gagal dikirim.");
+            }
+        }
+                
+        return redirect()->back();
+    }
+
+    public function send_all_tidak_lolos_email()
+    {
+        $recruitment_user = RecruitmentUser::where('status', '=', 'tidak_lolos')->get();
+
+        $emailSent = RecruitmentUser::where('email_sent', '=', '0')->get();
+
+        if (count($emailSent) < 1) {
+            Alert::info('Info', 'Semua email telah terkirim!');
+        } else {
+            foreach ($recruitment_user as $recruitment) {
+
+                Mail::to($recruitment->email)->send(new TidakLolosRecruitmentMail($recruitment));
 
                 $recruitment->update(['email_sent' => 1])
                 ? Alert::success('Berhasil', "Email telah berhasil dikirim!")
@@ -172,20 +241,42 @@ class RecruitmentUserController extends Controller
         return redirect()->back();
     }
 
-    public function send_all_rejected_email()
+    public function send_all_terima_email()
     {
-        $recruitment_user = RecruitmentUser::where('status', '=', 'tolak')->get();
+        $recruitment_user = RecruitmentUser::where('status', '=', 'terima')->get();
 
-        $emailSent = RecruitmentUser::where('email_sent', '=', '0')->get();
+        $emailSent = RecruitmentUser::where('email_sent', '=', '1')->get();
 
         if (count($emailSent) < 1) {
             Alert::info('Info', 'Semua email telah terkirim!');
         } else {
             foreach ($recruitment_user as $recruitment) {
 
-                Mail::to($recruitment->email)->send(new RejectedRecruitmentMail($recruitment));
+                Mail::to($recruitment->email)->send(new TerimaRecruitmentMail($recruitment));
 
-                $recruitment->update(['email_sent' => 1])
+                $recruitment->update(['email_sent' => 2])
+                ? Alert::success('Berhasil', "Email telah berhasil dikirim!")
+                : Alert::error('Error', "Email gagal dikirim.");
+            }
+        }
+                
+        return redirect()->back();
+    }
+
+    public function send_all_tolak_email()
+    {
+        $recruitment_user = RecruitmentUser::where('status', '=', 'tolak')->get();
+
+        $emailSent = RecruitmentUser::where('email_sent', '=', '1')->get();
+
+        if (count($emailSent) < 1) {
+            Alert::info('Info', 'Semua email telah terkirim!');
+        } else {
+            foreach ($recruitment_user as $recruitment) {
+
+                Mail::to($recruitment->email)->send(new TolakRecruitmentMail($recruitment));
+
+                $recruitment->update(['email_sent' => 2])
                 ? Alert::success('Berhasil', "Email telah berhasil dikirim!")
                 : Alert::error('Error', "Email gagal dikirim.");
             }

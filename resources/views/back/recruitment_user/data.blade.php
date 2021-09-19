@@ -47,6 +47,20 @@ Recruitment
                     </li>
                     <li class="nav-item" role="presentation">
                         @php
+                        $jumlahTolak = \App\Models\RecruitmentUser::where('status', 'lolos ')->count();
+                        @endphp
+                        <a class="nav-link" id="lolos-tab" data-toggle="tab" href="#lolos" role="tab"
+                            aria-controls="lolos" aria-selected="false">Lolos({{$jumlahTolak}})</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        @php
+                        $jumlahTolak = \App\Models\RecruitmentUser::where('status', 'tidak_lolos ')->count();
+                        @endphp
+                        <a class="nav-link" id="tidak-lolos-tab" data-toggle="tab" href="#tidakLolos" role="tab"
+                            aria-controls="tidakLolos" aria-selected="false">Tidak Lolos({{$jumlahTolak}})</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        @php
                         $jumlahTerima = \App\Models\RecruitmentUser::where('status', 'terima')->count();
                         @endphp
                         <a class="nav-link" id="terima-tab" data-toggle="tab" href="#terima" role="tab"
@@ -60,10 +74,9 @@ Recruitment
                             aria-controls="tolak" aria-selected="false">Tolak({{$jumlahTolak}})</a>
                     </li>
                 </ul>
-              
+
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="home-tab">
-
                         <br>
                         <table id="recruitment_all" class="table table-striped table-bordered" style="width: 100%">
                             <thead>
@@ -72,6 +85,7 @@ Recruitment
                                     <th>Nama</th>
                                     <th>NIM</th>
                                     <th>Email</th>
+                                    <th>Terkirim</th>
                                     <th>Alamat</th>
                                     <th>Kelas</th>
                                     <th>Prodi</th>
@@ -95,11 +109,22 @@ Recruitment
                                     <td>{{ $increment_all++ }}</td>
                                     <td>{{ $recruitments->nama_lengkap }}</td>
                                     <td>{{ $recruitments->nim }}</td>
-                                    <td>{{ $recruitments->email }} @if($recruitments->email_sent)
+                                    <td>{{ $recruitments->email }}</td>
+                                    <td>
+                                        @if($recruitments->email_sent == '1')
                                         <i class="far fa-check-square text-success" data-toggle="tooltip"
-                                            data-placement="top" data-original-title="Terkirim"
+                                            data-placement="top" data-original-title="Tahap Pertama"
                                             style="font-weight: bold; display:inline;"></i>
-                                        @endif</td>
+                                        @endif
+                                        @if($recruitments->email_sent == '2')
+                                        <i class="far fa-check-square text-success" data-toggle="tooltip"
+                                            data-placement="top" data-original-title="Tahap Pertama"
+                                            style="font-weight: bold; display:inline;"></i>
+                                        <i class="far fa-check-square text-success" data-toggle="tooltip"
+                                            data-placement="top" data-original-title="Tahap Terakhir"
+                                            style="font-weight: bold; display:inline;"></i>
+                                        @endif
+                                    </td>
                                     <td>{{ $recruitments->alamat }}</td>
                                     <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
                                     <td>{{ $recruitments->study_programs->nama }}</td>
@@ -124,39 +149,43 @@ Recruitment
                                             onclick="pengalamanOrganisasi({{$recruitments}})"><i
                                                 class="fas fa-info-circle"></i></button></td>
                                     <td>{{ $recruitments->minat_menjadi_pengurus }}</td>
-                                    <td><span class="badge badge-secondary">{{ $recruitments->status }}</span></td>
+                                    <td><span
+                                            class="badge badge-secondary">{{ str_replace('_', ' ', $recruitments->status) }}</span>
+                                    </td>
                                     <td>
                                         <div class="form-group">
-                                            @if($recruitments->status == 'terima')
+                                            @if($recruitments->stage == '1')
+                                            @if($recruitments->status == 'lolos')
 
                                             @else
                                             <button class="btn btn-sm btn-dark" data-toggle="modal"
-                                                data-target="#acceptanceModal"
-                                                onclick="acceptData({{ $recruitments }})">Terima</button>
+                                                data-target="#pelolosanModal"
+                                                onclick="lolosData({{ $recruitments }})">Lolos</button>
                                             @endif
-                                            @if($recruitments->status == 'tolak')
+                                            @if($recruitments->status == 'tidak_lolos')
 
                                             @else
                                             <button class="btn btn-sm btn-warning" data-toggle="modal"
-                                                data-target="#acceptanceModal"
-                                                onclick="rejectData({{ $recruitments }})">Tolak</button>
+                                                data-target="#pelolosanModal"
+                                                onclick="tidakLolosData({{ $recruitments }})">Tidak Lolos</button>
                                             @endif
                                             <button class="btn btn-sm btn-danger" data-toggle="modal"
                                                 data-target="#confirmDeleteModal"
                                                 onclick="deleteData({{ $recruitments }})">Hapus</button>
-                                            @if($recruitments->status == 'terima' || $recruitments->status == 'tolak')
+                                            @if($recruitments->status == 'lolos' || $recruitments->status ==
+                                            'tidak_lolos')
                                             @if($recruitments->email_sent == '0')
-                                            @if($recruitments->status == 'terima')
+                                            @if($recruitments->status == 'lolos')
                                             <button class="btn btn-sm btn-info"
-                                                data-url="{{ route('recruitment-users.send_accepted_email', $recruitments->id) }}"
+                                                data-url="{{ route('recruitment-users.send_lolos_email', $recruitments->id) }}"
                                                 data-toggle="modal" data-target="#emailModal"
-                                                onclick="acceptedEmailData(this, {{$recruitments}})">Kirim
+                                                onclick="lolosEmailData(this, {{$recruitments}})">Kirim
                                                 Email</button>
                                             @else
                                             <button class="btn btn-sm btn-info"
-                                                data-url="{{ route('recruitment-users.send_rejected_email', $recruitments->id) }}"
+                                                data-url="{{ route('recruitment-users.send_tidak_lolos_email', $recruitments->id) }}"
                                                 data-toggle="modal" data-target="#emailModal"
-                                                onclick="rejectedEmailData(this)">Kirim
+                                                onclick="tidakLolosEmailData(this)">Kirim
                                                 Email</button>
                                             @endif
                                             @else
@@ -165,6 +194,54 @@ Recruitment
                                                 data-toggle="modal" data-target="#resetEmailModal"
                                                 onclick="resetEmailData({{ $recruitments }})">Reset
                                                 Email</button>
+                                            @endif
+                                            @endif
+                                            @if($recruitments->status == 'lolos')
+                                            <button class="btn btn-sm btn-dark" data-toggle="modal"
+                                                data-target="#stageModal" onclick="stageData({{ $recruitments }})">Tahap
+                                                Kedua</button>
+                                            @endif
+                                            @endif
+                                            @if($recruitments->stage == '2')
+                                            @if($recruitments->status == 'terima')
+
+                                            @else
+                                            <button class="btn btn-sm btn-dark" data-toggle="modal"
+                                                data-target="#penerimaanModal"
+                                                onclick="terimaData({{ $recruitments }})">Terima</button>
+                                            @endif
+                                            @if($recruitments->status == 'tolak')
+
+                                            @else
+                                            <button class="btn btn-sm btn-warning" data-toggle="modal"
+                                                data-target="#penerimaanModal"
+                                                onclick="tolakData({{ $recruitments }})">Tolak</button>
+                                            @endif
+                                            <button class="btn btn-sm btn-danger" data-toggle="modal"
+                                                data-target="#confirmDeleteModal"
+                                                onclick="deleteData({{ $recruitments }})">Hapus</button>
+                                            @if($recruitments->status == 'terima' || $recruitments->status == 'tolak')
+                                            @if($recruitments->email_sent == '1')
+                                            @if($recruitments->status == 'terima')
+                                            <button class="btn btn-sm btn-info"
+                                                data-url="{{ route('recruitment-users.send_terima_email', $recruitments->id) }}"
+                                                data-toggle="modal" data-target="#emailModal"
+                                                onclick="terimaEmailData(this, {{$recruitments}})">Kirim
+                                                Email</button>
+                                            @else
+                                            <button class="btn btn-sm btn-info"
+                                                data-url="{{ route('recruitment-users.send_tolak_email', $recruitments->id) }}"
+                                                data-toggle="modal" data-target="#emailModal"
+                                                onclick="tolakEmailData(this)">Kirim
+                                                Email</button>
+                                            @endif
+                                            @else
+                                            <button class="btn btn-sm btn-info"
+                                                data-url="{{ route('recruitment-users.reset_email_2', $recruitments->id) }}"
+                                                data-toggle="modal" data-target="#resetEmailModal"
+                                                onclick="resetEmailData2({{ $recruitments }})">Reset
+                                                Email</button>
+                                            @endif
                                             @endif
                                             @endif
                                         </div>
@@ -206,11 +283,7 @@ Recruitment
                                     <td>{{ $increment_proses++ }}</td>
                                     <td>{{ $recruitments->nama_lengkap }}</td>
                                     <td>{{ $recruitments->nim }}</td>
-                                    <td>{{ $recruitments->email }} @if($recruitments->email_sent)
-                                        <i class="far fa-check-square text-success" data-toggle="tooltip"
-                                            data-placement="top" data-original-title="Terkirim"
-                                            style="font-weight: bold; display:inline;"></i>
-                                        @endif</td>
+                                    <td>{{ $recruitments->email }}</td>
                                     <td>{{ $recruitments->alamat }}</td>
                                     <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
                                     <td>{{ $recruitments->study_programs->nama }}</td>
@@ -239,11 +312,11 @@ Recruitment
                                     <td>
                                         <div class="form-group">
                                             <button class="btn btn-sm btn-dark" data-toggle="modal"
-                                                data-target="#acceptanceModal"
-                                                onclick="acceptData({{ $recruitments }})">Terima</button>
+                                                data-target="#pelolosanModal"
+                                                onclick="lolosData({{ $recruitments }})">Lolos</button>
                                             <button class="btn btn-sm btn-warning" data-toggle="modal"
-                                                data-target="#acceptanceModal"
-                                                onclick="rejectData({{ $recruitments }})">Tolak</button>
+                                                data-target="#pelolosanModal"
+                                                onclick="tidakLolosData({{ $recruitments }})">Tidak Lolos</button>
                                             <button class="btn btn-sm btn-danger" data-toggle="modal"
                                                 data-target="#confirmDeleteModal"
                                                 onclick="deleteData({{ $recruitments }})">Hapus</button>
@@ -254,223 +327,448 @@ Recruitment
                             </tbody>
                         </table>
                     </div>
+                    <div class="tab-pane fade" id="lolos" role="tabpanel" aria-labelledby="lolos-tab">
+                        <br>
+                        @if(count($recruitment_user_lolos) < 1) @else 
+                            <div class="form-group">
+                                <button class="btn btn-dark" data-url="{{ route('recruitment-users.send_all_lolos_email') }}"
+                                    data-toggle="modal" data-target="#sendAllLolosEmailModal"
+                                    onclick="allLolosEmailData(this)">Kirim
+                                    Semua Email</button>
+                            </div>
+                        @endif
+                        <table id="recruitment_lolos" class="table table-striped table-bordered" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama</th>
+                                    <th>NIM</th>
+                                    <th>Email</th>
+                                    <th>Terkirim</th>
+                                    <th>Alamat</th>
+                                    <th>Kelas</th>
+                                    <th>Prodi</th>
+                                    <th>Semester</th>
+                                    <th>Divisi</th>
+                                    <th>Spesialisasi Divisi</th>
+                                    <th>Pengetahuan Divisi</th>
+                                    <th>Pengalaman Divisi</th>
+                                    <th>Pengalaman Organisasi</th>
+                                    <th>Minat Menjadi Pengurus</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                $increment_lolos = 1;
+                                @endphp
+                                @foreach($recruitment_user_lolos as $recruitments)
+                                <tr>
+                                    <td>{{ $increment_lolos++ }}</td>
+                                    <td>{{ $recruitments->nama_lengkap }}</td>
+                                    <td>{{ $recruitments->nim }}</td>
+                                    <td>{{ $recruitments->email }}</td>
+                                    <td>
+                                        @if($recruitments->email_sent == '1')
+                                        <i class="far fa-check-square text-success" data-toggle="tooltip"
+                                            data-placement="top" data-original-title="Email Terkirim"
+                                            style="font-weight: bold; display:inline;"></i>
+                                        @endif
+                                    </td>
+                                    <td>{{ $recruitments->alamat }}</td>
+                                    <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
+                                    <td>{{ $recruitments->study_programs->nama }}</td>
+                                    <td>{{ $recruitments->semester }}</td>
+                                    <td>{{ $recruitments->divisions->nama }}</td>
+                                    <td>{{ $recruitments->specialization_divisions->nama }}</td>
+                                    <td><button class="btn btn-sm btn-secondary" data-toggle="modal"
+                                            data-target="#showModal" onclick="pengetahuanDivisi({{$recruitments}})"><i
+                                                class="fas fa-info-circle"></i></button></td>
+                                    <td>
+                                        @if(!empty($recruitments->pengalaman_divisi))
+                                        <button class="btn btn-sm btn-secondary" data-toggle="modal"
+                                            data-target="#showModal" onclick="pengalamanDivisi({{$recruitments}})">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
+                                        @else
+
+                                        @endif
+                                    </td>
+                                    <td><button class="btn btn-sm btn-secondary" data-toggle="modal"
+                                            data-target="#showModal"
+                                            onclick="pengalamanOrganisasi({{$recruitments}})"><i
+                                                class="fas fa-info-circle"></i></button></td>
+                                    <td>{{ $recruitments->minat_menjadi_pengurus }}</td>
+                                    <td><span class="badge badge-secondary">{{ $recruitments->status }}</span></td>
+                                    <td>
+                                        <div class="form-group">
+                                            @if($recruitments->email_sent == '0')
+                                            <button class="btn btn-sm btn-warning" data-toggle="modal"
+                                                data-target="#pelolosanModal"
+                                                onclick="tidakLolosData({{ $recruitments }})">Tidak Lolos</button>
+                                            @else
+                                            <button class="btn btn-sm btn-dark" data-toggle="modal"
+                                                data-target="#penerimaanModal"
+                                                onclick="terimaData({{ $recruitments }})">Terima</button>
+                                            <button class="btn btn-sm btn-warning" data-toggle="modal"
+                                                data-target="#penerimaanModal"
+                                                onclick="tolakData({{ $recruitments }})">Tolak</button>
+                                            @endif
+                                            <button class="btn btn-sm btn-danger" data-toggle="modal"
+                                                data-target="#confirmDeleteModal"
+                                                onclick="deleteData({{ $recruitments }})">Hapus</button>
+                                            @if($recruitments->email_sent == '0')
+                                            <button class="btn btn-sm btn-info"
+                                                data-url="{{ route('recruitment-users.send_lolos_email', $recruitments->id) }}"
+                                                data-toggle="modal" data-target="#emailModal"
+                                                onclick="lolosEmailData(this)">Kirim
+                                                Email</button>
+                                            @else
+                                            <button class="btn btn-sm btn-info"
+                                                data-url="{{ route('recruitment-users.reset_email', $recruitments->id) }}"
+                                                data-toggle="modal" data-target="#resetEmailModal"
+                                                onclick="resetEmailData({{ $recruitments }})">Reset
+                                                Email</button>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="tidakLolos" role="tabpanel" aria-labelledby="proses-tab">
+                        <br>
+                        @if(count($recruitment_user_tidak_lolos) < 1) @else 
+                            <div class="form-group">
+                                <button class="btn btn-dark"
+                                    data-url="{{ route('recruitment-users.send_all_tidak_lolos_email') }}"
+                                    data-toggle="modal" data-target="#sendAllTidakLolosEmailModal"
+                                    onclick="allTidakLolosEmailData(this)">Kirim
+                                    Semua Email</button>
+                            </div>
+                        @endif
+                        <table id="recruitment_tidaklolos" class="table table-striped table-bordered" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama</th>
+                                    <th>NIM</th>
+                                    <th>Email</th>
+                                    <th>Terkirim</th>
+                                    <th>Alamat</th>
+                                    <th>Kelas</th>
+                                    <th>Prodi</th>
+                                    <th>Semester</th>
+                                    <th>Divisi</th>
+                                    <th>Spesialisasi Divisi</th>
+                                    <th>Pengetahuan Divisi</th>
+                                    <th>Pengalaman Divisi</th>
+                                    <th>Pengalaman Organisasi</th>
+                                    <th>Minat Menjadi Pengurus</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                $increment_tidak_lolos = 1;
+                                @endphp
+                                @foreach($recruitment_user_tidak_lolos as $recruitments)
+                                <tr>
+                                    <td>{{ $increment_tidak_lolos++ }}</td>
+                                    <td>{{ $recruitments->nama_lengkap }}</td>
+                                    <td>{{ $recruitments->nim }}</td>
+                                    <td>{{ $recruitments->email }}</td>
+                                    <td>
+                                        @if($recruitments->email_sent == '1')
+                                        <i class="far fa-check-square text-success" data-toggle="tooltip"
+                                            data-placement="top" data-original-title="Email Terkirim"
+                                            style="font-weight: bold; display:inline;"></i>
+                                        @endif
+                                    </td>
+                                    <td>{{ $recruitments->alamat }}</td>
+                                    <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
+                                    <td>{{ $recruitments->study_programs->nama }}</td>
+                                    <td>{{ $recruitments->semester }}</td>
+                                    <td>{{ $recruitments->divisions->nama }}</td>
+                                    <td>{{ $recruitments->specialization_divisions->nama }}</td>
+                                    <td><button class="btn btn-sm btn-secondary" data-toggle="modal"
+                                            data-target="#showModal" onclick="pengetahuanDivisi({{$recruitments}})"><i
+                                                class="fas fa-info-circle"></i></button></td>
+                                    <td>
+                                        @if(!empty($recruitments->pengalaman_divisi))
+                                        <button class="btn btn-sm btn-secondary" data-toggle="modal"
+                                            data-target="#showModal" onclick="pengalamanDivisi({{$recruitments}})">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
+                                        @else
+
+                                        @endif
+                                    </td>
+                                    <td><button class="btn btn-sm btn-secondary" data-toggle="modal"
+                                            data-target="#showModal" onclick="pengalamanOrganisasi({{$recruitments}})"><i
+                                                class="fas fa-info-circle"></i></button></td>
+                                    <td>{{ $recruitments->minat_menjadi_pengurus }}</td>
+                                    <td><span class="badge badge-secondary">{{ str_replace('_', ' ', $recruitments->status) }}</span></td>
+                                    <td>
+                                        <div class="form-group">
+                                            @if($recruitments->email_sent == '0')
+                                            <button class="btn btn-sm btn-dark" data-toggle="modal"
+                                                data-target="#pelolosanModal"
+                                                onclick="lolosData({{ $recruitments }})">Lolos</button>
+                                            @endif
+                                            <button class="btn btn-sm btn-danger" data-toggle="modal"
+                                                data-target="#confirmDeleteModal"
+                                                onclick="deleteData({{ $recruitments }})">Hapus</button>
+                                            @if($recruitments->email_sent == '0')
+                                            <button class="btn btn-sm btn-info"
+                                                data-url="{{ route('recruitment-users.send_tidak_lolos_email', $recruitments->id) }}"
+                                                data-toggle="modal" data-target="#emailModal"
+                                                onclick="tidakLolosEmailData(this)">Kirim
+                                                Email</button>
+                                            @else
+                                            <button class="btn btn-sm btn-info"
+                                                data-url="{{ route('recruitment-users.reset_email', $recruitments->id) }}"
+                                                data-toggle="modal" data-target="#resetEmailModal"
+                                                onclick="resetEmailData({{ $recruitments }})">Reset
+                                                Email</button>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="tab-pane fade" id="terima" role="tabpanel" aria-labelledby="terima-tab">
                         <br>
-                        @if(count($recruitment_user_terima) < 1) @else <div class="form-group">
-                            <button class="btn btn-dark"
-                                data-url="{{ route('recruitment-users.send_all_accepted_email') }}" data-toggle="modal"
-                                data-target="#sendAllAcceptedEmailModal" onclick="allAcceptedEmailData(this)">Kirim
-                                Semua Email</button>
-                    </div>
-                    @endif
-                    <table id="recruitment_terima" class="table table-striped table-bordered" style="width: 100%">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nama</th>
-                                <th>NIM</th>
-                                <th>Email</th>
-                                <th>Alamat</th>
-                                <th>Kelas</th>
-                                <th>Prodi</th>
-                                <th>Semester</th>
-                                <th>Divisi</th>
-                                <th>Spesialisasi Divisi</th>
-                                <th>Pengetahuan Divisi</th>
-                                <th>Pengalaman Divisi</th>
-                                <th>Pengalaman Organisasi</th>
-                                <th>Minat Menjadi Pengurus</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                            $increment_terima = 1;
-                            @endphp
-                            @foreach($recruitment_user_terima as $recruitments)
-                            <tr>
-                                <td>{{ $increment_terima++ }}</td>
-                                <td>{{ $recruitments->nama_lengkap }}</td>
-                                <td>{{ $recruitments->nim }}</td>
-                                <td>{{ $recruitments->email }} @if($recruitments->email_sent)
-                                    <i class="far fa-check-square text-success" data-toggle="tooltip"
-                                        data-placement="top" data-original-title="Terkirim"
-                                        style="font-weight: bold; display:inline;"></i>
-                                    @endif</td>
-                                <td>{{ $recruitments->alamat }}</td>
-                                <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
-                                <td>{{ $recruitments->study_programs->nama }}</td>
-                                <td>{{ $recruitments->semester }}</td>
-                                <td>{{ $recruitments->divisions->nama }}</td>
-                                <td>{{ $recruitments->specialization_divisions->nama }}</td>
-                                <td><button class="btn btn-sm btn-secondary" data-toggle="modal"
-                                        data-target="#showModal" onclick="pengetahuanDivisi({{$recruitments}})"><i
-                                            class="fas fa-info-circle"></i></button></td>
-                                <td>
-                                    @if(!empty($recruitments->pengalaman_divisi))
-                                    <button class="btn btn-sm btn-secondary" data-toggle="modal"
-                                        data-target="#showModal" onclick="pengalamanDivisi({{$recruitments}})">
-                                        <i class="fas fa-info-circle"></i>
-                                    </button>
-                                    @else
-
-                                    @endif
-                                </td>
-                                <td><button class="btn btn-sm btn-secondary" data-toggle="modal"
-                                        data-target="#showModal" onclick="pengalamanOrganisasi({{$recruitments}})"><i
-                                            class="fas fa-info-circle"></i></button></td>
-                                <td>{{ $recruitments->minat_menjadi_pengurus }}</td>
-                                <td><span class="badge badge-secondary">{{ $recruitments->status }}</span></td>
-                                <td>
-                                    <div class="form-group">
-                                        @if($recruitments->email_sent == '0')
-                                        <button class="btn btn-sm btn-warning" data-toggle="modal"
-                                            data-target="#acceptanceModal"
-                                            onclick="rejectData({{ $recruitments }})">Tolak</button>
+                        @if(count($recruitment_user_terima) < 1) @else 
+                            <div class="form-group">
+                                <button class="btn btn-dark" data-url="{{ route('recruitment-users.send_all_terima_email') }}"
+                                    data-toggle="modal" data-target="#sendAllTerimaEmailModal"
+                                    onclick="allTerimaEmailData(this)">Kirim
+                                    Semua Email</button>
+                            </div>
+                        @endif
+                        <table id="recruitment_terima" class="table table-striped table-bordered" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama</th>
+                                    <th>NIM</th>
+                                    <th>Email</th>
+                                    <th>Terkirim</th>
+                                    <th>Alamat</th>
+                                    <th>Kelas</th>
+                                    <th>Prodi</th>
+                                    <th>Semester</th>
+                                    <th>Divisi</th>
+                                    <th>Spesialisasi Divisi</th>
+                                    <th>Pengetahuan Divisi</th>
+                                    <th>Pengalaman Divisi</th>
+                                    <th>Pengalaman Organisasi</th>
+                                    <th>Minat Menjadi Pengurus</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                $increment_terima = 1;
+                                @endphp
+                                @foreach($recruitment_user_terima as $recruitments)
+                                <tr>
+                                    <td>{{ $increment_terima++ }}</td>
+                                    <td>{{ $recruitments->nama_lengkap }}</td>
+                                    <td>{{ $recruitments->nim }}</td>
+                                    <td>{{ $recruitments->email }}</td>
+                                    <td>
+                                        @if($recruitments->email_sent == '2')
+                                        <i class="far fa-check-square text-success" data-toggle="tooltip"
+                                            data-placement="top" data-original-title="Email Terkirim"
+                                            style="font-weight: bold; display:inline;"></i>
                                         @endif
-                                        <button class="btn btn-sm btn-danger" data-toggle="modal"
-                                            data-target="#confirmDeleteModal"
-                                            onclick="deleteData({{ $recruitments }})">Hapus</button>
-                                        @if($recruitments->email_sent == '0')
-                                        <button class="btn btn-sm btn-info"
-                                            data-url="{{ route('recruitment-users.send_accepted_email', $recruitments->id) }}"
-                                            data-toggle="modal" data-target="#emailModal"
-                                            onclick="acceptedEmailData(this)">Kirim
-                                            Email</button>
+                                    </td>
+                                    <td>{{ $recruitments->alamat }}</td>
+                                    <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
+                                    <td>{{ $recruitments->study_programs->nama }}</td>
+                                    <td>{{ $recruitments->semester }}</td>
+                                    <td>{{ $recruitments->divisions->nama }}</td>
+                                    <td>{{ $recruitments->specialization_divisions->nama }}</td>
+                                    <td><button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#showModal"
+                                            onclick="pengetahuanDivisi({{$recruitments}})"><i
+                                                class="fas fa-info-circle"></i></button></td>
+                                    <td>
+                                        @if(!empty($recruitments->pengalaman_divisi))
+                                        <button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#showModal"
+                                            onclick="pengalamanDivisi({{$recruitments}})">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
                                         @else
-                                        <button class="btn btn-sm btn-info"
-                                            data-url="{{ route('recruitment-users.reset_email', $recruitments->id) }}"
-                                            data-toggle="modal" data-target="#resetEmailModal"
-                                            onclick="resetEmailData({{ $recruitments }})">Reset
-                                            Email</button>
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="tab-pane fade" id="tolak" role="tabpanel" aria-labelledby="tolak-tab">
-                    <br>
-                    @if(count($recruitment_user_tolak) < 1) @else <div class="form-group">
-                        <button class="btn btn-dark" data-url="{{ route('recruitment-users.send_all_rejected_email') }}"
-                            data-toggle="modal" data-target="#sendAllRejectedEmailModal"
-                            onclick="allRejectedEmailData(this)">Kirim Semua Email</button>
-                </div>
-                @endif
-                <table id="recruitment_tolak" class="table table-striped table-bordered" style="width: 100%">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama</th>
-                            <th>NIM</th>
-                            <th>Email</th>
-                            <th>Alamat</th>
-                            <th>Kelas</th>
-                            <th>Prodi</th>
-                            <th>Semester</th>
-                            <th>Divisi</th>
-                            <th>Spesialisasi Divisi</th>
-                            <th>Pengetahuan Divisi</th>
-                            <th>Pengalaman Divisi</th>
-                            <th>Pengalaman Organisasi</th>
-                            <th>Minat Menjadi Pengurus</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                        $increment_tolak = 1;
-                        @endphp
-                        @foreach($recruitment_user_tolak as $recruitments)
-                        <tr>
-                            <td>{{ $increment_tolak++ }}</td>
-                            <td>{{ $recruitments->nama_lengkap }}</td>
-                            <td>{{ $recruitments->nim }}</td>
-                            <td>{{ $recruitments->email }} @if($recruitments->email_sent)
-                                <i class="far fa-check-square text-success" data-toggle="tooltip" data-placement="top"
-                                    data-original-title="Terkirim" style="font-weight: bold; display:inline;"></i>
-                                @endif</td>
-                            <td>{{ $recruitments->alamat }}</td>
-                            <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
-                            <td>{{ $recruitments->study_programs->nama }}</td>
-                            <td>{{ $recruitments->semester }}</td>
-                            <td>{{ $recruitments->divisions->nama }}</td>
-                            <td>{{ $recruitments->specialization_divisions->nama }}</td>
-                            <td><button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#showModal"
-                                    onclick="pengetahuanDivisi({{$recruitments}})"><i
-                                        class="fas fa-info-circle"></i></button></td>
-                            <td>
-                                @if(!empty($recruitments->pengalaman_divisi))
-                                <button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#showModal"
-                                    onclick="pengalamanDivisi({{$recruitments}})">
-                                    <i class="fas fa-info-circle"></i>
-                                </button>
-                                @else
 
-                                @endif
-                            </td>
-                            <td><button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#showModal"
-                                    onclick="pengalamanOrganisasi({{$recruitments}})"><i
-                                        class="fas fa-info-circle"></i></button></td>
-                            <td>{{ $recruitments->minat_menjadi_pengurus }}</td>
-                            <td><span class="badge badge-secondary">{{ $recruitments->status }}</span></td>
-                            <td>
-                                <div class="form-group">
-                                    @if($recruitments->email_sent == '0')
-                                    <button class="btn btn-sm btn-dark" data-toggle="modal"
-                                        data-target="#acceptanceModal"
-                                        onclick="acceptData({{ $recruitments }})">Terima</button>
-                                    @endif
-                                    <button class="btn btn-sm btn-danger" data-toggle="modal"
-                                        data-target="#confirmDeleteModal"
-                                        onclick="deleteData({{ $recruitments }})">Hapus</button>
-                                    @if($recruitments->email_sent == '0')
-                                    <button class="btn btn-sm btn-info"
-                                        data-url="{{ route('recruitment-users.send_rejected_email', $recruitments->id) }}"
-                                        data-toggle="modal" data-target="#emailModal"
-                                        onclick="rejectedEmailData(this)">Kirim
-                                        Email</button>
-                                    @else
-                                    <button class="btn btn-sm btn-info"
-                                        data-url="{{ route('recruitment-users.reset_email', $recruitments->id) }}"
-                                        data-toggle="modal" data-target="#resetEmailModal"
-                                        onclick="resetEmailData({{ $recruitments }})">Reset
-                                        Email</button>
-                                    @endif
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                                        @endif
+                                    </td>
+                                    <td><button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#showModal"
+                                            onclick="pengalamanOrganisasi({{$recruitments}})"><i
+                                                class="fas fa-info-circle"></i></button></td>
+                                    <td>{{ $recruitments->minat_menjadi_pengurus }}</td>
+                                    <td><span class="badge badge-secondary">{{ $recruitments->status }}</span></td>
+                                    <td>
+                                        <div class="form-group">
+                                            @if($recruitments->email_sent == '1')
+                                            <button class="btn btn-sm btn-warning" data-toggle="modal"
+                                                data-target="#penerimaanModal"
+                                                onclick="tolakData({{ $recruitments }})">Tolak</button>
+                                            @endif
+                                            <button class="btn btn-sm btn-danger" data-toggle="modal"
+                                                data-target="#confirmDeleteModal"
+                                                onclick="deleteData({{ $recruitments }})">Hapus</button>
+                                            @if($recruitments->email_sent == '1')
+                                            <button class="btn btn-sm btn-info"
+                                                data-url="{{ route('recruitment-users.send_terima_email', $recruitments->id) }}"
+                                                data-toggle="modal" data-target="#emailModal"
+                                                onclick="terimaEmailData(this)">Kirim
+                                                Email</button>
+                                            @else
+                                            <button class="btn btn-sm btn-info"
+                                                data-url="{{ route('recruitment-users.reset_email_2', $recruitments->id) }}"
+                                                data-toggle="modal" data-target="#resetEmailModal"
+                                                onclick="resetEmailData2({{ $recruitments }})">Reset
+                                                Email</button>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="tolak" role="tabpanel" aria-labelledby="tolak-tab">
+                        <br>
+                        @if(count($recruitment_user_tolak) < 1) @else 
+                            <div class="form-group">
+                                <button class="btn btn-dark" data-url="{{ route('recruitment-users.send_all_tolak_email') }}"
+                                    data-toggle="modal" data-target="#sendAllTolakEmailModal"
+                                    onclick="allTolakEmailData(this)">Kirim Semua Email</button>
+                            </div>
+                        @endif
+                        <table id="recruitment_tolak" class="table table-striped table-bordered" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama</th>
+                                    <th>NIM</th>
+                                    <th>Email</th>
+                                    <th>Terkirim</th>
+                                    <th>Alamat</th>
+                                    <th>Kelas</th>
+                                    <th>Prodi</th>
+                                    <th>Semester</th>
+                                    <th>Divisi</th>
+                                    <th>Spesialisasi Divisi</th>
+                                    <th>Pengetahuan Divisi</th>
+                                    <th>Pengalaman Divisi</th>
+                                    <th>Pengalaman Organisasi</th>
+                                    <th>Minat Menjadi Pengurus</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                $increment_tolak = 1;
+                                @endphp
+                                @foreach($recruitment_user_tolak as $recruitments)
+                                <tr>
+                                    <td>{{ $increment_tolak++ }}</td>
+                                    <td>{{ $recruitments->nama_lengkap }}</td>
+                                    <td>{{ $recruitments->nim }}</td>
+                                    <td>{{ $recruitments->email }}</td>
+                                    <td>
+                                        @if($recruitments->email_sent == '2')
+                                        <i class="far fa-check-square text-success" data-toggle="tooltip"
+                                            data-placement="top" data-original-title="Email Terkirim"
+                                            style="font-weight: bold; display:inline;"></i>
+                                        @endif
+                                    </td>
+                                    <td>{{ $recruitments->alamat }}</td>
+                                    <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
+                                    <td>{{ $recruitments->study_programs->nama }}</td>
+                                    <td>{{ $recruitments->semester }}</td>
+                                    <td>{{ $recruitments->divisions->nama }}</td>
+                                    <td>{{ $recruitments->specialization_divisions->nama }}</td>
+                                    <td><button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#showModal"
+                                            onclick="pengetahuanDivisi({{$recruitments}})"><i
+                                                class="fas fa-info-circle"></i></button></td>
+                                    <td>
+                                        @if(!empty($recruitments->pengalaman_divisi))
+                                        <button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#showModal"
+                                            onclick="pengalamanDivisi({{$recruitments}})">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
+                                        @else
+
+                                        @endif
+                                    </td>
+                                    <td><button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#showModal"
+                                            onclick="pengalamanOrganisasi({{$recruitments}})"><i
+                                                class="fas fa-info-circle"></i></button></td>
+                                    <td>{{ $recruitments->minat_menjadi_pengurus }}</td>
+                                    <td><span class="badge badge-secondary">{{ $recruitments->status }}</span></td>
+                                    <td>
+                                        <div class="form-group">
+                                            @if($recruitments->email_sent == '1')
+                                            <button class="btn btn-sm btn-dark" data-toggle="modal" data-target="#penerimaanModal"
+                                                onclick="terimaData({{ $recruitments }})">Terima</button>
+                                            @endif
+                                            <button class="btn btn-sm btn-danger" data-toggle="modal"
+                                                data-target="#confirmDeleteModal"
+                                                onclick="deleteData({{ $recruitments }})">Hapus</button>
+                                            @if($recruitments->email_sent == '1')
+                                            <button class="btn btn-sm btn-info"
+                                                data-url="{{ route('recruitment-users.send_tolak_email', $recruitments->id) }}"
+                                                data-toggle="modal" data-target="#emailModal"
+                                                onclick="tolakEmailData(this)">Kirim
+                                                Email</button>
+                                            @else
+                                            <button class="btn btn-sm btn-info"
+                                                data-url="{{ route('recruitment-users.reset_email_2', $recruitments->id) }}"
+                                                data-toggle="modal" data-target="#resetEmailModal"
+                                                onclick="resetEmailData2({{ $recruitments }})">Reset
+                                                Email</button>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-</div>
-</div>
 
-<!-- Modal Acceptance -->
-<div class="modal fade" id="acceptanceModal" tabindex="-1" role="dialog" aria-labelledby="acceptanceModallTitle"
+<!-- Modal Penerimaan -->
+<div class="modal fade" id="penerimaanModal" tabindex="-1" role="dialog" aria-labelledby="penerimaanModalTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="acceptanceModalTitle">Penerimaan </h5>
+                <h5 class="modal-title" id="penerimaanModalTitle">Penerimaan</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="material-icons">close</i>
                 </button>
             </div>
-            <form action="{{ route('recruitment-users.update', '') }}" method="post" id="acceptanceForm">
+            <form action="{{ route('recruitment-users.update', '') }}" method="post" id="penerimaanForm">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="status">
                 <div class="modal-body">
-                    apakah anda yakin untuk <span id="acceptanceModalText"></span> <b> peserta</b> ini ?
+                    apakah anda yakin untuk <b><span id="penerimaanModalText"></span></b> peserta ini ?
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" id="buttonStatusModalConfirm"></button>
@@ -480,45 +778,141 @@ Recruitment
     </div>
 </div>
 
-<!-- Modal Send All Accepted Email -->
-<div class="modal fade" id="sendAllAcceptedEmailModal" tabindex="-1" role="dialog"
-    aria-labelledby="sendAllAcceptedEmailModalTitle" aria-hidden="true">
+<!-- Modal Pelolosan -->
+<div class="modal fade" id="pelolosanModal" tabindex="-1" role="dialog" aria-labelledby="lolosModallTitle"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="sendAllAcceptedEmailModalTitle">Kirim Semua Email</h5>
+                <h5 class="modal-title" id="lolosModalTitle">Pelolosan </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <form action="{{ route('recruitment-users.update', '') }}" method="post" id="lolosForm">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="status">
+                <div class="modal-body">
+                    apakah anda yakin untuk <b><span id="lolosModalText"></span></b> peserta ini ?
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="buttonPelolosanModalConfirm"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Stage -->
+<div class="modal fade" id="stageModal" tabindex="-1" role="dialog" aria-labelledby="stageModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="stageModalTitle">Tahap 2</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <form action="{{ route('recruitment-users.stage', '') }}" method="post" id="stageForm">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="stage">
+                <div class="modal-body">
+                    apakah anda yakin untuk <b>mengalihkan</b> peserta ini ke tahap kedua ?
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Ya, Alihkan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Send All Lolos Email -->
+<div class="modal fade" id="sendAllLolosEmailModal" tabindex="-1" role="dialog"
+    aria-labelledby="sendAllLolosEmailModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sendAllLolosEmailModalTitle">Kirim Semua Email</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="material-icons">close</i>
                 </button>
             </div>
             <div class="modal-body">
-                apakah anda yakin untuk mengirimkan <b> semua email</b> kepada peserta yang diterima sebagai anggota
+                apakah anda yakin untuk mengirimkan <b>semua email</b> kepada peserta yang <b>lolos</b> sebagai anggota
                 tahungoding?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="sendAllAcceptedEmailButton">Ya, Kirim</button>
+                <button type="button" class="btn btn-primary" id="sendAllLolosEmailButton">Ya, Kirim</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal Send All Rejected Email -->
-<div class="modal fade" id="sendAllRejectedEmailModal" tabindex="-1" role="dialog"
-    aria-labelledby="sendAllRejectedEmailModalTitle" aria-hidden="true">
+<!-- Modal Send All Tidak Lolos Email -->
+<div class="modal fade" id="sendAllTidakLolosEmailModal" tabindex="-1" role="dialog"
+    aria-labelledby="sendAllTidakLolosEmailModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="sendAllRejectedEmailModalTitle">Kirim Semua Email </h5>
+                <h5 class="modal-title" id="sendAllTidakLolosEmailModalTitle">Kirim Semua Email</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="material-icons">close</i>
                 </button>
             </div>
             <div class="modal-body">
-                apakah anda yakin untuk mengirimkan <b> semua email</b> kepada peserta yang ditolak sebagai anggota
+                apakah anda yakin untuk mengirimkan <b>semua email</b> kepada peserta yang <b>tidak lolos</b> sebagai anggota
                 tahungoding?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="sendAllRejectedEmailButton">Ya, Kirim</button>
+                <button type="button" class="btn btn-primary" id="sendAllTidakLolosEmailButton">Ya, Kirim</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Send All Terima Email -->
+<div class="modal fade" id="sendAllTerimaEmailModal" tabindex="-1" role="dialog"
+    aria-labelledby="sendAllTerimaEmailModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sendAllTerimaEmailModalTitle">Kirim Semua Email</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <div class="modal-body">
+                apakah anda yakin untuk mengirimkan <b> semua email</b> kepada peserta yang <b>diterima</b> sebagai anggota
+                tahungoding?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="sendAllTerimaEmailButton">Ya, Kirim</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Send All Tolak Email -->
+<div class="modal fade" id="sendAllTolakEmailModal" tabindex="-1" role="dialog"
+    aria-labelledby="sendAllTolakEmailModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sendAllTolakEmailModalTitle">Kirim Semua Email </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <div class="modal-body">
+                apakah anda yakin untuk mengirimkan <b> semua email</b> kepada peserta yang <b>ditolak</b> sebagai anggota
+                tahungoding?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="sendAllTolakEmailButton">Ya, Kirim</button>
             </div>
         </div>
     </div>
@@ -530,14 +924,14 @@ Recruitment
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="emailModalTitle">Kirim Email <span class="badge badge-secondary ml-1"
-                        id="statusEmailAccepted"></span></h5>
+                <h5 class="modal-title" id="emailModalTitle">Kirim Email</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="material-icons">close</i>
                 </button>
             </div>
             <div class="modal-body">
-                apakah anda yakin untuk mengirimkan <b> email</b> kepada peserta ini?
+                apakah anda yakin untuk mengirimkan email <b><span id="keteranganEmail"></span></b> kepada
+                peserta ini?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="sendEmailButton">Ya, Kirim</button>
@@ -559,6 +953,8 @@ Recruitment
             </div>
             <form action="{{ route('recruitment-users.reset_email', '') }}" method="post" id="resetEmailForm">
                 @csrf
+                <input type="hidden" name="email_sent" id="email_sent">
+                <input type="hidden" name="stage" id="stage">
                 <div class="modal-body">
                     apakah anda yakin untuk mereset <b> email</b> ini?
                 </div>
@@ -569,6 +965,7 @@ Recruitment
         </div>
     </div>
 </div>
+
 <!-- Modal Show -->
 <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="showModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -608,7 +1005,7 @@ Recruitment
                 @csrf
                 @method('delete')
                 <div class="modal-body">
-                    apakah anda yakin untuk menghapus <b> peserta</b> ini ?
+                    apakah anda yakin untuk <b>menghapus</b> peserta ini ?
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger">Ya, Hapus !</button>
@@ -633,6 +1030,18 @@ Recruitment
 
 $(document).ready(function() {
     $('#recruitment_proses').DataTable( {
+        responsive: true
+    });
+});
+
+$(document).ready(function() {
+    $('#recruitment_lolos').DataTable( {
+        responsive: true
+    });
+});
+
+$(document).ready(function() {
+    $('#recruitment_tidaklolos').DataTable( {
         responsive: true
     });
 });
@@ -667,8 +1076,9 @@ $(document).ready(function(){
            .responsive.recalc();
         }); 
     });
-    function acceptedEmailData(element, data) {
-        $("#statusEmailAccepted").html('Diterima');
+
+    function terimaEmailData(element, data) {
+        $("#keteranganEmail").html('penerimaan');
         $("#sendEmailButton").click(function() {
             var url = element.dataset.url;
             window.location.href = `${url}`;
@@ -676,8 +1086,17 @@ $(document).ready(function(){
         });
     }  
 
-    function rejectedEmailData(element) {
-        $("#statusEmailAccepted").html('Ditolak');
+    function tolakEmailData(element) {
+        $("#keteranganEmail").html('penolakan');
+        $("#sendEmailButton").click(function() {
+            var url = element.dataset.url;
+            window.location.href = `${url}`;
+            $('#sendEmailButton').prop('disabled', true);
+        });
+    } 
+     
+    function lolosEmailData(element, data) {
+        $("#keteranganEmail").html('lolos');
         $("#sendEmailButton").click(function() {
             var url = element.dataset.url;
             window.location.href = `${url}`;
@@ -685,33 +1104,81 @@ $(document).ready(function(){
         });
     }  
 
-    function allAcceptedEmailData(element) {
-        $("#sendAllAcceptedEmailButton").click(function() {
+    function tidakLolosEmailData(element) {
+        $("#keteranganEmail").html('tidak lolos');
+        $("#sendEmailButton").click(function() {
             var url = element.dataset.url;
             window.location.href = `${url}`;
-            $('#sendAllAcceptedEmailButton').prop('disabled', true);
+            $('#sendEmailButton').prop('disabled', true);
+        });
+    }  
+
+    function allTerimaEmailData(element) {
+        $("#sendAllTerimaEmailButton").click(function() {
+            var url = element.dataset.url;
+            window.location.href = `${url}`;
+            $('#sendAllTerimaEmailButton').prop('disabled', true);
         });
     } 
 
-    function allRejectedEmailData(element) {
-        $("#sendAllRejectedEmailButton").click(function() {
+    function allTolakEmailData(element) {
+        $("#sendAllTolakEmailButton").click(function() {
             var url = element.dataset.url;
             window.location.href = `${url}`;
-            $('#sendAllRejectedEmailButton').prop('disabled', true);
+            $('#sendAllTolakEmailButton').prop('disabled', true);
+        });
+    }  
+
+    function allLolosEmailData(element) {
+        $("#sendAllLolosEmailButton").click(function() {
+            var url = element.dataset.url;
+            window.location.href = `${url}`;
+            $('#sendAllLolosEmailButton').prop('disabled', true);
+        });
+    } 
+
+    function allTidakLolosEmailData(element) {
+        $("#sendAllTidakLolosEmailButton").click(function() {
+            var url = element.dataset.url;
+            window.location.href = `${url}`;
+            $('#sendAllTidakLolosEmailButton').prop('disabled', true);
         });
     }  
         
         const resetEmailLink = $('#resetEmailForm').attr('action');
         function resetEmailData(data) {
+            $('[name="email_sent"]').val('0');
+            $('[name="stage"]').val('1');
+            $('#resetEmailForm').attr('action',  `${resetEmailLink}/${data.id}`);
+        }
+
+        function resetEmailData2(data) {
+            $('[name="email_sent"]').val('1');
+            $('[name="stage"]').val('2');
             $('#resetEmailForm').attr('action',  `${resetEmailLink}/${data.id}`);
         }  
 
-        const acceptanceLink = $('#acceptanceForm').attr('action');
-        function acceptData(data) {
-            $('#acceptanceForm').attr('action',  `${acceptanceLink}/${data.id}`);
+        const penerimaanLink = $('#penerimaanForm').attr('action');
+        function terimaData(data) {
+            $('#penerimaanForm').attr('action',  `${penerimaanLink}/${data.id}`);
             $('[name="status"]').val('terima');
-            $('#acceptanceModalText').text('menerima');
+            $('#penerimaanModalText').text('menerima');
             $('#buttonStatusModalConfirm').text('Ya, Terima');
+        }  
+
+        function tolakData(data) {
+            $('#penerimaanForm').attr('action',  `${penerimaanLink}/${data.id}`);
+            $('[name="status"]').val('tolak');
+            $('#penerimaanModalText').text('menolak');
+            $('#buttonStatusModalConfirm').text('Ya, Tolak');
+        }  
+
+        const lolosLink = $('#lolosForm').attr('action');
+        function lolosData(data) {
+            $('#lolosForm').attr('action',  `${lolosLink}/${data.id}`);
+            $('[name="status"]').val('lolos');
+            $('#lolosModalText').text('meloloskan');
+            $('#buttonPelolosanModalConfirm').text('Ya, Loloskan');
         }  
 
         const deleteLink = $('#confirmDeleteForm').attr('action');
@@ -719,11 +1186,17 @@ $(document).ready(function(){
             $('#confirmDeleteForm').attr('action',  `${deleteLink}/${data.id}`);
         }  
 
-        function rejectData(data) {
-            $('#acceptanceForm').attr('action',  `${acceptanceLink}/${data.id}`);
-            $('[name="status"]').val('tolak');
-            $('#acceptanceModalText').text('menolak');
-            $('#buttonStatusModalConfirm').text('Ya, Tolak');
+        function tidakLolosData(data) {
+            $('#lolosForm').attr('action',  `${lolosLink}/${data.id}`);
+            $('[name="status"]').val('tidak_lolos');
+            $('#lolosModalText').text('tidak meloloskan');
+            $('#buttonPelolosanModalConfirm').text('Ya, Tidak Lolos');
+        }  
+
+        const stageLink = $('#stageForm').attr('action');
+        function stageData(data) {
+            $('#stageForm').attr('action',  `${stageLink}/${data.id}`);
+            $('[name="stage"]').val('2');
         }  
 
         function pengetahuanDivisi(data) {
