@@ -104,7 +104,6 @@ class RecruitmentController extends Controller
             'pengalaman_organisasi' => $request->pengalaman_organisasi,
             'minat_menjadi_pengurus' => $request->minat_menjadi_pengurus,
             'status' => 'proses',
-            'stage' => '1'
         ];
 
         RecruitmentUser::create($data);
