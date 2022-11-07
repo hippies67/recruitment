@@ -2,7 +2,7 @@
 
 # <p align="center"> **TAHU**NGODING </p>
 
-## Contributors
+## <p align="center">Contributors</p>
 
 <table align="center">
 <tr>
