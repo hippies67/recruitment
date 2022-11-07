@@ -1,10 +1,10 @@
-<p align="center"><img src="public/images/tahu.png" width="250"></p>
+<p align="center"><img src="https://avatars.githubusercontent.com/u/65649200?v=4" width="250"></p>
 
 # <p align="center"> **TAHU**NGODING </p>
 
 ## Contributors
 
-<table>
+<table align="center">
 <tr>
     <td align="center" colspan="2">Developed By</td>
 </tr>
