@@ -259,7 +259,7 @@ Recruitment
                     <i class="material-icons">close</i>
                 </button>
             </div>
-            <form class="form-horizontal" action="{{ route('recruitment-data.update', '') }}" id="editRecruitmentForm"
+            <form class="form-horizontal" action="{{ route('recruitment-data.update', $recruitments->id) }}" id="editRecruitmentForm"
                 method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -408,7 +408,7 @@ Recruitment
                                 // compare name in form to hidden field
                                 return ($(element).val() !== $('#checkRecruitmentYear').val());
                             },
-                           
+
                         }
                     },
                     edit_selayang_pandang:{
@@ -446,7 +446,7 @@ Recruitment
         const updateLink2 = $('#confirmDeleteForm').attr('action');
         function deleteData(data) {
             $('#confirmDeleteForm').attr('action',  `${updateLink2}/${data.id}`);
-        }  
+        }
 
         function selayangPandang(data, title) {
             $("#showContent").html('<p>'+ `${data.selayang_pandang}`+ '</p>');
@@ -459,7 +459,7 @@ Recruitment
             $('#activeModalTitle').text('Aktivasi Recruitment');
             $('#statusModalText').text('mengaktifkan');
             $('#buttonStatusModalConfirm').text('Ya, Aktifkan');
-        }  
+        }
 
         function notActiveData(data) {
             $('#activatingRecruitmentForm').attr('action',  `${activatingLink}/${data.id}`);
@@ -467,7 +467,7 @@ Recruitment
             $('#activeModalTitle').text('Aktivasi Recruitment');
             $('#statusModalText').text('menonaktifkan');
             $('#buttonStatusModalConfirm').text('Ya, Nonaktifkan');
-        }  
+        }
 
 </script>
 @endsection
