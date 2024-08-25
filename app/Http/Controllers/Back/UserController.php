@@ -17,8 +17,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data['user'] = User::all();
-        return view('back.user.data', $data);
+        if (auth()->user()->username == 'admin'){
+            $data['user'] = User::all();
+            return view('back.user.data', $data);
+        }
+        return view('back.user.data');
     }
 
     /**
@@ -27,7 +30,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function checkUsername(Request $request) 
+    public function checkUsername(Request $request)
     {
         if($request->Input('username')){
             $username = User::where('username',$request->Input('username'))->first();
@@ -48,7 +51,7 @@ class UserController extends Controller
         }
     }
 
-    public function checkEmail(Request $request) 
+    public function checkEmail(Request $request)
     {
         if($request->Input('email')){
             $email = User::where('email',$request->Input('email'))->first();
@@ -133,9 +136,9 @@ class UserController extends Controller
         return view('back.user.update_password', $data);
     }
 
-    public function updatePassword(Request $request, User $user) 
+    public function updatePassword(Request $request, User $user)
     {
-        
+
             $this->validate($request, [
                 'password_baru' => 'required',
                 'konfirmasi_password_baru' => 'same:password_baru',
@@ -144,7 +147,7 @@ class UserController extends Controller
                 'password_baru.required' => 'Password Baru harus di isi.',
                 'konfirmasi_password_baru.same' => 'Konfirmasi Password Baru tidak sama.',
             ]);
-        
+
         $data = [
             'password' => Hash::make($request->password_baru),
         ];
