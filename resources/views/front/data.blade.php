@@ -13,10 +13,10 @@
         <div>
             <figure><img src="{{ Storage::url(getActiveRecruitment()->banner) }}" alt="" class="img-fluid" width="350">
             </figure>
-            <h2>Open Member 2021</h2>
+            <h2>Open Member {{ getActiveRecruitment()->tahun }}</h2>
             <p>{{ getActiveRecruitment()->selayang_pandang }}</p>
         </div>
-        <div class="copy">© 2021 TAHUNGODING</div>
+        <div class="copy">&copy; <script>document.write(new Date().getFullYear())</script> TAHUNGODING</div>
     </div>
     <!-- /content-left-wrapper -->
 </div>
@@ -326,16 +326,16 @@
         $('#district-dropdown').on('change', function() {
             var district_id = this.value;
             console.log(district_id);
-            var element = $(this).find('option:selected'); 
-            var kecamatanValue = element.attr("data-name"); 
-            $('#kecamatanValue').val(kecamatanValue); 
+            var element = $(this).find('option:selected');
+            var kecamatanValue = element.attr("data-name");
+            $('#kecamatanValue').val(kecamatanValue);
             $("#village-dropdown").html('');
             $.ajax({
                 url:"{{url('get-villages-by-district')}}",
                 type: "POST",
                 data: {
                     district_id: district_id,
-                    _token: '{{csrf_token()}}' 
+                    _token: '{{csrf_token()}}'
                 },
                 dataType : 'json',
                 success: function(result){
@@ -347,13 +347,13 @@
                     });
                 }
             });
-        }); 
+        });
     });
 </script>
 
 <script>
     function show() {
-        // untuk membuat input tidak hidden 
+        // untuk membuat input tidak hidden
         $("#nim").css('display', 'block');
         $("#email").css('display', 'block');
     }
@@ -361,14 +361,14 @@
 
 <script>
     function submitValidate() {
-        // validate nim 
+        // validate nim
         if(!$('#nim').valid() && $('input[name=organization_1]:checked').val() && $('input[name=minat_menjadi_pengurus]:checked').val() && $('input[name=terms]:checked').val()) {
             Swal.fire({
             icon: 'info',
             title: 'Error',
             text: 'Nim yang anda masukan sudah tersedia'
             })
-        }    
+        }
         // validate email
         if(!$('#email').valid() && $('input[name=organization_1]:checked').val() && $('input[name=minat_menjadi_pengurus]:checked').val() && $('input[name=terms]:checked').val()) {
             Swal.fire({
@@ -376,33 +376,33 @@
             title: 'Error',
             text: 'Email yang anda masukan sudah tersedia'
             })
-        }    
+        }
     }
-    
+
     function validateAlamat() {
-        $('#district-dropdown').valid();    
+        $('#district-dropdown').valid();
     }
 
     function validateProdi() {
-        $('#program_studi').valid();    
+        $('#program_studi').valid();
     }
 
     function validateSemester() {
-        $('#semester').valid();    
+        $('#semester').valid();
     }
 
     function validateNim() {
-        $('#nim').valid();    
+        $('#nim').valid();
     }
 
     function validateEmail() {
-        $('#email').valid();    
+        $('#email').valid();
     }
-    
+
     function divisionData(data) {
         $("#divisionModalText").html(data.deskripsi)
     }
-    
+
     function specializationData(data) {
         $("#specializationModalText").html(data.deskripsi)
     }
@@ -446,7 +446,7 @@
                 $("#errorElement").css('display', 'none');
             }
         });
-        // make the error validation from divisi disappeared 
+        // make the error validation from divisi disappeared
         $('input[type=radio][name=divisi]').change(function() {
             if ($('input[name=divisi]:checked').val()) {
                 $(".error").css('display', 'none');
@@ -457,15 +457,15 @@
         // function errorValidation() {
         //     if( !$('input[name=spesialisasi_divisi]:checked').val())  {
         //         $(".spesialisasi-divisi-error").css('display', 'block');
-        //     } 
+        //     }
         // }
-        // // make the error validation from bidang divisi(iot) disappeared 
+        // // make the error validation from bidang divisi(iot) disappeared
         // $('input[type=radio][name=spesialisasi_divisi]').change(function() {
         //     if ($('input[name=spesialisasi_divisi]:checked').val()) {
         //         $(".spesialisasi-divisi-error").css('display', 'none');
         //     }
         // });
-        
+
 </script>
 
 @endsection
