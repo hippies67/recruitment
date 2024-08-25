@@ -47,9 +47,15 @@ User Manajement
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
+                @php
+                    $auth = Auth::user();
+                    $increments = 1;
+                @endphp
+                @if($auth->username == 'admin')
                 <div class="form-group mb-4">
                     <button data-toggle="modal" data-target="#tambahModal" class="btn btn-sm btn-dark">Tambah</button>
                 </div>
+                @endif
                 <h5 class="header-title pb-2">Data Akun Anda</h5>
                 <table id="user_loggedin"class="table table-striped table-bordered">
                     <thead>
@@ -62,10 +68,6 @@ User Manajement
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                            $auth = Auth::user();
-                            $increments = 1;
-                        @endphp
                         <tr>
                             <td>{{ $increments++ }}</td>
                             <td>{{ $auth->name }}</td>
@@ -82,6 +84,7 @@ User Manajement
                         </tr>
                     </tbody>
                 </table>
+                @if($auth->username == 'admin')
                 @php
                     $increments = 1;
                 @endphp
@@ -115,11 +118,12 @@ User Manajement
                         @endforeach
                     </tbody>
                 </table>
+                @endif
             </div>
         </div>
     </div>
 </div>
-
+@if($auth->username == 'admin')
 <!-- Modal Tambah -->
 <div class="modal fade" id="tambahModal" tabindex="-1" role="dialog" aria-labelledby="TambahModalTitle"
     aria-hidden="true">
@@ -164,7 +168,7 @@ User Manajement
         </div>
     </div>
 </div>
-
+@endif
 <!-- Modal Edit -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -325,7 +329,7 @@ User Manajement
                         required: "Konfirmasi Password harus di isi",
                         equalTo: "Konfirmasi Password tidak sama"
                     },
-                    
+
                 },
                 submitHandler: function(form) {
                     $("#tambahButton").prop('disabled', true);
@@ -351,7 +355,7 @@ User Manajement
                                 // compare name in form to hidden field
                                 return ($(element).val() !== $('#checkUsername').val());
                             },
-                           
+
                         }
                     },
                     edit_email:{
@@ -366,7 +370,7 @@ User Manajement
                                 // compare name in form to hidden field
                                 return ($(element).val() !== $('#checkEmail').val());
                             },
-                           
+
                         }
                     },
                     edit_password : {
@@ -425,6 +429,6 @@ User Manajement
         const updateLink2 = $('#confirmDeleteForm').attr('action');
         function deleteData(data) {
             $('#confirmDeleteForm').attr('action',  `${updateLink2}/${data.id}`);
-        }  
+        }
 </script>
 @endsection
