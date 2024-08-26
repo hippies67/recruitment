@@ -50,7 +50,7 @@ Semester
                 <div class="form-group mb-4">
                     <button data-toggle="modal" data-target="#tambahModal" class="btn btn-sm btn-dark">Tambah</button>
                 </div>
-                <table id="semester_table" class="table table-striped table-bordered">
+                <table id="semester_table" class="table table-striped table-bordered"  style="width: 100%">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -231,7 +231,7 @@ Semester
                                 // compare name in form to hidden field
                                 return ($(element).val() !== $('#checkSemesterName').val());
                             },
-                           
+
                         }
                     },
                 },
@@ -259,6 +259,6 @@ Semester
         const updateLink2 = $('#confirmDeleteForm').attr('action');
         function deleteData(data) {
             $('#confirmDeleteForm').attr('action',  `${updateLink}/${data.id}`);
-        }  
+        }
 </script>
 @endsection

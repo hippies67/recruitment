@@ -57,7 +57,7 @@ User Manajement
                 </div>
                 @endif
                 <h5 class="header-title pb-2">Data Akun Anda</h5>
-                <table id="user_loggedin"class="table table-striped table-bordered">
+                <table id="user_loggedin"class="table table-striped table-bordered"  style="width: 100%">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -89,7 +89,7 @@ User Manajement
                     $increments = 1;
                 @endphp
                 <h5 class="header-title pb-2 pt-4">Data User</h5>
-                <table id="user_table" class="table table-striped table-bordered">
+                <table id="user_table" class="table table-striped table-bordered" style="width: 100%">
                     <thead>
                         <tr>
                             <th>#</th>

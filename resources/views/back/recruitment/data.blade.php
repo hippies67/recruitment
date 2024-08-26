@@ -59,7 +59,7 @@ Recruitment
                 <div class="form-group mb-4">
                     <button data-toggle="modal" data-target="#tambahModal" class="btn btn-sm btn-dark">Tambah</button>
                 </div>
-                <table id="recruitment_table" class="table table-striped table-bordered">
+                <table id="recruitment_table" class="table table-striped table-bordered" style="width: 100%">
                     <thead>
                         <tr>
                             <th>Tahun</th>
