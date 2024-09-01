@@ -73,4 +73,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('user-management/update-password/{user}', [UserController::class, 'updatePassword'])->name('user-managements.updatePassword');
     Route::post('check-username', [UserController::class, 'checkUsername'])->name('checkUsername');
     Route::post('check-email', [UserController::class, 'checkEmail'])->name('checkEmail');
+    Route::get('/recruitment-user/export', [RecruitmentUserController::class, 'export']);
 });
