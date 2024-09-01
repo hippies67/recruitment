@@ -25,7 +25,7 @@ Recruitment
         </div>
     </div>
 </div>
-
+<a href="/recruitment-user/export" class="btn btn-success my-3" target="_blank">EXPORT EXCEL</a>
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -335,7 +335,7 @@ Recruitment
                     </div>
                     <div class="tab-pane fade" id="lolos" role="tabpanel" aria-labelledby="lolos-tab">
                         <br>
-                        @if(count($recruitment_user_lolos) < 1) @else 
+                        @if(count($recruitment_user_lolos) < 1) @else
                             <div class="form-group">
                                 <button class="btn btn-dark" data-url="{{ route('recruitment-users.send_all_lolos_email') }}"
                                     data-toggle="modal" data-target="#sendAllLolosEmailModal"
@@ -446,7 +446,7 @@ Recruitment
                     </div>
                     <div class="tab-pane fade" id="tidakLolos" role="tabpanel" aria-labelledby="proses-tab">
                         <br>
-                        @if(count($recruitment_user_tidak_lolos) < 1) @else 
+                        @if(count($recruitment_user_tidak_lolos) < 1) @else
                             <div class="form-group">
                                 <button class="btn btn-dark"
                                     data-url="{{ route('recruitment-users.send_all_tidak_lolos_email') }}"
@@ -550,7 +550,7 @@ Recruitment
                     </div>
                     <div class="tab-pane fade" id="terima" role="tabpanel" aria-labelledby="terima-tab">
                         <br>
-                        @if(count($recruitment_user_terima) < 1) @else 
+                        @if(count($recruitment_user_terima) < 1) @else
                             <div class="form-group">
                                 <button class="btn btn-dark" data-url="{{ route('recruitment-users.send_all_terima_email') }}"
                                     data-toggle="modal" data-target="#sendAllTerimaEmailModal"
@@ -653,7 +653,7 @@ Recruitment
                     </div>
                     <div class="tab-pane fade" id="tolak" role="tabpanel" aria-labelledby="tolak-tab">
                         <br>
-                        @if(count($recruitment_user_tolak) < 1) @else 
+                        @if(count($recruitment_user_tolak) < 1) @else
                             <div class="form-group">
                                 <button class="btn btn-dark" data-url="{{ route('recruitment-users.send_all_tolak_email') }}"
                                     data-toggle="modal" data-target="#sendAllTolakEmailModal"
@@ -1065,7 +1065,7 @@ $(document).ready(function() {
 });
 
 $(document).ready(function(){
-       
+
         $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
             localStorage.setItem('activeTab', $(e.target).attr('href'));
         });
@@ -1080,7 +1080,7 @@ $(document).ready(function(){
         $($.fn.dataTable.tables(true)).DataTable()
            .columns.adjust()
            .responsive.recalc();
-        }); 
+        });
     });
 
     function terimaEmailData(element, data) {
@@ -1090,7 +1090,7 @@ $(document).ready(function(){
             window.location.href = `${url}`;
             $('#sendEmailButton').prop('disabled', true);
         });
-    }  
+    }
 
     function tolakEmailData(element) {
         $("#keteranganEmail").html('penolakan');
@@ -1099,8 +1099,8 @@ $(document).ready(function(){
             window.location.href = `${url}`;
             $('#sendEmailButton').prop('disabled', true);
         });
-    } 
-     
+    }
+
     function lolosEmailData(element, data) {
         $("#keteranganEmail").html('lolos');
         $("#sendEmailButton").click(function() {
@@ -1108,7 +1108,7 @@ $(document).ready(function(){
             window.location.href = `${url}`;
             $('#sendEmailButton').prop('disabled', true);
         });
-    }  
+    }
 
     function tidakLolosEmailData(element) {
         $("#keteranganEmail").html('tidak lolos');
@@ -1117,7 +1117,7 @@ $(document).ready(function(){
             window.location.href = `${url}`;
             $('#sendEmailButton').prop('disabled', true);
         });
-    }  
+    }
 
     function allTerimaEmailData(element) {
         $("#sendAllTerimaEmailButton").click(function() {
@@ -1125,7 +1125,7 @@ $(document).ready(function(){
             window.location.href = `${url}`;
             $('#sendAllTerimaEmailButton').prop('disabled', true);
         });
-    } 
+    }
 
     function allTolakEmailData(element) {
         $("#sendAllTolakEmailButton").click(function() {
@@ -1133,7 +1133,7 @@ $(document).ready(function(){
             window.location.href = `${url}`;
             $('#sendAllTolakEmailButton').prop('disabled', true);
         });
-    }  
+    }
 
     function allLolosEmailData(element) {
         $("#sendAllLolosEmailButton").click(function() {
@@ -1141,7 +1141,7 @@ $(document).ready(function(){
             window.location.href = `${url}`;
             $('#sendAllLolosEmailButton').prop('disabled', true);
         });
-    } 
+    }
 
     function allTidakLolosEmailData(element) {
         $("#sendAllTidakLolosEmailButton").click(function() {
@@ -1149,8 +1149,8 @@ $(document).ready(function(){
             window.location.href = `${url}`;
             $('#sendAllTidakLolosEmailButton').prop('disabled', true);
         });
-    }  
-        
+    }
+
         const resetEmailLink = $('#resetEmailForm').attr('action');
         function resetEmailData(data) {
             $('[name="email_sent"]').val('0');
@@ -1162,7 +1162,7 @@ $(document).ready(function(){
             $('[name="email_sent"]').val('1');
             $('[name="stage"]').val('2');
             $('#resetEmailForm').attr('action',  `${resetEmailLink}/${data.id}`);
-        }  
+        }
 
         const penerimaanLink = $('#penerimaanForm').attr('action');
         function terimaData(data) {
@@ -1170,14 +1170,14 @@ $(document).ready(function(){
             $('[name="status"]').val('terima');
             $('#penerimaanModalText').text('menerima');
             $('#buttonStatusModalConfirm').text('Ya, Terima');
-        }  
+        }
 
         function tolakData(data) {
             $('#penerimaanForm').attr('action',  `${penerimaanLink}/${data.id}`);
             $('[name="status"]').val('tolak');
             $('#penerimaanModalText').text('menolak');
             $('#buttonStatusModalConfirm').text('Ya, Tolak');
-        }  
+        }
 
         const lolosLink = $('#lolosForm').attr('action');
         function lolosData(data) {
@@ -1185,39 +1185,39 @@ $(document).ready(function(){
             $('[name="status"]').val('lolos');
             $('#lolosModalText').text('meloloskan');
             $('#buttonPelolosanModalConfirm').text('Ya, Loloskan');
-        }  
+        }
 
         const deleteLink = $('#confirmDeleteForm').attr('action');
         function deleteData(data) {
             $('#confirmDeleteForm').attr('action',  `${deleteLink}/${data.id}`);
-        }  
+        }
 
         function tidakLolosData(data) {
             $('#lolosForm').attr('action',  `${lolosLink}/${data.id}`);
             $('[name="status"]').val('tidak_lolos');
             $('#lolosModalText').text('tidak meloloskan');
             $('#buttonPelolosanModalConfirm').text('Ya, Tidak Lolos');
-        }  
+        }
 
         const stageLink = $('#stageForm').attr('action');
         function stageData(data) {
             $('#stageForm').attr('action',  `${stageLink}/${data.id}`);
             $('[name="stage"]').val('2');
-        }  
+        }
 
         function pengetahuanDivisi(data) {
             $('#showModalTitle').text('Pengetahuan Divisi');
             $('#showModalText').text(data.pengetahuan_divisi);
-        }  
+        }
 
         function pengalamanDivisi(data) {
             $('#showModalTitle').text('Pengalaman Divisi');
             $('#showModalText').text(data.pengalaman_divisi);
-        }  
+        }
 
         function pengalamanOrganisasi(data) {
             $('#showModalTitle').text('Pengalaman Organisasi');
             $('#showModalText').text(data.pengalaman_organisasi);
-        }  
+        }
 </script>
 @endsection

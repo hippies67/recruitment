@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Back;
 
+use App\Exports\RecruitmentUserExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RecruitmentUser;
@@ -10,6 +11,7 @@ use App\Mail\TolakRecruitmentMail;
 use App\Mail\LolosRecruitmentMail;
 use App\Mail\TidakLolosRecruitmentMail;
 use Alert;
+use Maatwebsite\Excel\Facades\Excel;
 use Mail;
 
 class RecruitmentUserController extends Controller
@@ -81,7 +83,7 @@ class RecruitmentUserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {      
+    {
         $recruitment_user = RecruitmentUser::findOrFail($id);
 
         $data = [
@@ -205,7 +207,7 @@ class RecruitmentUserController extends Controller
     public function reset_email(Request $request, $id)
     {
         $recruitment_user = RecruitmentUser::findOrFail($id);
-        
+
         $recruitment_user->update(['email_sent' => $request->email_sent, 'stage' => $request->stage])
         ? Alert::success('Berhasil', "Email telah berhasil direset!")
         : Alert::error('Error', "Email gagal direset.");
@@ -231,7 +233,7 @@ class RecruitmentUserController extends Controller
                 : Alert::error('Error', "Email gagal dikirim.");
             }
         }
-                
+
         return redirect()->back();
     }
 
@@ -253,7 +255,7 @@ class RecruitmentUserController extends Controller
                 : Alert::error('Error', "Email gagal dikirim.");
             }
         }
-                
+
         return redirect()->back();
     }
 
@@ -275,7 +277,7 @@ class RecruitmentUserController extends Controller
                 : Alert::error('Error', "Email gagal dikirim.");
             }
         }
-                
+
         return redirect()->back();
     }
 
@@ -297,7 +299,11 @@ class RecruitmentUserController extends Controller
                 : Alert::error('Error', "Email gagal dikirim.");
             }
         }
-                
+
         return redirect()->back();
+    }
+
+    public function export() {
+        return Excel::download(new RecruitmentUserExport, 'data recruitment.xlsx');
     }
 }
