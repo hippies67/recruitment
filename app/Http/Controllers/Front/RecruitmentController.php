@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\CV;
 use Illuminate\Http\Request;
 use App\Models\Recruitment;
 use App\Models\RecruitmentUser;
@@ -13,6 +14,7 @@ use App\Models\StudentClass;
 use App\Models\SpecializationDivision;
 use App\Models\District;
 use App\Models\Village;
+use Illuminate\Support\Facades\DB;
 
 class RecruitmentController extends Controller
 {
@@ -44,7 +46,7 @@ class RecruitmentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function checkEmail(Request $request) 
+    public function checkEmail(Request $request)
     {
         if($request->Input('email')){
             $email = RecruitmentUser::where('email',$request->Input('email'))->first();
@@ -56,7 +58,7 @@ class RecruitmentController extends Controller
         }
     }
 
-    public function checkNim(Request $request) 
+    public function checkNim(Request $request)
     {
         if($request->Input('nim')){
             $nim = RecruitmentUser::where('nim',$request->Input('nim'))->first();
@@ -88,6 +90,23 @@ class RecruitmentController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nama_lengkap' => 'required',
+            'nim' => 'required',
+            'email' => 'required',
+            'kecamatan' => 'required',
+            'desa' => 'required',
+            'kelas' => 'required',
+            'program_studi' => 'required',
+            'semester' => 'required',
+            'divisi_value' => 'required',
+            'spesialisasi_divisi' => 'required',
+            'pengetahuan_divisi' => 'required',
+            'pengalaman_divisi' => 'required',
+            'pengalaman_organisasi' => 'required',
+            'minat_menjadi_pengurus' => 'required',
+            'file' => 'required',
+        ]);
         $data = [
             'recruitment' => getActiveRecruitment()->id,
             'nama_lengkap' => $request->nama_lengkap,
@@ -103,11 +122,21 @@ class RecruitmentController extends Controller
             'pengalaman_divisi' => $request->pengalaman_divisi,
             'pengalaman_organisasi' => $request->pengalaman_organisasi,
             'minat_menjadi_pengurus' => $request->minat_menjadi_pengurus,
-            'status' => 'proses',
+            'status' => 'proses'
         ];
+        $file = $request->file('file')->store("/public/input/recruitments");
 
         RecruitmentUser::create($data);
-        
+        $userId = DB::table('recruitment_users')
+            ->select('id')
+            ->where('nim', '=', $data['nim'])
+            ->get();
+
+        $dataCV = [
+            'user' => $userId[0]->id,
+            'fileName' => $file
+        ];
+        CV::create($dataCV);
         return redirect()->back()->with('sukses', 'Data telah berhasil dikirim');
     }
 
