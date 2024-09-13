@@ -105,7 +105,7 @@ class RecruitmentController extends Controller
             'pengalaman_divisi' => 'required',
             'pengalaman_organisasi' => 'required',
             'minat_menjadi_pengurus' => 'required',
-            'file' => 'required',
+            'file' => 'required|mimetypes:application/pdf',
         ]);
         $data = [
             'recruitment' => getActiveRecruitment()->id,
