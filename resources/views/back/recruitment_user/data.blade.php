@@ -156,6 +156,12 @@ Recruitment
                                     </td>
                                     <td>
                                         <div class="form-group">
+
+                                            @foreach($recruitment_user_cv as $cv)
+                                                @if($recruitments->id == $cv->user)
+                                                    <a class="btn btn-success" href={{Storage::url($cv->fileName)}}>Download CV</a>
+                                                @endif
+                                            @endforeach
                                             @if($recruitments->stage == '1')
                                             @if($recruitments->email_sent == '0')
                                                 @if($recruitments->status == 'lolos')
@@ -317,6 +323,11 @@ Recruitment
                                     <td><span class="badge badge-secondary">{{ $recruitments->status }}</span></td>
                                     <td>
                                         <div class="form-group">
+                                            @foreach($recruitment_user_cv as $cv)
+                                                @if($recruitments->id == $cv->user)
+                                                    <a class="btn btn-success" href={{Storage::url($cv->fileName)}}>Download CV</a>
+                                                @endif
+                                            @endforeach
                                             <button class="btn btn-sm btn-dark" data-toggle="modal"
                                                 data-target="#pelolosanModal"
                                                 onclick="lolosData({{ $recruitments }})">Lolos</button>
@@ -409,6 +420,11 @@ Recruitment
                                     <td><span class="badge badge-secondary">{{ $recruitments->status }}</span></td>
                                     <td>
                                         <div class="form-group">
+                                            @foreach($recruitment_user_cv as $cv)
+                                                @if($recruitments->id == $cv->user)
+                                                    <a class="btn btn-success" href={{Storage::url($cv->fileName)}}>Download CV</a>
+                                                @endif
+                                            @endforeach
                                             @if($recruitments->email_sent == '0')
                                             <button class="btn btn-sm btn-warning" data-toggle="modal"
                                                 data-target="#pelolosanModal"
@@ -520,6 +536,12 @@ Recruitment
                                     <td><span class="badge badge-secondary">{{ str_replace('_', ' ', $recruitments->status) }}</span></td>
                                     <td>
                                         <div class="form-group">
+
+                                            @foreach($recruitment_user_cv as $cv)
+                                                @if($recruitments->id == $cv->user)
+                                                    <a class="btn btn-success" href={{Storage::url($cv->fileName)}}>Download CV</a>
+                                                @endif
+                                            @endforeach
                                             @if($recruitments->email_sent == '0')
                                             <button class="btn btn-sm btn-dark" data-toggle="modal"
                                                 data-target="#pelolosanModal"
@@ -623,6 +645,12 @@ Recruitment
                                     <td><span class="badge badge-secondary">{{ $recruitments->status }}</span></td>
                                     <td>
                                         <div class="form-group">
+
+                                            @foreach($recruitment_user_cv as $cv)
+                                                @if($recruitments->id == $cv->user)
+                                                    <a class="btn btn-success" href={{Storage::url($cv->fileName)}}>Download CV</a>
+                                                @endif
+                                            @endforeach
                                             @if($recruitments->email_sent == '1')
                                             <button class="btn btn-sm btn-warning" data-toggle="modal"
                                                 data-target="#penerimaanModal"
@@ -725,6 +753,11 @@ Recruitment
                                     <td><span class="badge badge-secondary">{{ $recruitments->status }}</span></td>
                                     <td>
                                         <div class="form-group">
+                                            @foreach($recruitment_user_cv as $cv)
+                                                @if($recruitments->id == $cv->user)
+                                                    <a class="btn btn-success" href={{Storage::url($cv->fileName)}}>Download CV</a>
+                                                @endif
+                                            @endforeach
                                             @if($recruitments->email_sent == '1')
                                             <button class="btn btn-sm btn-dark" data-toggle="modal" data-target="#penerimaanModal"
                                                 onclick="terimaData({{ $recruitments }})">Terima</button>
