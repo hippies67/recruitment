@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Back;
 
 use App\Exports\RecruitmentUserExport;
 use App\Http\Controllers\Controller;
+use App\Models\CV;
 use Illuminate\Http\Request;
 use App\Models\RecruitmentUser;
 use App\Mail\TerimaRecruitmentMail;
@@ -24,6 +25,7 @@ class RecruitmentUserController extends Controller
     public function index()
     {
         $data['recruitment_user'] = RecruitmentUser::all();
+        $data['recruitment_user_cv'] = CV::all();
         $data['recruitment_user_proses'] = RecruitmentUser::where('status', '=', 'proses')->get();
         $data['recruitment_user_lolos'] = RecruitmentUser::where('status', '=', 'lolos')->get();
         $data['recruitment_user_tidak_lolos'] = RecruitmentUser::where('status', '=', 'tidak_lolos')->get();
