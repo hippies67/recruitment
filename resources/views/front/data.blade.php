@@ -1,5 +1,6 @@
 @extends('layouts.front')
 @section('content')
+
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <div class="col-lg-6 content-left">
     <div class="content-left-wrapper">
@@ -49,8 +50,13 @@
             <div id="progressbar"></div>
         </div>
         <!-- /top-wizard -->
-
-        <form id="wrapped" action="{{ route('store') }}" method="POST">
+        @if ($errors->any())
+            <div class="alert alert-danger alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>Pendaftaran gagal. Isi form yang dengan benar!</strong>
+            </div>
+        @endif
+        <form id="wrapped" action="{{ route('store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input id="website" name="website" type="text" value="">
             <input type="hidden" id="checkNim">
@@ -200,7 +206,7 @@
                         ?
                     </h3>
                     <div class="form-group">
-                        <textarea name="pengalaman_divisi" class="form-control" style="height:100px;"></textarea>
+                        <textarea name="pengalaman_divisi" class="form-control required" style="height:100px;"></textarea>
                     </div>
                 </div>
 
@@ -246,6 +252,12 @@
                                             class="required">
                                         <span class="checkmark"></span>
                                     </label>
+                                </div>
+                            </li>
+                            <li><strong>3</strong>
+                                <div class="form-group">
+                                    <h5 style="color: #222222 !important">Upload CV (Only PDF)</h5>
+                                    <input type="file" name="file" class="form-control required" id="file" accept="application/pdf">
                                 </div>
                             </li>
                         </ul>
@@ -428,6 +440,9 @@
                 $("#errorElement").css('display', 'none');
                 $("#submitButton").attr("type", "submit");
             }
+            // if( document.getElementById("file").files.length == 0 ){
+            //     console.log("no files selected");
+            // }
         }
         // show textarea if the yes radio button is clicked (old) prevent textarea to not disappear when the website is refreshed
         if($('input[name=organization_1]:checked').val() == 'Ya') {
