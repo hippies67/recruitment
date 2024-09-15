@@ -54,7 +54,7 @@
             <div class="error-info">
                 <h1 style="color: #ffffff !important;">Recruitment</h1>
                 <h1 style="color: #ffffff !important;">Closed</h1>
-                <p style="color: #ffffff !important;">Open member tahungoding 2021 telah ditutup <br>terima kasih kami ucapkan kepada kalian yang <br>telah antusias untuk mendaftar.</p>
+                <p style="color: #ffffff !important;">Open member tahungoding <script>document.write(new Date().getFullYear())</script> telah ditutup <br>terima kasih kami ucapkan kepada kalian yang <br>telah antusias untuk mendaftar.</p>
                 <p style="color: #ffffff !important;">Untuk mengetahui informasi lainnya terkait <br>tahungoding follow akun sosial media kita di :</p>
                 <div class="row">
                     <div class="col">
