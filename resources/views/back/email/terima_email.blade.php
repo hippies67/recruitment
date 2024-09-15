@@ -28,8 +28,28 @@
                                     <tr>
                                         <td>
                                             <p style="color: #222; font-family: 'Roboto', sans-serif;">Hi {{ $recruitment_user->nama_lengkap }}</p>
-                                            <p style="color: #222; font-family: 'Roboto', sans-serif;"><b>Selamat</b> kamu <b
-                                                    style="color:green; font-family: 'Roboto', sans-serif;">DITERIMA</b> bergabung bersama kami di TAHUNGODING.</p>                                            
+                                            <p style="color: #222; font-family: 'Roboto', sans-serif;"><b>Selamat</b> kamu dinyatakan <b
+                                                    style="color:green; font-family: 'Roboto', sans-serif;">LOLOS</b> pada tahap kedua proses seleksi seleksi wawancara Open Recruitment TAHUNGODING {{ $recruitment_user->recruitments->tahun }}. Tahap selanjutnya adalah, kamu wajib masuk ke group whatsapp dibawah ini untuk informasi selanjutnya.</p>
+                                            <p>Tahap selanjutnya adalah, kamu wajib masuk ke group whatsapp utama TAHUNGODING dibawah ini.</p>
+                                            <table role="presentation" border="0" cellpadding="0" cellspacing="0"
+                                                   class="btn btn-primary">
+                                                <tbody>
+                                                <tr>
+                                                    <td align="left">
+                                                        <table role="presentation" border="0" cellpadding="0"
+                                                               cellspacing="0">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td> <a href="https://wa.me/oqm-kxmr-bzz"
+                                                                        target="_blank">Grup Whatshapp</a> </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
                                             <p style="color: #222; font-family: 'Roboto', sans-serif;">Terimakasih sudah berpartisipasi dalam Open Recruitment TAHUNGODING {{ $recruitment_user->recruitments->tahun }}, Kami tunggu KARYA MU !</p>
                                             <br>
                                             <p style="color: #222; font-family: 'Roboto', sans-serif;">Regards,</p>
@@ -52,13 +72,13 @@
                             <tr>
                                 <td class="content-block">
                                     <span class="apple-link">Jl. Angrek no. 19</span>
-                                    <br> 
-                                    STMIK SUMEDANG
+                                    <br>
+                                    UNIVERSITAS SEBELAS APRIL
                                 </td>
                             </tr>
                             <tr>
                                 <td class="content-block powered-by">
-                                   <a href="http://tahungoding.com/"><i> <h3><b>tahungoding.com</b></h3></i></a>
+                                   <a href="http://tahungoding.id/"><i> <h3><b>tahungoding.id</b></h3></i></a>
                                 </td>
                             </tr>
                         </table>

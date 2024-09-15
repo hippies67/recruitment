@@ -28,10 +28,11 @@
                                     <tr>
                                         <td>
                                             <p style="color: #222; font-family: 'Roboto', sans-serif;">Hi {{ $recruitment_user->nama_lengkap }}</p>
-                                            <p style="color: #222; font-family: 'Roboto', sans-serif;"><b>Mohon</b> maaf untuk saat ini kamu <b
-                                                    style="color:red; font-family: 'Roboto', sans-serif;">BELUM</b> bisa menjadi bagian dari TAHUNGODING karena satu dan dua hal.</p>
+                                            <p style="color: #222; font-family: 'Roboto', sans-serif;">Terima kasih sudah meluangkan waktu kamu untuk mengikuti proses seleksi.</p>
+                                            <p style="color: #222; font-family: 'Roboto', sans-serif;"><b>Mohon</b> maaf untuk saat ini kamu dinyatakan <b
+                                                    style="color:red; font-family: 'Roboto', sans-serif;">TIDAK LOLOS</b> pada proses seleksi Open Recruitment TAHUNGODING 2024. Setelah mempertimbangkan hasil kualifikasi yang ada, kami tidak dapat melanjutkan kamu ke tahap berikutnya.</p>
                                             <p style="color: #222; font-family: 'Roboto', sans-serif;">Kamu bisa mencobanya <b>Kembali</b> di Open Recruitment TAHUNGODING selanjutnya.</p>
-                                            
+
                                             <p style="color: #222; font-family: 'Roboto', sans-serif;">Terima kasih sudah berpartisipasi dalam Open Recruitment TAHUNGODING {{ $recruitment_user->recruitments->tahun }} tetap semangat dan teruslah berkarya dimanapun kamu berada !</p>
                                             <br>
                                             <p style="color: #222; font-family: 'Roboto', sans-serif;">Regards,</p>
@@ -54,13 +55,13 @@
                             <tr>
                                 <td class="content-block">
                                     <span class="apple-link">Jl. Angrek no. 19</span>
-                                    <br> 
-                                    STMIK SUMEDANG
+                                    <br>
+                                    UNIVERSITAS SEBELAS APRIL
                                 </td>
                             </tr>
                             <tr>
                                 <td class="content-block powered-by">
-                                   <a href="http://tahungoding.com/"><i> <h3><b>tahungoding.com</b></h3></i></a>
+                                   <a href="http://tahungoding.id/"><i> <h3><b>tahungoding.id</b></h3></i></a>
                                 </td>
                             </tr>
                         </table>

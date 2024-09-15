@@ -29,28 +29,26 @@
                                         <td>
                                             <p style="color: #222; font-family: 'Roboto', sans-serif;">Hi {{ $recruitment_user->nama_lengkap }}</p>
                                             <p style="color: #222; font-family: 'Roboto', sans-serif;"><b>Selamat</b> kamu dinyatakan <b
-                                                    style="color:green; font-family: 'Roboto', sans-serif;">LOLOS</b> pada tahap pertama proses seleksi Open
+                                                    style="color:green; font-family: 'Roboto', sans-serif;">LOLOS</b> pada tahap pertama proses seleksi Administrasi Open
                                                 Recruitment TAHUNGODING {{ $recruitment_user->recruitments->tahun }}.
                                             </p>
-                                            <p style="color: #222; font-family: 'Roboto', sans-serif;">Tahap selanjutnya adalah, kamu wajib menghadiri Video
-                                                Conference (Meeting Online) pada hari <b>Jum'at 24 September 2021 Pukul
-                                                    14:00 - Selesai</b></p>
+                                            <p style="color: #222; font-family: 'Roboto', sans-serif;">Tahap selanjutnya adalah, kamu wajib mengikuti proses seleksi wawancara dan masuk ke group whatsapp dibawah ini untuk informasi selanjutnya.</p>
                                             <table role="presentation" border="0" cellpadding="0" cellspacing="0"
-                                                class="btn btn-primary">
+                                                   class="btn btn-primary">
                                                 <tbody>
-                                                    <tr>
-                                                        <td align="left">
-                                                            <table role="presentation" border="0" cellpadding="0"
-                                                                cellspacing="0">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td> <a href="https://meet.google.com/oqm-kxmr-bzz"
-                                                                                target="_blank">Join Meeting</a> </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
+                                                <tr>
+                                                    <td align="left">
+                                                        <table role="presentation" border="0" cellpadding="0"
+                                                               cellspacing="0">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td> <a href="https://chat.whatsapp.com/KGFwKhl3IDG72sf9oRdjSY"
+                                                                        target="_blank">Grup Whatshapp</a> </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
                                                 </tbody>
                                             </table>
                                             <p style="color: #222; font-family: 'Roboto', sans-serif;">Terimakasih sudah berpartisipasi dalam Open
@@ -77,13 +75,13 @@
                             <tr>
                                 <td class="content-block">
                                     <span class="apple-link">Jl. Angrek no. 19</span>
-                                    <br> 
-                                    STMIK SUMEDANG
+                                    <br>
+                                    UNIVERSITAS SEBELAS APRIL
                                 </td>
                             </tr>
                             <tr>
                                 <td class="content-block powered-by">
-                                   <a href="http://tahungoding.com/"><i> <h3><b>tahungoding.com</b></h3></i></a>
+                                   <a href="http://tahungoding.id/"><i> <h3><b>tahungoding.id</b></h3></i></a>
                                 </td>
                             </tr>
                         </table>
