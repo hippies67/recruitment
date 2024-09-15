@@ -30,7 +30,7 @@
                                             <p style="color: #222; font-family: 'Roboto', sans-serif;">Hi {{ $recruitment_user->nama_lengkap }}</p>
                                             <p style="color: #222; font-family: 'Roboto', sans-serif;">Terima kasih sudah meluangkan waktu kamu untuk mengikuti proses seleksi.</p>
                                             <p style="color: #222; font-family: 'Roboto', sans-serif;"><b>Mohon</b> maaf untuk saat ini kamu dinyatakan <b
-                                                    style="color:red; font-family: 'Roboto', sans-serif;">TIDAK LOLOS</b> pada proses seleksi Open Recruitment TAHUNGODING 2024. Setelah mempertimbangkan hasil kualifikasi yang ada, kami tidak dapat melanjutkan kamu ke tahap berikutnya.</p>
+                                                    style="color:red; font-family: 'Roboto', sans-serif;">TIDAK LOLOS</b> pada proses seleksi Open Recruitment TAHUNGODING {{ $recruitment_user->recruitments->tahun }}. Setelah mempertimbangkan hasil kualifikasi yang ada, kami tidak dapat melanjutkan kamu ke tahap berikutnya.</p>
                                             <p style="color: #222; font-family: 'Roboto', sans-serif;">Kamu bisa mencobanya <b>Kembali</b> di Open Recruitment TAHUNGODING selanjutnya.</p>
 
                                             <p style="color: #222; font-family: 'Roboto', sans-serif;">Terima kasih sudah berpartisipasi dalam Open Recruitment TAHUNGODING {{ $recruitment_user->recruitments->tahun }} tetap semangat dan teruslah berkarya dimanapun kamu berada !</p>

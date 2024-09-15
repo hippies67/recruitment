@@ -29,7 +29,7 @@
                                         <td>
                                             <p style="color: #222; font-family: 'Roboto', sans-serif;">Hi {{ $recruitment_user->nama_lengkap }}</p>
                                             <p style="color: #222; font-family: 'Roboto', sans-serif;"><b>Selamat</b> kamu dinyatakan <b
-                                                    style="color:green; font-family: 'Roboto', sans-serif;">LOLOS</b> pada tahap kedua proses seleksi seleksi wawancara Open Recruitment TAHUNGODING {{ $recruitment_user->recruitments->tahun }}. Tahap selanjutnya adalah, kamu wajib masuk ke group whatsapp dibawah ini untuk informasi selanjutnya.</p>
+                                                    style="color:green; font-family: 'Roboto', sans-serif;">LOLOS</b> pada tahap kedua proses seleksi seleksi wawancara Open Recruitment TAHUNGODING {{ $recruitment_user->recruitments->tahun }}.</p>
                                             <p>Tahap selanjutnya adalah, kamu wajib masuk ke group whatsapp utama TAHUNGODING dibawah ini.</p>
                                             <table role="presentation" border="0" cellpadding="0" cellspacing="0"
                                                    class="btn btn-primary">
