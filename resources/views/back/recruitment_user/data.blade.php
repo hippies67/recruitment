@@ -299,7 +299,7 @@ Recruitment
                                     <td>{{ $recruitments->alamat }}</td>
                                     <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
                                     <td>{{ $recruitments->study_programs->nama }}</td>
-                                    <td>{{ $recruitments->semester }}</td>
+                                    <td>{{ $recruitments->semesters->nama }}</td>
                                     <td>{{ $recruitments->divisions->nama }}</td>
                                     <td>{{ $recruitments->specialization_divisions->nama }}</td>
                                     <td><button class="btn btn-sm btn-secondary" data-toggle="modal"
@@ -396,7 +396,7 @@ Recruitment
                                     <td>{{ $recruitments->alamat }}</td>
                                     <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
                                     <td>{{ $recruitments->study_programs->nama }}</td>
-                                    <td>{{ $recruitments->semester }}</td>
+                                    <td>{{ $recruitments->semesters->nama }}</td>
                                     <td>{{ $recruitments->divisions->nama }}</td>
                                     <td>{{ $recruitments->specialization_divisions->nama }}</td>
                                     <td><button class="btn btn-sm btn-secondary" data-toggle="modal"
@@ -513,7 +513,7 @@ Recruitment
                                     <td>{{ $recruitments->alamat }}</td>
                                     <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
                                     <td>{{ $recruitments->study_programs->nama }}</td>
-                                    <td>{{ $recruitments->semester }}</td>
+                                    <td>{{ $recruitments->semesters->nama }}</td>
                                     <td>{{ $recruitments->divisions->nama }}</td>
                                     <td>{{ $recruitments->specialization_divisions->nama }}</td>
                                     <td><button class="btn btn-sm btn-secondary" data-toggle="modal"
@@ -622,7 +622,7 @@ Recruitment
                                     <td>{{ $recruitments->alamat }}</td>
                                     <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
                                     <td>{{ $recruitments->study_programs->nama }}</td>
-                                    <td>{{ $recruitments->semester }}</td>
+                                    <td>{{ $recruitments->semesters->nama }}</td>
                                     <td>{{ $recruitments->divisions->nama }}</td>
                                     <td>{{ $recruitments->specialization_divisions->nama }}</td>
                                     <td><button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#showModal"
@@ -730,7 +730,7 @@ Recruitment
                                     <td>{{ $recruitments->alamat }}</td>
                                     <td>@if($recruitments->kelas){{ $recruitments->classes->nama }}@endif</td>
                                     <td>{{ $recruitments->study_programs->nama }}</td>
-                                    <td>{{ $recruitments->semester }}</td>
+                                    <td>{{ $recruitments->semesters->nama }}</td>
                                     <td>{{ $recruitments->divisions->nama }}</td>
                                     <td>{{ $recruitments->specialization_divisions->nama }}</td>
                                     <td><button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#showModal"
