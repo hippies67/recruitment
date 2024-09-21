@@ -15,6 +15,7 @@ use App\Models\SpecializationDivision;
 use App\Models\District;
 use App\Models\Village;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class RecruitmentController extends Controller
 {
@@ -90,6 +91,7 @@ class RecruitmentController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info($request);
         $request->validate([
             'nama_lengkap' => 'required',
             'nim' => 'required',

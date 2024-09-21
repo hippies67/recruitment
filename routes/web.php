@@ -74,4 +74,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('check-username', [UserController::class, 'checkUsername'])->name('checkUsername');
     Route::post('check-email', [UserController::class, 'checkEmail'])->name('checkEmail');
     Route::get('/recruitment-user/export', [RecruitmentUserController::class, 'export']);
+    Route::get('log-viewers', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 });
