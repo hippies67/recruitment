@@ -36,4 +36,7 @@ class RecruitmentUser extends Model
     {
         return $this->belongsTo(Recruitment::class, 'recruitment');
     }
+    public function semesters() {
+        return $this->belongsTo(Semester::class, 'semester');
+    }
 }
