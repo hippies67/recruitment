@@ -126,7 +126,8 @@ class RecruitmentController extends Controller
             'minat_menjadi_pengurus' => $request->minat_menjadi_pengurus,
             'status' => 'proses'
         ];
-        $file = $request->file('file')->store("/public/input/recruitments");
+        $namaFIle = str_replace(' ', '', $request->file('file')->getClientOriginalName());
+        $file = $request->file('file')->storeAs("/public/input/recruitments", time().'-'.$namaFIle);
 
         RecruitmentUser::create($data);
         $userId = DB::table('recruitment_users')
