@@ -16,6 +16,7 @@ use App\Models\District;
 use App\Models\Village;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class RecruitmentController extends Controller
 {
@@ -92,7 +93,7 @@ class RecruitmentController extends Controller
     public function store(Request $request)
     {
         Log::info($request);
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'nama_lengkap' => 'required',
             'nim' => 'required',
             'email' => 'required',
@@ -109,6 +110,12 @@ class RecruitmentController extends Controller
             'minat_menjadi_pengurus' => 'required',
             'file' => 'required|mimetypes:application/pdf',
         ]);
+        if ($validator->fails()) {
+            Log::error($validator->errors());
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
         $data = [
             'recruitment' => getActiveRecruitment()->id,
             'nama_lengkap' => $request->nama_lengkap,
@@ -140,6 +147,7 @@ class RecruitmentController extends Controller
             'fileName' => $file
         ];
         CV::create($dataCV);
+        Log::info($request->nama_lengkap.' berhasil terdaftar');
         return redirect()->back()->with('sukses', 'Data telah berhasil dikirim');
     }
 

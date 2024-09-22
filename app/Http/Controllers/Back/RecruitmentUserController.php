@@ -12,6 +12,7 @@ use App\Mail\TolakRecruitmentMail;
 use App\Mail\LolosRecruitmentMail;
 use App\Mail\TidakLolosRecruitmentMail;
 use Alert;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Mail;
 
@@ -124,8 +125,10 @@ class RecruitmentUserController extends Controller
 
         if(count(Mail::failures()) > 0) {
             Alert::error('Error', "Email gagal dikirim!");
+            Log::error('Email gagal dikirim (send_lolos_email_no_stage_update)');
         } else {
             Alert::success('Berhasil', "Email telah berhasil dikirim.");
+            Log::info('Email berhasil dikirim (send_lolos_email_no_stage_update)');
         }
 
         return redirect()->back();
@@ -140,8 +143,10 @@ class RecruitmentUserController extends Controller
 
         if(count(Mail::failures()) > 0) {
             Alert::error('Error', "Email gagal dikirim!");
+            Log::error('Email gagal dikirim (send_lolos_email)');
         } else {
             Alert::success('Berhasil', "Email telah berhasil dikirim.");
+            Log::info('Email berhasil dikirim (send_lolos_email)');
         }
 
         return redirect()->back();
@@ -156,8 +161,10 @@ class RecruitmentUserController extends Controller
 
         if(count(Mail::failures()) > 0) {
             Alert::error('Error', "Email gagal dikirim!");
+            Log::error('Email gagal dikirim (send_tidak_lolos_email)');
         } else {
             Alert::success('Berhasil', "Email telah berhasil dikirim.");
+            Log::info('Email berhasil dikirim (send_tidak_lolos_email)');
         }
 
         return redirect()->back();
@@ -183,8 +190,10 @@ class RecruitmentUserController extends Controller
 
         if(count(Mail::failures()) > 0) {
             Alert::error('Error', "Email gagal dikirim!");
+            Log::error('Email gagal dikirim (send_terima_email)');
         } else {
             Alert::success('Berhasil', "Email telah berhasil dikirim.");
+            Log::info('Email berhasil dikirim (send_terima_email)');
         }
 
         return redirect()->back();
@@ -199,8 +208,10 @@ class RecruitmentUserController extends Controller
 
         if(count(Mail::failures()) > 0) {
             Alert::error('Error', "Email gagal dikirim!");
+            Log::error('Email gagal dikirim (send_tolak_email)');
         } else {
             Alert::success('Berhasil', "Email telah berhasil dikirim.");
+            Log::info('Email berhasil dikirim (send_tolak_email)');
         }
 
         return redirect()->back();
@@ -230,9 +241,13 @@ class RecruitmentUserController extends Controller
 
                 Mail::to($recruitment->email)->send(new LolosRecruitmentMail($recruitment));
 
-                $recruitment->update(['email_sent' => 1, 'stage' => 2])
-                ? Alert::success('Berhasil', "Email telah berhasil dikirim!")
-                : Alert::error('Error', "Email gagal dikirim.");
+                if ($recruitment->update(['email_sent' => 1, 'stage' => 2])){
+                    Alert::success('Berhasil', "Email telah berhasil dikirim!");
+                    Log::info('Semua Email berhasil dikirim (send_all_lolos_email)');
+                }else {
+                    Alert::error('Error', "Email gagal dikirim.");
+                    Log::error('Semua Email gagal dikirim (send_all_lolos_email)');
+                }
             }
         }
 
@@ -252,9 +267,13 @@ class RecruitmentUserController extends Controller
 
                 Mail::to($recruitment->email)->send(new TidakLolosRecruitmentMail($recruitment));
 
-                $recruitment->update(['email_sent' => 1])
-                ? Alert::success('Berhasil', "Email telah berhasil dikirim!")
-                : Alert::error('Error', "Email gagal dikirim.");
+                if ($recruitment->update(['email_sent' => 1])){
+                    Alert::success('Berhasil', "Email telah berhasil dikirim!");
+                    Log::info('Semua Email berhasil dikirim (send_all_tidak_lolos_email)');
+                }else {
+                    Alert::error('Error', "Email gagal dikirim.");
+                    Log::error('Semua Email gagal dikirim (send_all_tidak_lolos_email)');
+                }
             }
         }
 
@@ -274,9 +293,13 @@ class RecruitmentUserController extends Controller
 
                 Mail::to($recruitment->email)->send(new TerimaRecruitmentMail($recruitment));
 
-                $recruitment->update(['email_sent' => 2])
-                ? Alert::success('Berhasil', "Email telah berhasil dikirim!")
-                : Alert::error('Error', "Email gagal dikirim.");
+                if ($recruitment->update(['email_sent' => 2])){
+                    Alert::success('Berhasil', "Email telah berhasil dikirim!");
+                    Log::info('Semua Email berhasil dikirim (send_all_terima_email)');
+                } else {
+                    Alert::error('Error', "Email gagal dikirim.");
+                    Log::error('Semua Email gagal dikirim (send_all_terima_email)');
+                }
             }
         }
 
@@ -296,9 +319,13 @@ class RecruitmentUserController extends Controller
 
                 Mail::to($recruitment->email)->send(new TolakRecruitmentMail($recruitment));
 
-                $recruitment->update(['email_sent' => 2])
-                ? Alert::success('Berhasil', "Email telah berhasil dikirim!")
-                : Alert::error('Error', "Email gagal dikirim.");
+                if ($recruitment->update(['email_sent' => 2])) {
+                    Alert::success('Berhasil', "Email telah berhasil dikirim!");
+                    Log::info('Semua Email berhasil dikirim (send_all_tolak_email)');
+                } else {
+                    Alert::error('Error', "Email gagal dikirim.");
+                    Log::error('Semua Email gagal dikirim (send_all_tolak_email)');
+                }
             }
         }
 
