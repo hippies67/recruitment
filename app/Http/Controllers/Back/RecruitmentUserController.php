@@ -120,7 +120,7 @@ class RecruitmentUserController extends Controller
     {
         $recruitment_user = RecruitmentUser::findOrFail($id);
         $recruitment_user->update(['email_sent' => 1]);
-
+        Log::info('mengirim email ke '.$recruitment_user->email.' (send_lolos_email_no_stage_update)');
         Mail::to($recruitment_user->email)->send(new LolosRecruitmentMail($recruitment_user));
 
         if(count(Mail::failures()) > 0) {
@@ -138,7 +138,7 @@ class RecruitmentUserController extends Controller
     {
         $recruitment_user = RecruitmentUser::findOrFail($id);
         $recruitment_user->update(['email_sent' => 1, 'stage' => 2]);
-
+        Log::info('mengirim email ke '.$recruitment_user->email.' (send_lolos_email)');
         Mail::to($recruitment_user->email)->send(new LolosRecruitmentMail($recruitment_user));
 
         if(count(Mail::failures()) > 0) {
@@ -156,7 +156,7 @@ class RecruitmentUserController extends Controller
     {
         $recruitment_user = RecruitmentUser::findOrFail($id);
         $recruitment_user->update(['email_sent' => 1]);
-
+        Log::info('mengirim email ke '.$recruitment_user->email.' (send_tidak_lolos_email)');
         Mail::to($recruitment_user->email)->send(new TidakLolosRecruitmentMail($recruitment_user));
 
         if(count(Mail::failures()) > 0) {
@@ -185,7 +185,7 @@ class RecruitmentUserController extends Controller
     {
         $recruitment_user = RecruitmentUser::findOrFail($id);
         $recruitment_user->update(['email_sent' => 2]);
-
+        Log::info('mengirim email ke '.$recruitment_user->email.' (send_terima_email)');
         Mail::to($recruitment_user->email)->send(new TerimaRecruitmentMail($recruitment_user));
 
         if(count(Mail::failures()) > 0) {
@@ -203,7 +203,7 @@ class RecruitmentUserController extends Controller
     {
         $recruitment_user = RecruitmentUser::findOrFail($id);
         $recruitment_user->update(['email_sent' => 2]);
-
+        Log::info('mengirim email ke '.$recruitment_user->email.' (send_tolak_email)');
         Mail::to($recruitment_user->email)->send(new TolakRecruitmentMail($recruitment_user));
 
         if(count(Mail::failures()) > 0) {
@@ -238,7 +238,7 @@ class RecruitmentUserController extends Controller
             Alert::info('Info', 'Semua email telah terkirim!');
         } else {
             foreach ($recruitment_user as $recruitment) {
-
+                Log::info('mengirim email ke '.$recruitment->email.' (send_all_lolos_email)');
                 Mail::to($recruitment->email)->send(new LolosRecruitmentMail($recruitment));
 
                 if ($recruitment->update(['email_sent' => 1, 'stage' => 2])){
@@ -264,7 +264,7 @@ class RecruitmentUserController extends Controller
             Alert::info('Info', 'Semua email telah terkirim!');
         } else {
             foreach ($recruitment_user as $recruitment) {
-
+                Log::info('mengirim email ke '.$recruitment->email.' (send_all_tidak_lolos_email)');
                 Mail::to($recruitment->email)->send(new TidakLolosRecruitmentMail($recruitment));
 
                 if ($recruitment->update(['email_sent' => 1])){
@@ -290,7 +290,7 @@ class RecruitmentUserController extends Controller
             Alert::info('Info', 'Semua email telah terkirim!');
         } else {
             foreach ($recruitment_user as $recruitment) {
-
+                Log::info('mengirim email ke '.$recruitment->email.' (send_all_terima_email)');
                 Mail::to($recruitment->email)->send(new TerimaRecruitmentMail($recruitment));
 
                 if ($recruitment->update(['email_sent' => 2])){
@@ -316,7 +316,7 @@ class RecruitmentUserController extends Controller
             Alert::info('Info', 'Semua email telah terkirim!');
         } else {
             foreach ($recruitment_user as $recruitment) {
-
+                Log::info('mengirim email ke '.$recruitment->email.' (send_all_tolak_email)');
                 Mail::to($recruitment->email)->send(new TolakRecruitmentMail($recruitment));
 
                 if ($recruitment->update(['email_sent' => 2])) {
