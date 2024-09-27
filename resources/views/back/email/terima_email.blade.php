@@ -40,7 +40,7 @@
                                                                cellspacing="0">
                                                             <tbody>
                                                             <tr>
-                                                                <td> <a href="https://wa.me/oqm-kxmr-bzz"
+                                                                <td> <a href="https://chat.whatsapp.com/KHtnsGQ71eKHbw2giekBIM"
                                                                         target="_blank">Grup Whatshapp</a> </td>
                                                             </tr>
                                                             </tbody>
